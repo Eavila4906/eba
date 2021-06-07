@@ -1,0 +1,79 @@
+.form-signin{
+    width:200%;
+    height: 80%;
+    max-width:400px;
+    min-width:300px;
+    padding-left:20px;
+    margin:auto;
+    margin-top:100px;
+    margin-bottom:15px;
+    border: 1px solid rgba(29, 173, 137, 0.329);
+    border-radius: 5px;
+    background: rgba(29, 173, 137, 0.027);
+}
+
+.form-signin input{
+	width:95%;
+	padding:10px 8px;
+	border:1px solid #9DA3A6;
+	font-size:15px;
+	border-radius:5px;
+	margin-bottom:10px;
+}
+
+.form-signin button{
+	width:95%;
+}
+
+
+
+@media screen and (max-width:600px) {
+    .form-signin {
+        width:80%;
+        max-width:400px;
+        min-width:300px;
+        margin:auto;
+        display:block;
+        padding:10px;
+        margin-top:120px;
+        margin-bottom:15px;
+    }
+}
+
+/* Formularios de guardar y actualizar registros en las tablas */
+
+/*titulo modal permiso*/
+.modal-header {
+    background: #009688;
+    color: white;   
+}
+
+.header-register {
+    background: rgb(57, 141, 57);
+    color: white;
+}
+
+.header-update {
+    background: #007bffc5;
+    color: white;
+}
+
+.none-block {
+    display: none;
+}
+
+
+/* ocultar caja de contrasena para registro */
+.pass-register {
+    display: none;
+}
+
+/* Modal mostar info user */
+.header-infoUser {
+    background: #009688;
+    color: white;
+}
+
+.text-msg-co-update {
+    display: none;
+}

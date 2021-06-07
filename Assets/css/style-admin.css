@@ -1,0 +1,25 @@
+.app-sidebar__user-avatar{
+    width: 50px;
+    background: rgb(212, 212, 212);
+    padding: 4px;
+}
+
+.app-nav__item {
+    padding: 15px;
+    line-height: 31px;
+}
+
+
+.widget-small.green {
+    background-color: rgb(25, 185, 87);
+}
+
+.widget-small.green.coloured-icon {
+    background-color: #fff;
+    color: #2a2a2a;
+}
+
+.widget-small.green.coloured-icon .icon {
+    background-color: rgb(25, 185, 87);
+    color: #fff;
+}
