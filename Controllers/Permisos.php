@@ -43,8 +43,7 @@
                             );
                         }
                         $arrayModulos[$i]['permisos'] = $arrPermisos;  
-                    }
-                    
+                    }   
                 }
                 $arrPermisosRol['modulos'] = $arrayModulos;
                 $html = getModal('permisos_modal', $arrPermisosRol);
@@ -52,7 +51,6 @@
             die();
         }
         
-
         public function setPermisos() {
             if ($_POST) {
                 $id_rol = intval($_POST['id_rol']);
