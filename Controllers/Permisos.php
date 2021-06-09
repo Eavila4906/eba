@@ -44,6 +44,7 @@
                         }
                         $arrayModulos[$i]['permisos'] = $arrPermisos;  
                     }
+                    
                 }
                 $arrPermisosRol['modulos'] = $arrayModulos;
                 $html = getModal('permisos_modal', $arrPermisosRol);
