@@ -38,5 +38,21 @@
             $result = $this->InsertMySQL($Query_Insert, $Array_Query);
             return $result;
         }
+
+        public function permisosModulos(int $id_rol){
+            $this->id_rol = $id_rol;
+
+            $Query_Select = "SELECT p.rol, p.modulo, m.nombreModulo, p.r, p.w, p.u, p.d
+                            FROM permisos p INNER JOIN modulo m 
+                            ON (p.modulo=m.id_modulo)
+                            WHERE p.rol = $this->id_rol";
+            $result = $this->SelectAllMySQL($Query_Select);
+
+            $arrayPermisos = array();
+            for ($i=0; $i < count($result); $i++) { 
+                $arrayPermisos[$result[$i]['modulo']] = $result[$i];
+            }
+            return $arrayPermisos;
+        }
     }
 ?>

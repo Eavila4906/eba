@@ -3,6 +3,7 @@
         public function __construct(){
             parent::__construct();
             ValidarSesionNotExists();
+            getPermisos(2);
         }
 
         public function Dashboard(){

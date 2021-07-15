@@ -32,24 +32,44 @@
     /*Validar session admin*/
     //not exists
     function ValidarSesionNotExists(){
-        session_start();
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
         if (empty($_SESSION['Login'])) {
-            header('location: '.BASE_URL().'admin');
+            header('location: '.BASE_URL());
         }
     }
     //Yes exists
     function ValidarSesionYesExists(){
-        session_start();
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
         if (isset($_SESSION['Login'])) {
-            header('location: '.BASE_URL().'dashboard');
+            if ($_SESSION['dataUser']['nombreRol'] == 'Super Administrador') {
+                header('location: '.BASE_URL().'dashboard');
+            } else {
+                header('location: '.BASE_URL().'my');
+            }
         }
     }
 
-    function ValidarSesion(){
-        session_start();
-        if (empty($_SESSION['Login'])) {
-            header('location: '.BASE_URL().'admin');
+    //Modulos y permisos
+    function getPermisos(int $id_modulo){
+        require_once("Models/PermisosModel.php");
+        $ObjPermisos =new PermisosModel();
+        $id_rol = $_SESSION['dataUser']['id_rol'];
+        $arrayData = $ObjPermisos->permisosModulos($id_rol);
+
+        $permisos = "";
+        $permisosModulo = "";
+
+        if (count($arrayData) > 0) {
+            $permisos = $arrayData;
+            $permisosModulo = isset($arrayData[$id_modulo]) ? $arrayData[$id_modulo] : "";
         }
+
+        $_SESSION['permisos'] = $permisos;
+        $_SESSION['permisosModulo'] = $permisosModulo;
     }
 
     //Mostrar modals
@@ -57,7 +77,30 @@
         $View_modal = "Views/Templates/Modals/{$name_modal}.php";
         require_once($View_modal);
     }
-    
+
+    //upload image to server
+    function uploadImageServer(array $data, string $name){
+        $url_temp = $data['tmp_name'];
+        $destino    = 'Assets/images/image-public-site/carousel-image-home/'.$name;        
+        $move = move_uploaded_file($url_temp, $destino);
+        return $move;
+    }
+
+    function uploadProfilePhotoServer(array $data, string $name){
+        $url_temp = $data['tmp_name'];
+        $destino    = 'Assets/images/image-profiles/'.$name;        
+        $move = move_uploaded_file($url_temp, $destino);
+        return $move;
+    }
+
+    //delete image to server
+    function deleteImageServer(String $name_image) {
+        unlink('Assets/images/image-public-site/carousel-image-home/'.$name_image);
+    }
+
+    function deleteProfilePhotoServer(String $name_image) {
+        unlink('Assets/images/image-profiles/'.$name_image);
+    }
 
     // Generador de password aleatoreo //
     function passGenerator($length = 10) {

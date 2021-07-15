@@ -5,17 +5,27 @@
         }
 
         public function SelectAllUsers() {
+            if ($_SESSION['dataUser']['nombreRol'] != "Super Administrador" && $_SESSION['id_usuario'] != 1) {
+                $useractivo = "AND r.nombreRol != 'Super Administrador'";
+            } else {
+                $useractivo = "";
+            }
             $Query_Select_All = "SELECT u.id_usuario, u.DNI, CONCAT(u.nombres, ' ', u.apellidoP, ' ', u.apellidoM) AS nombres,
                                 u.username, r.nombreRol, u.estado
                                 FROM usuario u INNER JOIN roles r
                                 ON (u.rol=r.id_rol)
-                                WHERE u.estado != 0 AND r.nombreRol != 'Super Administrador' ORDER BY u.id_usuario DESC";
+                                WHERE u.estado != 0 ".$useractivo."";
             $result = $this->SelectAllMySQL($Query_Select_All);
             return $result;
         }
 
         public function SelectAllRoles() {
-            $Query_Select_All = "SELECT id_rol, nombreRol FROM roles WHERE estadoRol != 0 AND estadoRol != 2 AND nombreRol != 'Super Administrador' ORDER BY id_rol DESC";
+            if ($_SESSION['dataUser']['nombreRol'] != "Super Administrador" && $_SESSION['id_usuario'] != 1) {
+                $useractivo = "AND nombreRol != 'Administrador'";
+            } else {
+                $useractivo = "";
+            }
+            $Query_Select_All = "SELECT id_rol, nombreRol FROM roles WHERE estadoRol != 0 AND estadoRol != 2 AND nombreRol != 'Super Administrador' ".$useractivo."";
             $result = $this->SelectAllMySQL($Query_Select_All);
             return $result;
         }

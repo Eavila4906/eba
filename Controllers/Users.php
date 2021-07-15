@@ -3,9 +3,17 @@
         public function __construct(){
             parent::__construct();
             ValidarSesionNotExists();
+            getPermisos(4);
         }
 
         public function Users(){
+            if (empty($_SESSION['permisosModulo']['r'])) {
+                if ($_SESSION['dataUser']['nombreRol'] == 'Super Administrador') {
+                    header('location: '.BASE_URL().'dashboard');
+                } else {
+                    header('location: '.BASE_URL().'my');
+                }
+            }
             $data['page_name'] = "Usuarios";
             $data['functions_js'] = "./Assets/js/functions_users.js";
             $this->views->getViews($this,"users", $data);
@@ -15,17 +23,52 @@
             $arrayData = $this->model->SelectAllUsers();
             
             for ($i=0; $i < count($arrayData); $i++) { 
+                $btnVerInfoUser = "";    
+                $btnEditarUser = "";
+                $btnEliminarUser = "";
                 if ($arrayData[$i]['estado'] == 1) {
                     $arrayData[$i]['estado'] = '<spam class="badge badge-success">Activo</spam>';
                 } else {
                     $arrayData[$i]['estado'] = '<spam class="badge badge-danger">Inactivo</spam>';
                 }
+
+                if ($_SESSION['permisosModulo']['r']) {
+                    $btnVerInfoUser = '<button class="btn btn-primary btn-sm btnVerInfoUser" onclick="FctBtnVerInfoUser('.$arrayData[$i]['id_usuario'].')" title="Ver info"><i class="fa fa-eye"></i></button>';
+                }
+
+                if ($_SESSION['permisosModulo']['u']){
+                    if ($_SESSION['id_usuario'] == 1) {
+                        if ($_SESSION['dataUser']['id_usuario'] != $arrayData[$i]['id_usuario']) {
+                            $btnEditarUser = '<button class="btn btn-info btn-sm btnEditarUser" onclick="FctBtnEditarUser('.$arrayData[$i]['id_usuario'].')" title="Editar"><i class="fa fa-pencil"></i></button>';
+                        } else {
+                            $btnEditarUser = '<button class="btn btn-info btn-sm btnEditarUser" title="No disponible" disabled><i class="fa fa-pencil"></i></button>';
+                        }    
+                    } else if ($_SESSION['id_usuario'] != 1) {
+                        if ($_SESSION['dataUser']['nombreRol'] == "Administrador" && $arrayData[$i]['nombreRol'] == "Administrador") {
+                            $btnEditarUser = '<button class="btn btn-info btn-sm btnEditarUser" title="No disponible" disabled><i class="fa fa-pencil"></i></button>';
+                        } else {
+                            $btnEditarUser = '<button class="btn btn-info btn-sm btnEditarUser" onclick="FctBtnEditarUser('.$arrayData[$i]['id_usuario'].')" title="Editar"><i class="fa fa-pencil"></i></button>';
+                        }
+                    }
+                }
+
+                if ($_SESSION['permisosModulo']['d']){
+                    if ($_SESSION['id_usuario'] == 1) {
+                        if ($_SESSION['dataUser']['id_usuario'] != $arrayData[$i]['id_usuario']) {
+                            $btnEliminarUser = '<button class="btn btn-danger btn-sm btnEliminarUser" onclick="FctBtnEliminarUser('.$arrayData[$i]['id_usuario'].')" title="Eliminar"><i class="fa fa-trash"></i></button>';
+                        } else {
+                            $btnEliminarUser = '<button class="btn btn-danger btn-sm btnEliminarUser" title="No disponible" disabled><i class="fa fa-trash"></i></button>';
+                        }    
+                    } else if ($_SESSION['id_usuario'] != 1) {
+                        if ($_SESSION['dataUser']['nombreRol'] == "Administrador" && $arrayData[$i]['nombreRol'] == "Administrador") {
+                            $btnEliminarUser = '<button class="btn btn-danger btn-sm btnEliminarUser" title="No disponible" disabled><i class="fa fa-trash"></i></button>';
+                        } else {
+                            $btnEliminarUser = '<button class="btn btn-danger btn-sm btnEliminarUser" onclick="FctBtnEliminarUser('.$arrayData[$i]['id_usuario'].')" title="Eliminar"><i class="fa fa-trash"></i></button>';
+                        }
+                    }
+                }
                 
-                $accionesUsers = '<div class="text-center">
-                                <button class="btn btn-primary btn-sm btnVerInfoUser" onclick="FctBtnVerInfoUser('.$arrayData[$i]['id_usuario'].')" title="Ver info"><i class="fa fa-eye"></i></button>
-                                <button class="btn btn-info btn-sm btnEditarUser" onclick="FctBtnEditarUser('.$arrayData[$i]['id_usuario'].')" title="Editar"><i class="fa fa-pencil"></i></button>
-                                <button class="btn btn-danger btn-sm btnEliminarUser" onclick="FctBtnEliminarUser('.$arrayData[$i]['id_usuario'].')" title="Eliminar"><i class="fa fa-trash"></i></button>
-                            </div>';
+                $accionesUsers = '<div class="text-center">'.$btnVerInfoUser.' '.$btnEditarUser.' '.$btnEliminarUser.'</div>';
                 $arrayData[$i]['Acciones'] = $accionesUsers;
             }
             echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);

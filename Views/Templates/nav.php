@@ -1,22 +1,52 @@
 <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
     <aside class="app-sidebar">
-      <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="<?= MEDIA(); ?>images/image-perfil/author-image1.jpg">
+      <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" id="photo-profile-nav" src="">
         <div>
           <p class="app-sidebar__user-name"><?= $_SESSION['dataUser']['username']; ?></p>
           <p class="app-sidebar__user-designation"><?= $_SESSION['dataUser']['nombreRol']; ?></p>
         </div>
       </div>
-      <ul class="app-menu">
+      <ul class="app-menu">''
+        <?php if (!empty($_SESSION['permisos'][1]['r'])) { ?>
+        <li><a class="app-menu__item" href="<?= BASE_URL(); ?>my"><i class="app-menu__icon 
+          <?php 
+            if ($_SESSION['dataUser']['nombreRol'] == "Estudiante") {
+              echo "fas fa-user-graduate";
+            } else if ($_SESSION['dataUser']['nombreRol'] == "Super Administrador" || $_SESSION['dataUser']['nombreRol'] == "Docente Administrador" || $_SESSION['dataUser']['nombreRol'] == "Administrador") {
+              echo "fas fa-user-tie";
+            } else {
+              echo "fas fa-chalkboard-teacher";
+            }
+          ?>"></i><span class="app-menu__label">Area personal</span></a>
+        </li>
+        <?php } ?>
+
+        <?php if (!empty($_SESSION['permisos'][2]['r'])) { ?>
         <li><a class="app-menu__item" href="<?= BASE_URL(); ?>dashboard"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
-        <li><a class="app-menu__item" href=""><i class="app-menu__icon fas fa-globe-americas"></i><span class="app-menu__label">Sitio publico</span></a></li>
+        <?php } ?>
+
+        <?php if (!empty($_SESSION['permisos'][3]['r'])) { ?>
+        <li><a class="app-menu__item" href="<?= BASE_URL(); ?>publicsite"><i class="app-menu__icon fas fa-globe"></i><span class="app-menu__label">Sitio publico</span></a></li>
+        <?php } ?>
+
+        <?php if (!empty($_SESSION['permisos'][4]['r']) || !empty($_SESSION['permisos'][5]['r'])) { ?>
         <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-users"></i><span class="app-menu__label">Usuarios</span><i class="treeview-indicator fa fa-angle-right"></i></a>
           <ul class="treeview-menu">
-            <li><a class="treeview-item" href="users"><i class="icon fa fa-circle-o"></i> Usuarios</a></li>
-            <li><a class="treeview-item" href="roles"><i class="icon fa fa-circle-o"></i> Roles</a></li>
-            <li><a class="treeview-item" href=""><i class="icon fa fa-circle-o"></i> Permisos</a></li>
+            <?php if (!empty($_SESSION['permisos'][4]['r'])) { ?>
+            <li><a class="treeview-item" href="<?= BASE_URL(); ?>users"><i class="icon fa fa-circle-o"></i> Usuarios</a></li>
+            <?php } ?>
+
+            <?php if (!empty($_SESSION['permisos'][5]['r'])) { ?>
+            <li><a class="treeview-item" href="<?= BASE_URL(); ?>roles"><i class="icon fa fa-circle-o"></i> Roles</a></li>
+            <?php } ?>
           </ul>
         </li>
+        <?php } ?>
+
+        <?php if (!empty($_SESSION['permisos'][6]['r'])) { ?>
         <li><a class="app-menu__item" href=""><i class="app-menu__icon fas fa-book-open"></i><span class="app-menu__label">Cursos</span></a></li>
+        <?php } ?>
+
         
       </ul>
     </aside>

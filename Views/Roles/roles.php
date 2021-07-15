@@ -17,9 +17,11 @@
         </ul>
     </div>
 
+    <?php if ($_SESSION['permisosModulo']['w']) { ?>
     <div>
-        <button class="btn btn-success mb-3" type="button" onclick="openModal();"><i class="fa fa-plus-circle fa-lg"></i> Nuevo rol</button><br>
+      <button class="btn btn-success mb-3" type="button" onclick="openModal();"><i class="fa fa-plus-circle fa-lg"></i> Nuevo rol</button><br>
     </div>
+    <?php } ?>
     
     <div class="row">
         <div class="col-md-12">

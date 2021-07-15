@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
     <link rel="icon" href="<?= MEDIA(); ?>images/icons/icon.ico">
-    <title><?= NAME_PROJECT ?> - Administración</title>
+    <title><?= NAME_PROJECT; ?> - Administración</title>
 
     
     <link rel="stylesheet" type="text/css" href="<?= ASSETS_VALI();?>css/main.css">
@@ -25,11 +25,11 @@
             </div>
 
             <div class="form-label-group mb-4">
-                <input type="text" id="textUsername-email" name="textUsername-email" class="form-control" placeholder="Username / email" >
+                <input type="text" id="textUsername-email" name="textUsername-email" class="form-control login" placeholder="Username / email" >
             </div>
 
             <div class="form-label-group mb-6">
-                <input type="password" id="textPassword" name="textPassword" class="form-control" placeholder="Password" >
+                <input type="password" id="textPassword" name="textPassword" class="form-control login" placeholder="Password" >
             </div><br>
 
             <button class="btn btn-lg btn-primary btn-block" type="submit">Iniciar Sesión</button><br>

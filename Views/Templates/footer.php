@@ -12,7 +12,7 @@
     <!-- Data table plugin-->
     <script type="text/javascript" src="<?= ASSETS_VALI();?>js/plugins/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="<?= ASSETS_VALI();?>js/plugins/dataTables.bootstrap.min.js"></script>
-    <script type="text/javascript" src="<?= MEDIA();?>js/functions_admin.js"></script>
+    <script type="text/javascript" src="<?= MEDIA();?>js/functions_system.js"></script>
     <!-- Page specific javascripts-->
     <script type="text/javascript" src="<?= ASSETS_VALI();?>js/plugins/sweetalert.min.js"></script>
     <!-- Google analytics script-->

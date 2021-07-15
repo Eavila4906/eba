@@ -1,13 +1,15 @@
 <?php 
-    header_view($data);
+  header_view($data);
+  getModal('subirFoto_modal', $data);
 ?>
-
 <main class="app-content">
     <div class="row user">
         <div class="col-md-12">
           <div class="profile">
-            <div class="info"><img class="user-img" src="<?= MEDIA(); ?>images/image-perfil/author-image1.jpg">
-              <h4><?= $_SESSION['dataUser']['username']; ?></h4>
+            <div class="info">
+              <a href="javascript:;" type="Button" onclick="editPhotoProfile(<?=$_SESSION['dataUser']['id_usuario'];?>);">
+              <img class="user-img" id="photo-profile" src=""></a>
+              <h4><?= $_SESSION['dataUser']['nombres']." ".$_SESSION['dataUser']['apellidoP']." ".$_SESSION['dataUser']['apellidoM']?></h4>
               <p><?= $_SESSION['dataUser']['nombreRol']; ?></p>
             </div>
             <div class="cover-image"></div>
@@ -27,36 +29,60 @@
             <!-- Profile -->
             <div class="tab-pane active" id="profile">
               <div class="timeline-post">
-                <div class="post-media"><a href="#"><img src="<?= MEDIA(); ?>images/image-perfil/author-image1.jpg"></a>
+                <div class="post-media"> 
                   <div class="content">
-                    <h5><a href="profile"><?= $_SESSION['dataUser']['username']; ?></a></h5>
-                    <p class="text-muted"><small>2 January at 9:30</small></p>
+                    <h5 class="text-primary">Datos personales</h5> 
                   </div>
                 </div>
-                <div class="post-content">
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,	quis tion ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non	proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                </div>
-                <ul class="post-utility">
-                  <li class="likes"><a href="#"><i class="fa fa-fw fa-lg fa-thumbs-o-up"></i>Like</a></li>
-                  <li class="shares"><a href="#"><i class="fa fa-fw fa-lg fa-share"></i>Share</a></li>
-                  <li class="comments"><i class="fa fa-fw fa-lg fa-comment-o"></i> 5 Comments</li>
-                </ul>
-              </div>
-              <div class="timeline-post">
-                <div class="post-media"><a href="#"><img src="https://s3.amazonaws.com/uifaces/faces/twitter/jsa/48.jpg"></a>
+
+                <table class="table table-bordered">
+                  <tbody>
+                    <tr>
+                      <td style="width: 150px">Cedula / Pasaporte</td>
+                      <td id="DNI"></td>
+                    </tr>
+
+                    <tr>
+                      <td style="width: 150px">Nombres</td>
+                      <td id="nombres"></td>
+                    </tr>
+
+                    <tr>
+                      <td style="width: 150px">Apellidos</td>
+                      <td id="apellidos"></td>
+                    </tr>
+
+                    <tr>
+                      <td style="width: 150px">Sexo</td>
+                      <td id="sexo"></td>
+                    </tr>
+
+                    <tr>
+                      <td style="width: 150px">Fecha de nacimiento</td>
+                      <td id="fechaNacimiento"></td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <div class="post-media"> 
                   <div class="content">
-                    <h5><a href="#">John Doe</a></h5>
-                    <p class="text-muted"><small>2 January at 9:30</small></p>
+                    <h5 class="text-primary">Contactos</h5> 
                   </div>
                 </div>
-                <div class="post-content">
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,	quis tion ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non	proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                </div>
-                <ul class="post-utility">
-                  <li class="likes"><a href="#"><i class="fa fa-fw fa-lg fa-thumbs-o-up"></i>Like</a></li>
-                  <li class="shares"><a href="#"><i class="fa fa-fw fa-lg fa-share"></i>Share</a></li>
-                  <li class="comments"><i class="fa fa-fw fa-lg fa-comment-o"></i> 5 Comments</li>
-                </ul>
+
+                <table class="table table-bordered">
+                  <tbody>
+                    <tr>
+                      <td style="width: 150px">Email</td>
+                      <td id="email"></td>
+                    </tr>
+
+                    <tr>
+                      <td style="width: 150px">Telefono</td>
+                      <td id="telefono"></td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
 
@@ -64,54 +90,54 @@
             <div class="tab-pane fade" id="profile-update">
               <div class="tile user-settings">
                 <h4 class="line-head text-primary">Actualizar perfil</h4>
-                <form>
+                <form name="FormUpdateDataUser" id="FormUpdateDataUser">
                   <div class="row mb-4">
                     <div class="col-md-4">
-                      <label>Cedula / Pasaporte</label>
-                      <input class="form-control" type="text">
+                      <label>Cedula / Pasaporte</label> <i class="fa-fw fas fa-info-circle " title="Campo obligatorio no editable" style="color: #ff8000;" width="3" height="3"></i>
+                      <input class="form-control" type="text" name="InputDNI" id="InputDNI" disabled title="No editable!">
                     </div>
                     <div class="col-md-4">
-                      <label>Nombres Completos</label>
-                      <input class="form-control" type="text">
+                      <label>Nombres Completos</label> <i class="fa-fw fas fa-info-circle " title="Campo obligatorio no editable" style="color: #ff8000;" width="3" height="3"></i>
+                      <input class="form-control" type="text" name="InputNombres" id="InputNombres" disabled title="No editable!">
                     </div>
                   </div>
 
                   <div class="row mb-4">
                     <div class="col-md-4">
-                      <label>Apellido Paterno</label>
-                      <input class="form-control" type="text">
+                      <label>Apellido Paterno</label> <i class="fa-fw fas fa-info-circle " title="Campo obligatorio no editable" style="color: #ff8000;" width="3" height="3"></i>
+                      <input class="form-control" type="text" name="InputApellidoP" id="InputApellidoP" disabled title="No editable!">
                     </div>
                     <div class="col-md-4">
-                      <label>Apellido Materno</label>
-                      <input class="form-control" type="text">
-                    </div>
-                  </div>
-
-                  <div class="row mb-4">
-                    <div class="col-md-4">
-                      <label>Email</label>
-                      <input class="form-control" type="text">
-                    </div>
-                    <div class="col-md-4">
-                      <label>telefono</label>
-                      <input class="form-control" type="text">
+                      <label>Apellido Materno</label> <i class="fa-fw fas fa-info-circle " title="Campo obligatorio editable" style="color: green;" width="3" height="3"></i>
+                      <input class="form-control" type="text"  name="InputApellidoM" id="InputApellidoM">
                     </div>
                   </div>
 
                   <div class="row mb-4">
                     <div class="col-md-4">
-                      <label>Sexo</label>
-                      <select class="form-control" name="" id="">Sexo</select>
+                      <label>Email</label> <i class="fa-fw fas fa-info-circle " title="Campo obligatorio editable" style="color: green;" width="3" height="3"></i>
+                      <input class="form-control" type="text" name="InputEmail" id="InputEmail">
                     </div>
                     <div class="col-md-4">
-                      <label>Fecha Nacimiento</label>
-                      <input class="form-control" type="date">
+                      <label>telefono</label> <i class="fa-fw fas fa-info-circle " title="Campo obligatorio editable" style="color: green;" width="3" height="3"></i>
+                      <input class="form-control" type="text" name="InputTelefono" id="InputTelefono">
+                    </div>
+                  </div>
+
+                  <div class="row mb-4">
+                    <div class="col-md-4">
+                      <label>Sexo</label> <i class="fa-fw fas fa-info-circle " title="Campo obligatorio editable" style="color: green;" width="3" height="3"></i>
+                      <select class="form-control" name="InputSexo" id="InputSexo"></select>
+                    </div>
+                    <div class="col-md-4">
+                      <label>Fecha Nacimiento</label> <i class="fa-fw fas fa-info-circle " title="Campo obligatorio editable" style="color: green;" width="3" height="3"></i>
+                      <input class="form-control" type="date" name="InputFechaNaci" id="InputFechaNaci">
                     </div>
                   </div>
                   
                   <div class="row mb-10">
                     <div class="col-md-12">
-                      <button class="btn btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i> Guardar</button>
+                      <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i> Actualizar</button>
                     </div>
                   </div>
                 </form>
@@ -122,29 +148,42 @@
             <div class="tab-pane fade" id="password-update">
               <div class="tile user-settings">
                 <h4 class="line-head text-primary">Cambiar contraseña</h4>
-                <form>
+                <form name="FormUpdatePassword" id="FormUpdatePassword">
+                    <div id="notificationPass"></div>
                     <div class="row">
                         <div class="col-md-8 mb-4">
-                        <label>Contraseña Actual</label>
-                        <input class="form-control" type="password">
+                          <label>Contraseña Actual</label>
+                          <input class="form-control" type="password" name="InputCurrentPass" id="InputCurrentPass" required>
                         </div>
                         <div class="clearfix"></div>
                     </div>
-
                     <div class="row mb-4">
                         <div class="col-md-4">
                             <label>Nueva Contraseña</label>
-                            <input class="form-control" type="password">
-                        </div>
+                            <input class="form-control NewPass" type="password" name="InputNewPass" id="InputNewPass" required>
+                            <p class="none-block" id="leyenda-new-pass">
+                              <small> 
+                                La contraseñas debe de tener de 8 a 16 caracteres!
+                              </small>
+                            </p>
+                          </div>
                         <div class="col-md-4">
                             <label>Confirmar contraseña</label>
-                            <input class="form-control" type="password">
-                        </div>
+                            <input class="form-control ConfirmPass" type="password" name="InputConfirmPass" id="InputConfirmPass" required>
+                            <p class="none-block" id="leyenda-confi-pass">
+                              <small>
+                                <i class="fas fa-exclamation-triangle text-danger"></i> 
+                                Ambas contraseñas deben de ser iguales
+                              </small>
+                            </p>
+                          </div>
                     </div>
 
                     <div class="row mb-10">
                         <div class="col-md-12">
-                        <button class="btn btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i> Guardar</button>
+                          <button class="btn btn-primary" type="submit">
+                            <i class="fa fa-fw fa-lg fa-check-circle"></i> Hecho
+                          </button>
                         </div>
                     </div>
                 </form>
@@ -156,5 +195,5 @@
     </div>
 </main>
 <?php 
-    footer_view($data);
+  footer_view($data);
 ?>

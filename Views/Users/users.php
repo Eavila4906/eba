@@ -16,10 +16,12 @@
           <li class="breadcrumb-item active"><a href="users"><?= $data['page_name']; ?></a></li>
         </ul>
     </div>
-
+    <?php if ($_SESSION['permisosModulo']['w']) { ?>
     <div>
-        <button class="btn btn-success mb-3" type="button" onclick="openModal();"><i class="fa fa-user-plus fa-lg"></i> Nuevo usuario</button><br>
+      <button class="btn btn-success mb-3" type="button" onclick="openModal();"><i class="fa fa-user-plus fa-lg"></i> Nuevo usuario</button><br>
     </div>
+    <?php } ?>
+    
     
     <div class="row">
         <div class="col-md-12">

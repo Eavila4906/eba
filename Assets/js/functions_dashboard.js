@@ -70,12 +70,12 @@ function loadCountTeachers() {
     }
 }
 
-/*$(document).ready(function () {
-	$('#ModalNotificacion').modal('show');
-});*/
-
-setInterval(loadCoutUsers, 2000);
+setTimeout(loadCoutUsers, 1000);
+setTimeout(loadCountCourses, 1000);
+setTimeout(loadCountStudens, 1000);
+setTimeout(loadCountTeachers, 1000);
+/*setInterval(loadCoutUsers, 2000);
 setInterval(loadCountCourses, 2000);
 setInterval(loadCountStudens, 2000);
-setInterval(loadCountTeachers, 2000);
+setInterval(loadCountTeachers, 2000);*/
 

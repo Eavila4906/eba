@@ -41,7 +41,9 @@
 }
 
 /* Formularios de guardar y actualizar registros en las tablas */
-
+.required {
+    color: red;
+}
 /*titulo modal permiso*/
 .modal-header {
     background: #009688;
@@ -62,6 +64,10 @@
     display: none;
 }
 
+.notBlock{
+	display: none;
+}
+
 
 /* ocultar caja de contrasena para registro */
 .pass-register {
@@ -76,4 +82,174 @@
 
 .text-msg-co-update {
     display: none;
+}
+
+/* invalid form*/
+.invalid {
+	border: red 1px solid;
+}
+/* Imagen de perfil del modal actualizar foto de perfil */
+.file {
+    display: none;
+}
+
+.previwe {
+    border-radius: 100%;
+    width: 200px;
+    height: 200px;
+}
+
+/* Subir Imagen a la galeria de inicio */
+.previwe-homeGalery {
+    width: 200px;
+    height: 170px;
+}
+
+.prevPhoto {
+    display: flex;
+    justify-content: space-between;
+    width: 300px;
+    height: 200px;
+    border: 1px solid #CCC;
+    position: relative;
+    cursor: pointer;
+    background: url(../images/image-uploads/upload.png);
+    background-size: 140px 110px;
+    background-repeat: no-repeat;
+    
+    background-position: center center;
+    margin: auto;
+}
+.prevPhoto label{
+	cursor: pointer;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 2;
+}
+.prevPhoto img{
+	width: 100%;
+	height: 100%;
+}
+.upimg, .notBlock{
+	display: none !important;
+}
+.errorArchivo{
+	font-size: 16px;
+	font-family: arial;
+	color: #cc0000;
+	text-align: center;
+	font-weight: bold; 
+	margin-top: 10px;
+}
+.delPhoto{
+	color: #FFF;
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 50%;
+	width: 25px;
+	height: 25px;
+	background: red;
+	position: absolute;
+	right: -10px;
+	top: -10px;
+	z-index: 10;
+}
+#tbl_list_productos img{
+	width: 50px;
+}
+.imgProductoDelete{
+	width: 175px;
+}
+
+.img-default {
+    width: 50%;
+	height: 50%;
+}
+
+/* upload profile photo*/
+.prevPhotoProfile {
+    display: flex;
+    justify-content: space-between;
+    border-radius: 100%;
+    width: 200px;
+    height: 200px;
+	border: 1px solid #CCC;
+    position: relative;
+    cursor: pointer;
+	background: url(../images/image-uploads/upload.png);
+    background-size: 140px 110px;
+    background-repeat: no-repeat;
+    
+    background-position: center center;
+    margin: auto;
+}
+.prevPhotoProfile label{
+	cursor: pointer;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 2;
+}
+.prevPhotoProfile img{
+	border-radius: 100%;
+    width: 200px;
+    height: 200px;
+}
+
+.delPhotoProfile{
+	color: #FFF;
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 50%;
+	width: 25px;
+	height: 25px;
+	background: red;
+	position: absolute;
+	right: -10px;
+	top: -10px;
+	z-index: 10;
+}
+#tbl_list_productos img{
+	width: 50px;
+}
+.imgProductoDelete{
+	width: 175px;
+}
+
+.img-default {
+    width: 50%;
+	height: 50%;
+}
+
+/*loading form*/
+#divLoading{
+	position: fixed;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: rgba(254,254,255, .65);
+	z-index: 9999;
+	display: none;
+}
+#divLoading img{
+	width: 50px;
+	height: 50px;
 }
