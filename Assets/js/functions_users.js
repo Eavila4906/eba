@@ -1,3 +1,67 @@
+/* Starts validacion de formulario add users */
+const inputs = document.querySelectorAll('#formUsers input');
+
+const expresiones = {
+	cedula: /^\d{9,10}$/,
+	nombres: /^[a-zA-ZÀ-ÿ\s]{1,45}$/,
+	apellido: /^[a-zA-ZÀ-ÿ\s]{1,35}$/,
+	email: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+	telefono: /^\d{7,10}$/
+}
+
+const campos = {
+	InputCedulaPasaporte: false,
+	InputNombres: false,
+	InputApellidoP: false,
+	InputApellidoM: false,
+	InputEmail: false,
+	InputTelefono: false
+}
+
+const validarFormulario = (e) => {
+	switch (e.target.name) {
+		case "InputCedulaPasaporte":
+			validarCamposForm(expresiones.cedula, e.target, 'labelCedula', 'InputCedulaPasaporte', 'leyenda-cedula');
+		break;
+		case "InputNombres":
+			validarCamposForm(expresiones.nombres, e.target, 'labelNombres', 'InputNombres', 'leyenda-nombres');
+		break;
+		case "InputApellidoP":
+			validarCamposForm(expresiones.apellido, e.target, 'labelApellidoP', 'InputApellidoP', 'leyenda-apellidoP');
+		break;
+		case "InputApellidoM":
+			validarCamposForm(expresiones.apellido, e.target, 'labelApellidoM', 'InputApellidoM', 'leyenda-apellidoM');
+		break;
+		case "InputEmail":
+			validarCamposForm(expresiones.email, e.target, 'labelEmail', 'InputEmail', 'leyenda-email');
+		break;
+		case "InputTelefono":
+			validarCamposForm(expresiones.telefono, e.target, 'labelTelefono', 'InputTelefono', 'leyenda-telefono');
+		break;
+	}
+}
+
+const validarCamposForm = (expresion, input, label, id_input, leyenda) => {
+	if(expresion.test(input.value)){
+        document.getElementById(`${id_input}`).classList.remove('invalid');
+        document.getElementById(`${leyenda}`).classList.add('none-block');
+		document.getElementById(`${label}`).classList.remove('text-danger');
+		campos[id_input] = true;
+	} else {
+		document.getElementById(`${id_input}`).classList.add('invalid');
+		document.getElementById(`${leyenda}`).classList.remove('none-block');
+		document.getElementById(`${label}`).classList.add('text-danger');
+		campos[id_input] = false;
+	}
+}
+
+inputs.forEach((input) => {
+	input.addEventListener('keyup', validarFormulario);
+	input.addEventListener('blur', validarFormulario);
+});
+
+/* Finish validacion de formulario add users */
+
 //Cargar elementos del data table
 $(document).ready(function () {
 	$('#DataTableUsuarios').DataTable();
@@ -32,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		"order": [[0, "desc"]] /*Ordenar de forma Desendente*/
 	});
 
-	//Registrar
+	//add user
 	var formUsers = document.querySelector("#formUsers");
 	formUsers.onsubmit = function (e) {
 		e.preventDefault();
@@ -52,7 +116,11 @@ document.addEventListener('DOMContentLoaded', function () {
 			swal("¡Atención!", "Todos los campos son obligatorios.", "warning");
 			return false;
 		}
-
+		if (!campos.InputCedulaPasaporte || !campos.InputNombres || !campos.InputApellidoP || !campos.InputApellidoM || !campos.InputEmail || !campos.InputTelefono) {
+			swal("¡Atención!", "Verifica los campos en rojo!", "warning");
+			return false;
+		}
+		divLoading.style.display = "flex";
 		var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
 		var ajaxUrl = BASE_URL + 'users/setUsers';
 		var formData = new FormData(formUsers);
@@ -73,6 +141,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			} else {
 				swal("ERROR!", "Error", "error");
 			}
+			divLoading.style.display = "none";
+            return false;
 		}
 	}
 });
@@ -82,13 +152,28 @@ function openModal() {
 	document.querySelector('#id_usuario').value = "";
 	document.querySelector('#title-modal').innerHTML = "Nuevo Usuario";
 	document.querySelector('.modal-header').classList.replace("header-update", "header-register");
-	document.querySelector('#text-msg-co').classList.replace("text-msg-co-update", "text-msg-co-register");
 	document.querySelector('#cajaPassword').classList.replace("pass-update", "pass-register");
 	document.querySelector('#InputTipoRol').classList.replace("rol-update", "rol-register");
 	document.querySelector('#btn-action-form').classList.replace("btn-info", "btn-success");
 	document.querySelector('#text-btn').innerHTML = "Guardar";
 	document.getElementById("formUsers").reset();
 	$('#ModalFormUsers').modal('show');
+	cleanResiduoVali();
+}
+
+function cleanResiduoVali() {
+	var ocuLeyenda = document.querySelectorAll('.labelForm');	
+	ocuLeyenda.forEach.call(ocuLeyenda, c => {
+		c.classList.remove('text-danger');
+	});
+	var ocuLeyenda = document.querySelectorAll('.inputForm');	
+	ocuLeyenda.forEach.call(ocuLeyenda, c => {
+		c.classList.remove('invalid');
+	});
+	var ocuLeyenda = document.querySelectorAll('.leyenda');	
+	ocuLeyenda.forEach.call(ocuLeyenda, c => {
+		c.classList.add('none-block');
+	});
 }
 
 //Cargar lista de tipo de rol
@@ -161,11 +246,18 @@ function FctBtnVerInfoUser(id_user) {
 function FctBtnEditarUser(id_user) {
 	document.querySelector('#title-modal').innerHTML = "Actualizar usuario";
 	document.querySelector('.modal-header').classList.replace("header-register", "header-update");
-	document.querySelector('#text-msg-co').classList.replace("text-msg-co-register", "text-msg-co-update");
 	document.querySelector('#btn-action-form').classList.replace("btn-success", "btn-info");
 	document.querySelector('#cajaPassword').classList.replace("pass-register", "pass-update");
 	document.querySelector('#InputTipoRol').classList.replace("rol-register", "rol-update");
 	document.querySelector('#text-btn').innerHTML = "Actualizar";
+	cleanResiduoVali();
+
+	campos.InputCedulaPasaporte = true; 
+	campos.InputNombres = true; 
+	campos.InputApellidoP = true; 
+	campos.InputApellidoM = true; 
+	campos.InputEmail = true; 
+	campos.InputTelefono = true;
 
 	var id_usuario = id_user;
 	var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');

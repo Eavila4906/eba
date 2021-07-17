@@ -386,6 +386,11 @@
                 }
               ?>
             </div>
+            <div>
+              <?php if ($_SESSION['permisosModulo']['w']) {?>
+              <button class="btn text-success" onclick="OpenModalAddIcons();"><i class="fas fa-plus fa-fw"></i>Agregar icono</button>
+              <?php } ?>
+            </div>
           </div>
         </div>
       </div>

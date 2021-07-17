@@ -17,11 +17,11 @@
 
             <div class="form">
                 <div class="form-label-group mb-4">
-                    <input type="text" id="InputUsername-email" name="InputUsername-email" class="btn-lg form-control login" placeholder="Username / email" >
+                    <input type="text" id="InputUsername-email" name="InputUsername-email" class="btn-lg form-control login" placeholder="Username / email" required>
                 </div><br>
 
                 <div class="form-label-group mb-2">
-                    <input type="password" id="InputPassword" name="InputPassword" class="btn-lg form-control login" placeholder="Password" >
+                    <input type="password" id="InputPassword" name="InputPassword" class="btn-lg form-control login" placeholder="Password" required>
                 </div><br>
 
                 <center><a class="text-green" href="">¿Olvidaste tu contraseña?</a></center>

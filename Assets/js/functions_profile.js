@@ -1,20 +1,25 @@
-/* Validacion del formulario de cambiar password */
-var formulario = document.getElementById('FormUpdatePassword');
-var inputs = document.querySelectorAll('#FormUpdatePassword input');
-
 var expresiones = {
-	password: /^.{8,16}$/
+	password: /^.{8,16}$/,
+	email: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+	telefono: /^\d{7,10}$/
 }
 
-var campos = {
+var camposFUP = {
 	InputNewPass: false,
 	InputConfirmPass: false
 }
 
-const validarFormulario = (e) => {
+var camposFUDU = {
+	InputEmail: false,
+	InputTelefono: false
+}
+/* Starts Validacion del formulario de cambiar password */
+var inputsUpdatePassword = document.querySelectorAll('#FormUpdatePassword input');
+
+const validarFormularioUP = (e) => {
 	switch (e.target.name) {
 		case "InputNewPass":
-			validarCampo(expresiones.password, e.target, 'InputNewPass', 'leyenda-new-pass');
+			validarCamposFormUP(expresiones.password, e.target, 'labelNewPass', 'InputNewPass', 'leyenda-new-pass');
             validarConfirmPass();
 		break;
 		case "InputConfirmPass":
@@ -23,15 +28,17 @@ const validarFormulario = (e) => {
 	}
 }
 
-const validarCampo = (expresion, input, id_input, leyenda) => {
+const validarCamposFormUP = (expresion, input, label, id_input, leyenda) => {
 	if(expresion.test(input.value)){
         document.getElementById(`${id_input}`).classList.remove('invalid');
         document.getElementById(`${leyenda}`).classList.add('none-block');
-		campos[id_input] = true;
+		document.getElementById(`${label}`).classList.remove('text-danger');
+		camposFUP[id_input] = true;
 	} else {
 		document.getElementById(`${id_input}`).classList.add('invalid');
 		document.getElementById(`${leyenda}`).classList.remove('none-block');
-		campos[id_input] = false;
+		document.getElementById(`${label}`).classList.add('text-danger');
+		camposFUP[id_input] = false;
 	}
 }
 
@@ -42,18 +49,57 @@ const validarConfirmPass = () => {
 	if(inputPassword1.value !== inputPassword2.value){
 		document.getElementById(`InputConfirmPass`).classList.add('invalid');
 		document.getElementById(`leyenda-confi-pass`).classList.remove('none-block');
-		campos['InputConfirmPass'] = false;
+		document.getElementById('labelConfirmPass').classList.add('text-danger');
+		camposFUP['InputConfirmPass'] = false;
 	} else {
 		document.getElementById(`InputConfirmPass`).classList.remove('invalid');
 		document.getElementById(`leyenda-confi-pass`).classList.add('none-block');
-		campos['InputConfirmPass'] = true;
+		document.getElementById('labelConfirmPass').classList.remove('text-danger');
+		camposFUP['InputConfirmPass'] = true;
 	}
 }
 
-inputs.forEach((input) => {
-	input.addEventListener('keyup', validarFormulario);
-	input.addEventListener('blur', validarFormulario);
+inputsUpdatePassword.forEach((input) => {
+	input.addEventListener('keyup', validarFormularioUP);
+	input.addEventListener('blur', validarFormularioUP);
 });
+
+/* Finish Validacion del formulario de cambiar password */
+
+/* Starts Validacion del formulario de update data user */
+var inputsUpdateDataUser = document.querySelectorAll('#FormUpdateDataUser input');
+
+const validarFormularioUDU = (e) => {
+	switch (e.target.name) {
+		case "InputEmail":
+			validarCamposFormUDU(expresiones.email, e.target, 'labelEmail', 'InputEmail', 'leyenda-email');
+		break;
+		case "InputTelefono":
+			validarCamposFormUDU(expresiones.telefono, e.target, 'labelTelefono', 'InputTelefono', 'leyenda-telefono');
+		break;
+	}
+}
+
+const validarCamposFormUDU = (expresion, input, label, id_input, leyenda) => {
+	if(expresion.test(input.value)){
+        document.getElementById(`${id_input}`).classList.remove('invalid');
+        document.getElementById(`${leyenda}`).classList.add('none-block');
+		document.getElementById(`${label}`).classList.remove('text-danger');
+		camposFUDU[id_input] = true;
+	} else {
+		document.getElementById(`${id_input}`).classList.add('invalid');
+		document.getElementById(`${leyenda}`).classList.remove('none-block');
+		document.getElementById(`${label}`).classList.add('text-danger');
+		camposFUDU[id_input] = false;
+	}
+}
+
+inputsUpdateDataUser.forEach((input) => {
+	input.addEventListener('keyup', validarFormularioUDU);
+	input.addEventListener('blur', validarFormularioUDU);
+});
+
+/* Finish Validacion del formulario de update data user */
 
 
 //Update profile
@@ -162,11 +208,17 @@ document.addEventListener('DOMContentLoaded', function(){
 		var InputApellidoP = document.querySelector('#InputApellidoP').value;
         var InputTelefono = document.querySelector('#InputTelefono').value;
         var InputEmail = document.querySelector('#InputEmail').value;
+		camposFUDU.InputEmail = true;
+		camposFUDU.InputTelefono = true;
 
 		if (InputDNI == '' || InputNombres == '' || InputApellidoP == '' || InputTelefono == '' || InputEmail == '') {
 			swal("¡Atención!", "Todos los campos son obligatorios.", "warning");
 			return false;
 		}
+		if (!camposFUDU.InputEmail || !camposFUDU.InputTelefono) {
+            swal("¡Atención!", "Verifica el campo en rojo.", "warning");
+			return false;
+        }
         
         divLoading.style.display = "flex";
 		var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
@@ -204,8 +256,9 @@ document.addEventListener('DOMContentLoaded', function(){
 			swal("¡Atención!", "Todos los campos son obligatorios.", "warning");
 			return false;
 		}
-        if (!campos.InputNewPass && !campos.InputConfirmPass) {
-            swal("¡Atención!", "Todos los campos son obligatorios.", "warning");
+        if (!camposFUP.InputNewPass || !camposFUP.InputConfirmPass) {
+			console.log('funciona');
+            swal("¡Atención!", "Verifica el campo en rojo.", "warning");
 			return false;
         }
         divLoading.style.display = "flex";

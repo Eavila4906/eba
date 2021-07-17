@@ -1,3 +1,52 @@
+/* Starts validacion de formulario add roles */
+const inputs = document.querySelectorAll('#formRoles input');
+const textarea = document.querySelectorAll('#formRoles textarea');
+
+const expresiones = {
+	nombreRol: /^[a-zA-ZÀ-ÿ\s]{1,20}$/,
+	descripcionRol: /^[a-zA-ZÀ-ÿ0-9\s]{1,80}$/,
+}
+
+const campos = {
+	TextNombreRol: false,
+	TextDescripcionRol: false
+}
+
+const validarFormulario = (e) => {
+	switch (e.target.name) {
+		case "TextNombreRol":
+			validarCamposForm(expresiones.nombreRol, e.target, 'labelNombreRol', 'TextNombreRol', 'leyenda-nombreRol');
+		break;
+		case "TextDescripcionRol":
+			validarCamposForm(expresiones.descripcionRol, e.target, 'labelDescripcionRol', 'TextDescripcionRol', 'leyenda-descripcionRol');
+		break;
+	}
+}
+
+const validarCamposForm = (expresion, input, label, id_input, leyenda) => {
+	if(expresion.test(input.value)){
+        document.getElementById(`${id_input}`).classList.remove('invalid');
+        document.getElementById(`${leyenda}`).classList.add('none-block');
+		document.getElementById(`${label}`).classList.remove('text-danger');
+		campos[id_input] = true;
+	} else {
+		document.getElementById(`${id_input}`).classList.add('invalid');
+		document.getElementById(`${leyenda}`).classList.remove('none-block');
+		document.getElementById(`${label}`).classList.add('text-danger');
+		campos[id_input] = false;
+	}
+}
+
+inputs.forEach((input) => {
+	input.addEventListener('keyup', validarFormulario);
+	input.addEventListener('blur', validarFormulario);
+});
+textarea.forEach((textarea) => {
+	textarea.addEventListener('keyup', validarFormulario);
+	textarea.addEventListener('blur', validarFormulario);
+});
+/* Finish validacion de formulario add roles */
+
 //Cargar los datos del la base de datos al la tabla
 var DataTableRoles;
 document.addEventListener('DOMContentLoaded', function () {
@@ -25,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		"order": [[0, "desc"]] /*Ordenar de forma Desendente*/
 	});
 
-	//Registrar
+	//add rol
 	var formRoles = document.querySelector("#formRoles");
 	formRoles.onsubmit = function (e) {
 		e.preventDefault();
@@ -38,7 +87,12 @@ document.addEventListener('DOMContentLoaded', function () {
 			swal("¡Atención!", "Todos los campos son obligatorios.", "warning");
 			return false;
 		}
+		if (!campos.TextNombreRol || !campos.TextDescripcionRol) {
+			swal("¡Atención!", "Verifica los campos en rojo.", "warning");
+			return false;
+		}
 
+		divLoading.style.display = "flex";
 		var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
 		var ajaxUrl = BASE_URL + 'roles/setRoles';
 		var formData = new FormData(formRoles);
@@ -59,6 +113,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			} else {
 				swal("ERROR!", "Error", "error");
 			}
+			divLoading.style.display = "none";
+            return false;
 		}
 	}
 });
@@ -67,7 +123,6 @@ $(document).ready(function () {
 	$('#DataTableRoles').DataTable();
 });
 
-
 function openModal() {
 	document.querySelector('#id_rol').value = "";
 	document.querySelector('#title-modal').innerHTML = "Nuevo Rol";
@@ -75,7 +130,23 @@ function openModal() {
 	document.querySelector('#btn-action-form').classList.replace("btn-info", "btn-success");
 	document.querySelector('#text-btn').innerHTML = "Guardar";
 	document.querySelector('#formRoles').reset();
+	cleanResiduoVali();
 	$('#ModalFormRoles').modal('show');
+}
+
+function cleanResiduoVali() {
+	var ocuLeyenda = document.querySelectorAll('.labelForm');	
+	ocuLeyenda.forEach.call(ocuLeyenda, c => {
+		c.classList.remove('text-danger');
+	});
+	var ocuLeyenda = document.querySelectorAll('.inputForm');	
+	ocuLeyenda.forEach.call(ocuLeyenda, c => {
+		c.classList.remove('invalid');
+	});
+	var ocuLeyenda = document.querySelectorAll('.leyenda');	
+	ocuLeyenda.forEach.call(ocuLeyenda, c => {
+		c.classList.add('none-block');
+	});
 }
 
 /*Acciones de los botones data table*/
@@ -104,7 +175,8 @@ function fctSavePermisosRol(evnet) {
 	var formData = new FormData(formPermisos);
 	request.open("POST", ajaxUrl, true);
 	request.send(formData);
-
+	
+	divLoading.style.display = "flex";
 	request.onreadystatechange = function () {
 		if (request.readyState == 4 && request.status == 200) {
 			var objData = JSON.parse(request.responseText);
@@ -116,6 +188,8 @@ function fctSavePermisosRol(evnet) {
 		} else {
 			swal("ERROR!", "Error", "error");
 		}
+		divLoading.style.display = "none";
+        return false;
 	}
 
 }
@@ -126,6 +200,10 @@ function FctBtnEditarRol(id_rol) {
 	document.querySelector('.modal-header').classList.replace("header-register", "header-update");
 	document.querySelector('#btn-action-form').classList.replace("btn-success", "btn-info");
 	document.querySelector('#text-btn').innerHTML = "Actualizar";
+
+	cleanResiduoVali();
+	campos.TextNombreRol = true; 
+	campos.TextDescripcionRol = true;
 
 	var id_rol = id_rol;
 	var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');

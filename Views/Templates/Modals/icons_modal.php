@@ -14,13 +14,23 @@
               <form id="formIcons" name="formIcons">
                 <p class="text-primary">Los campos con asterisco (<span class="required">*</span>) son obligatorios.</p>
                 <div class="form-group">
-                  <label class="control-label">Codigo <span class="required">*</span></label>
-                  <input class="form-control" name="InputCodigo" id="InputCodigo" type="text" placeholder="Ingresar codigo del icono">
+                  <label id="labelCodigo" class="labelForm">Codigo <span class="required">*</span></label>
+                  <input class="form-control inputForm" name="InputCodigo" id="InputCodigo" type="text" placeholder="Ingresar codigo del icono" required>
+                  <p class="leyenda none-block text-danger" id="leyenda-codigo">
+                    <small> 
+                      El campo codigo debe tener 4 digitos numericos para que sea un valor valido de un icono.
+                    </small>
+                  </p>
                 </div>
 
                 <div class="form-group">
-                  <label class="control-label">Nombre <span class="required">*</span></label>
-                  <input class="form-control" name="InputNombre" id="InputNombre" type="text" placeholder="Ingresar nombre del icono">
+                  <label id="labelNombreIC" class="labelForm">Nombre <span class="required">*</span></label>
+                  <input class="form-control inputForm" name="InputNombre" id="InputNombre" type="text" placeholder="Ingresar nombre del icono" required>
+                  <p class="leyenda none-block text-danger" id="leyenda-nombreic">
+                    <small> 
+                      El campo nombre debe tener un valor valido.
+                    </small>
+                  </p>
                 </div>
 
                 <div class="form-group">

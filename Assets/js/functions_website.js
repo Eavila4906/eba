@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 }, 5000);
                 return false;
             } else {
+                divLoading.style.display = "flex";
                 var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
                 var ajaxUrl = BASE_URL+'login/LoginUser';
                 var formData =new FormData(formLogin);
@@ -58,6 +59,7 @@ document.addEventListener('DOMContentLoaded', function(){
                         }, 5000);
                         swal("¡ERROR!", "Proceso fallido.", "error");
                     }
+                    divLoading.style.display = "none";
                     return false;
                 }
             }

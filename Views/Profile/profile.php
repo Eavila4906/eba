@@ -115,12 +115,22 @@
 
                   <div class="row mb-4">
                     <div class="col-md-4">
-                      <label>Email</label> <i class="fa-fw fas fa-info-circle " title="Campo obligatorio editable" style="color: green;" width="3" height="3"></i>
+                      <label id="labelEmail" class="">Email</label> <i class="fa-fw fas fa-info-circle " title="Campo obligatorio editable" style="color: green;" width="3" height="3"></i>
                       <input class="form-control" type="text" name="InputEmail" id="InputEmail">
+                      <p class="none-block text-danger" id="leyenda-email">
+                        <small> 
+                          Email incorrecto, solo puede contener letras, numeros, puntos, guiones y guion bajo!<br>ejemplo: ads@ads.com
+                        </small>
+                      </p>
                     </div>
                     <div class="col-md-4">
-                      <label>telefono</label> <i class="fa-fw fas fa-info-circle " title="Campo obligatorio editable" style="color: green;" width="3" height="3"></i>
+                      <label id="labelTelefono" class="">telefono</label> <i class="fa-fw fas fa-info-circle " title="Campo obligatorio editable" style="color: green;" width="3" height="3"></i>
                       <input class="form-control" type="text" name="InputTelefono" id="InputTelefono">
+                      <p class="none-block text-danger" id="leyenda-telefono">
+                        <small> 
+                          El telefono solo puede contener numeros y el maximo son 10 dígitos!
+                        </small>
+                      </p>
                     </div>
                   </div>
 
@@ -159,18 +169,18 @@
                     </div>
                     <div class="row mb-4">
                         <div class="col-md-4">
-                            <label>Nueva Contraseña</label>
+                            <label id="labelNewPass" class="">Nueva Contraseña</label>
                             <input class="form-control NewPass" type="password" name="InputNewPass" id="InputNewPass" required>
-                            <p class="none-block" id="leyenda-new-pass">
+                            <p class="none-block text-danger" id="leyenda-new-pass">
                               <small> 
                                 La contraseñas debe de tener de 8 a 16 caracteres!
                               </small>
                             </p>
                           </div>
                         <div class="col-md-4">
-                            <label>Confirmar contraseña</label>
+                            <label id="labelConfirmPass" class="">Confirmar contraseña</label>
                             <input class="form-control ConfirmPass" type="password" name="InputConfirmPass" id="InputConfirmPass" required>
-                            <p class="none-block" id="leyenda-confi-pass">
+                            <p class="none-block text-danger" id="leyenda-confi-pass">
                               <small>
                                 <i class="fas fa-exclamation-triangle text-danger"></i> 
                                 Ambas contraseñas deben de ser iguales

@@ -13,23 +13,32 @@
             <div class="tile-body">
               <form id="formRoles" name="formRoles">
                 <input type="hidden" id="id_rol" name="id_rol" value="">
-
-                <p class="text-success text-msg-co-register text-msg-co-update" id="text-msg-co">
-                  Todos los campos son obligatorios*
+                <p class="text-primary">
+                  Los campos con asterisco (<span class="required">*</span>) son obligatorios.
                 </p>
                 
                 <div class="form-group">
-                  <label class="control-label">Nombre rol</label>
-                  <input class="form-control" name="TextNombreRol" id="TextNombreRol" type="text" placeholder="Ingresar Nombre rol">
+                  <label id="labelNombreRol" class="labelForm">Nombre rol <span class="required">*</span></label>
+                  <input class="form-control inputForm" name="TextNombreRol" id="TextNombreRol" type="text" placeholder="Ingresar Nombre rol">
+                  <p class="leyenda none-block text-danger" id="leyenda-nombreRol">
+                    <small> 
+                      El nombre del rol debe tener 1 o 20 caracteres, solo letras!
+                    </small>
+                  </p>
                 </div>
 
                 <div class="form-group">
-                  <label class="control-label">Descripción</label>
-                  <textarea class="form-control" name="TextDescripcionRol" id="TextDescripcionRol" cols="30" rows="2" placeholder="Ingresar Descripción"></textarea>
+                  <label id="labelDescripcionRol" class="labelForm">Descripción <span class="required">*</span></label>
+                  <textarea class="form-control inputForm" name="TextDescripcionRol" id="TextDescripcionRol" cols="30" rows="2" placeholder="Ingresar Descripción"></textarea>
+                  <p class="leyenda none-block text-danger" id="leyenda-descripcionRol">
+                    <small> 
+                      La descripcion del rol debe tener 1 o 80 caracteres!
+                    </small>
+                  </p>
                 </div>
 
                 <div class="form-group">
-                  <label class="control-label">Estado</label>
+                  <label class="control-label">Estado <span class="required">*</span></label>
                   <select class="form-control" name="ListaEstadoRol" id="ListaEstadoRol">
                       <option value="1">Activo</option>
                       <option value="2">Inactivo</option>

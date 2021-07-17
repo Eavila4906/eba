@@ -24,7 +24,11 @@
 
 </head>
 <body id="top" data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
-
+     <div id="divLoading" >
+          <div>
+               <img src="<?= MEDIA(); ?>/images/loading.svg" alt="Loading">
+          </div>
+     </div>
      <!-- PRE LOADER -->
      <section class="preloader">
           <div class="spinner">

@@ -16,41 +16,41 @@
                 <div class="row mb-4">
                     <div class="col-md-4">
                       <label>Cedula / Pasaporte</label>
-                      <input class="form-control" type="text" name="InputCedulaPasaporte" id="InputCedulaPasaporte">
+                      <input class="form-control" type="text" name="InputCedulaPasaporte" id="InputCedulaPasaporte" required>
                     </div>
                     <div class="col-md-4">
                       <label>Nombres Completos</label>
-                      <input class="form-control" type="text" name="InputNombres" id="InputNombres">
+                      <input class="form-control" type="text" name="InputNombres" id="InputNombres" required>
                     </div>
                 </div><br>
 
                 <div class="row mb-4">
                     <div class="col-md-4">
                       <label>Apellido Paterno</label>
-                      <input class="form-control" type="text" name="InputApellidoP" id="InputApellidoP">
+                      <input class="form-control" type="text" name="InputApellidoP" id="InputApellidoP" required>
                     </div>
                     <div class="col-md-4">
                       <label>Apellido Materno</label>
-                      <input class="form-control" type="text" name="InputApellidoM" id="InputApellidoM">
+                      <input class="form-control" type="text" name="InputApellidoM" id="InputApellidoM" required>
                     </div>
                     <div class="col-md-4">
                       <label>Email</label>
-                      <input class="form-control" type="email" name="InputEmail" id="InputEmail">
+                      <input class="form-control" type="email" name="InputEmail" id="InputEmail" required>
                     </div>
                 </div><br>
 
                 <div class="row mb-4">
                     <div class="col-md-4">
                       <label>telefono</label>
-                      <input class="form-control" type="text" name="InputTelefono" id="InputTelefono">
+                      <input class="form-control" type="text" name="InputTelefono" id="InputTelefono" required>
                     </div>
                     <div class="col-md-4">
                         <label>Fecha Nacimiento</label>
-                        <input class="form-control" type="date" name="InputfechaNaci" id="InputfechaNaci">
+                        <input class="form-control" type="date" name="InputfechaNaci" id="InputfechaNaci" required>
                     </div>
                     <div class="col-md-4">
                         <label>Sexo</label>
-                        <select class="form-control" name="InputSexo" id="InputSexo">
+                        <select class="form-control" name="InputSexo" id="InputSexo" required>
                             <option value="M">Masculino</option>
                             <option value="F">Femenino</option>
                         </select>

@@ -17,12 +17,23 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                        <label class="control-label">Titulo <span class="required">*</span></label>
-                        <input class="form-control" name="InputTitulo" id="InputTitulo" type="text" placeholder="Titulo para la imagen" required="">
+                          <label id="labelTituloHG" class="labelForm">Titulo <span class="required">*</span></label>
+                          <input class="form-control inputForm" name="InputTitulo" id="InputTitulo" type="text" placeholder="Titulo para la imagen" required="">
+                          <p class="leyenda none-block text-danger" id="leyenda-titulo-hg">
+                            <small> 
+                              El titulo del contenido debe tener 1 o 60 caracteres, solo letras y sígnos de admiración e interrogación.
+                            </small>
+                          </p>
                         </div>
+
                         <div class="form-group">
-                        <label class="control-label">Descripción <span class="required">*</span></label>
-                        <textarea class="form-control" name="InputDescripcion" id="InputDescripcion" rows="2" placeholder="Descripción para la imagen" required=""></textarea>
+                          <label id="labelDescripcionHG" class="labelForm">Descripción <span class="required">*</span></label>
+                          <textarea class="form-control inputForm" name="InputDescripcion" id="InputDescripcion" rows="2" placeholder="Descripción para la imagen" required=""></textarea>
+                          <p class="leyenda none-block text-danger" id="leyenda-descripcion-hg">
+                            <small> 
+                              La descripción del contenido debe tener 1 caracterer como minimo, solo letras, espacios, números y sígnos de admiración.
+                            </small>
+                          </p>
                         </div>
                         <div class="form-group">
                             <label for="exampleSelect1">Estado <span class="required">*</span></label>

@@ -15,12 +15,22 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                        <label class="control-label">Nombre <span class="required">*</span></label>
-                        <input class="form-control" name="InputNombreRS" id="InputNombreRS" type="text" placeholder="Ingresar el nombre de la red social" required="">
+                          <label id="labelNombre" class="labelForm">Nombre <span class="required">*</span></label>
+                          <input class="form-control inputForm" name="InputNombreRS" id="InputNombreRS" type="text" placeholder="Ingresar el nombre de la red social" required="">
+                          <p class="leyenda none-block text-danger" id="leyenda-nombre">
+                            <small> 
+                              El campo nombre debe tener almenos 1 caracter.
+                            </small>
+                          </p>
                         </div>
                         <div class="form-group">
-                        <label class="control-label">Link <span class="required">*</span></label>
-                        <input class="form-control" name="InputLinkRS" id="InputLinkRS" type="text" placeholder="Ingresar el link de la red social" required="">                        
+                          <label id="labelLink" class="labelForm">Link <span class="required">*</span></label>
+                          <input class="form-control inputForm" name="InputLinkRS" id="InputLinkRS" type="text" placeholder="Ingresar el link de la red social" required="">                        
+                          <p class="leyenda none-block text-danger" id="leyenda-link">
+                            <small> 
+                              El campo link debe tener un valor valido a una URL<br>example: http://www.example.com/....
+                            </small>
+                          </p>
                         </div> 
                     </div>
                     <div class="col-md-6">

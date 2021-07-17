@@ -15,18 +15,33 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                        <label class="control-label">Ubicación <span class="required">*</span></label>
-                        <input class="form-control" name="InputUbicacion" id="InputUbicacion" type="text" placeholder="Ubicación" required="">
+                          <label id="labelUbicación" class="labelForm">Ubicación <span class="required">*</span></label>
+                          <input class="form-control inputForm" name="InputUbicacion" id="InputUbicacion" type="text" placeholder="Ubicación" required="">
+                          <p class="leyenda none-block text-danger" id="leyenda-ubicación">
+                            <small> 
+                              El campo ubicación debe tener 1 o 75 caractereres.
+                            </small>
+                          </p>
                         </div>
                         <div class="form-group">
-                        <label class="control-label">Longitud <span class="required">*</span></label>
-                        <input class="form-control" name="InputLongitud" id="InputLongitud" type="text" placeholder="Longitud" required="">
+                          <label id="labelLongitud" class="labelForm">Longitud <span class="required">*</span></label>
+                          <input class="form-control inputForm" name="InputLongitud" id="InputLongitud" type="text" placeholder="Longitud" required="">
+                          <p class="leyenda none-block text-danger" id="leyenda-longitud">
+                            <small> 
+                              El campo longitud debe tener 1 o 25 caractereres con un valor valido a una longitud.
+                            </small>
+                          </p>
                         </div> 
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label class="control-label">Latitud <span class="required">*</span></label>
-                            <input class="form-control" name="InputLatitud" id="InputLatitud" type="text" placeholder="Latitud" required="">
+                          <label id="labelLatitud" class="labelForm">Latitud <span class="required">*</span></label>
+                          <input class="form-control inputForm" name="InputLatitud" id="InputLatitud" type="text" placeholder="Latitud" required="">
+                          <p class="leyenda none-block text-danger" id="leyenda-latitud">
+                            <small> 
+                              El campo latitud debe tener 1 o 25 caractereres con un valor valido a una latitud.
+                            </small>
+                          </p>
                         </div> 
 
                         <div class="form-group">

@@ -13,63 +13,93 @@
               <form id="formUsers" name="formUsers" class="form-horizontal">
                 <input type="hidden" id="id_usuario" name="id_usuario" value="">
                 
-                <p class="text-success text-msg-co-register text-msg-co-update" id="text-msg-co">
-                  Todos los campos son obligatorios*
+                <p class="text-primary">
+                  Los campos con asterisco (<span class="required">*</span>) son obligatorios.
                 </p>
 
                 <div class="row mb-4">
                     <div class="col-md-4">
-                      <label>Cedula / Pasaporte</label>
-                      <input class="form-control" type="text" name="InputCedulaPasaporte" id="InputCedulaPasaporte">
+                      <label id="labelCedula" class="labelForm">Cedula <span class="required">*</span></label>
+                      <input class="form-control inputForm" type="text" name="InputCedulaPasaporte" id="InputCedulaPasaporte" required> 
+                      <p class="leyenda none-block text-danger" id="leyenda-cedula">
+                        <small> 
+                          La cedula debe de tener de 10 caracteres numericos!
+                        </small>
+                      </p>
                     </div>
                     
                 </div>
 
                 <div class="row mb-4">
                     <div class="col-md-4">
-                      <label>Nombres Completos</label>
-                      <input class="form-control" type="text" name="InputNombres" id="InputNombres">
+                      <label id="labelNombres" class="labelForm">Nombres Completos <span class="required">*</span></label>
+                      <input class="form-control inputForm" type="text" name="InputNombres" id="InputNombres" required>
+                      <p class="leyenda none-block text-danger" id="leyenda-nombres">
+                        <small> 
+                          El campo nombre tiene un maximo de 45 caracteres!
+                        </small>
+                      </p>
                     </div>
                     <div class="col-md-4">
-                      <label>Apellido Paterno</label>
-                      <input class="form-control" type="text" name="InputApellidoP" id="InputApellidoP">
+                      <label id="labelApellidoP" class="labelForm">Apellido Paterno <span class="required">*</span></label>
+                      <input class="form-control inputForm" type="text" name="InputApellidoP" id="InputApellidoP" required>
+                      <p class="leyenda none-block text-danger" id="leyenda-apellidoP">
+                        <small> 
+                          El campo apellido paterno tiene un maximo de 35 caracteres!
+                        </small>
+                      </p>
                     </div>
                     <div class="col-md-4">
-                      <label>Apellido Materno</label>
-                      <input class="form-control" type="text" name="InputApellidoM" id="InputApellidoM">
+                      <label id="labelApellidoM" class="labelForm">Apellido Materno <span class="required">*</span></label>
+                      <input class="form-control inputForm" type="text" name="InputApellidoM" id="InputApellidoM" required>
+                      <p class="leyenda none-block text-danger" id="leyenda-apellidoM">
+                        <small> 
+                          El campo apellido materno tiene un maximo de 35 caracteres!
+                        </small>
+                      </p>
                     </div>
                 </div>
 
                 <div class="row mb-4">
                     <div class="col-md-4">
-                      <label>Email</label>
-                      <input class="form-control" type="email" name="InputEmail" id="InputEmail">
+                      <label id="labelEmail" class="labelForm">Email <span class="required">*</span></label>
+                      <input class="form-control inputForm" type="email" name="InputEmail" id="InputEmail" required>
+                      <p class="leyenda none-block text-danger" id="leyenda-email">
+                        <small> 
+                          El email es incorrecto, solo puede contener letras, numeros, puntos, guiones y guion bajo!<br>ejemplo: ads@ads.com
+                        </small>
+                      </p>
                     </div>
                     <div class="col-md-4">
-                      <label>telefono</label>
-                      <input class="form-control" type="text" name="InputTelefono" id="InputTelefono">
+                      <label id="labelTelefono" class="labelForm">telefono <span class="required">*</span></label>
+                      <input class="form-control inputForm" type="text" name="InputTelefono" id="InputTelefono" required>
+                      <p class="leyenda none-block text-danger" id="leyenda-telefono">
+                        <small> 
+                          El telefono solo puede contener numeros y el maximo son 10 dígitos!
+                        </small>
+                      </p>
                     </div>
                     <div class="col-md-4">
-                        <label>Fecha Nacimiento</label>
-                        <input class="form-control" type="date" name="InputfechaNaci" id="InputfechaNaci">
+                        <label>Fecha Nacimiento <span class="required">*</span></label>
+                        <input class="form-control" type="date" name="InputfechaNaci" id="InputfechaNaci" required>
                     </div>
                 </div>
 
                 <div class="row mb-4">
                     <div class="col-md-4">
-                        <label>Sexo</label>
-                        <select class="form-control" name="InputSexo" id="InputSexo">
+                        <label>Sexo <span class="required">*</span></label>
+                        <select class="form-control" name="InputSexo" id="InputSexo" required>
                             <option value="M">Masculino</option>
                             <option value="F">Femenino</option>
                         </select>
                     </div>
                     <div class="col-md-4">
-                      <label>Tipo rol</label>
-                      <select class="form-control rol-register rol-update" name="InputTipoRol" id="InputTipoRol">
+                      <label>Tipo rol <span class="required">*</span></label>
+                      <select class="form-control rol-register rol-update" name="InputTipoRol" id="InputTipoRol" required>
                       </select>
                     </div>
                     <div class="col-md-4">
-                        <label class="control-label">Estado</label>
+                        <label class="control-label">Estado <span class="required">*</span></label>
                         <select class="form-control" name="InputEstado" id="InputEstado">
                             <option value="1">Activo</option>
                             <option value="2">Inactivo</option>
@@ -79,10 +109,15 @@
 
                 <div class="row mb-4 pass-register pass-update" id="cajaPassword">
                     <div class="col-md-4">
-                        <label>Contraseña</label>
+                        <label id="labelPassword">Contraseña</label>
                         <input class="form-control" type="password" name="InputPassword" id="InputPassword"><br>
                         <input  type="checkbox" id="mostrar_contrasena" title="clic para mostrar contraseña"/>
                         &nbsp;&nbsp;Mostrar Contraseña
+                        <p class="none-block text-danger" id="leyenda-password">
+                          <small> 
+                            La contraseñas debe de tener de 8 a 16 caracteres!
+                          </small>
+                        </p>
                     </div>
                     
                 </div>

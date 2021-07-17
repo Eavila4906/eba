@@ -15,12 +15,22 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                        <label class="control-label">Titulo <span class="required">*</span></label>
-                        <input class="form-control" name="InputTituloAbout" id="InputTituloAbout" type="text" placeholder="Titulo del contenido" required="">
+                          <label id="labelTituloAB" class="labelForm">Titulo <span class="required">*</span></label>
+                          <input class="form-control inputForm" name="InputTituloAbout" id="InputTituloAbout" type="text" placeholder="Titulo del contenido" required="">
+                          <p class="leyenda none-block text-danger" id="leyenda-titulo-ab">
+                            <small> 
+                              El titulo del contenido debe tener 1 o 60 caracteres, solo letras y sígnos de admiración e interrogación.
+                            </small>
+                          </p>
                         </div>
                         <div class="form-group">
-                        <label class="control-label">Descripción <span class="required">*</span></label>
-                        <textarea class="form-control" name="InputDescripcionAbout" id="InputDescripcionAbout" rows="8" placeholder="Descripción del contenido" required=""></textarea>
+                          <label id="labelDescripcionAB" class="labelForm">Descripción <span class="required">*</span></label>
+                          <textarea class="form-control inputForm" name="InputDescripcionAbout" id="InputDescripcionAbout" rows="8" placeholder="Descripción del contenido" required=""></textarea>
+                          <p class="leyenda none-block text-danger" id="leyenda-descripcion-ab">
+                            <small> 
+                              La descripción del contenido debe tener 1 caracterer como minimo, solo letras, espacios, números y sígnos de admiración.
+                            </small>
+                          </p>
                         </div> 
                     </div>
                     <div class="col-md-6">

@@ -15,13 +15,23 @@
                 <p class="text-primary">Los campos con asterisco (<span class="required">*</span>) son obligatorios.</p>
                 <input type="hidden" id="id_contacts" name="id_contacts" value="">
                 <div class="form-group">
-                  <label class="control-label">Telefono <span class="required">*</span></label>
-                  <input class="form-control" name="InputTelefono" id="InputTelefono" type="text" placeholder="Ingresar telefono">
+                  <label id="labelTelefono" class="labelForm">Telefono <span class="required">*</span></label>
+                  <input class="form-control inputForm" name="InputTelefono" id="InputTelefono" type="text" placeholder="Ingresar telefono" required>
+                  <p class="leyenda none-block text-danger" id="leyenda-telefono">
+                    <small> 
+                      El campo telefono debe tener un valor valido a un telefono<br>ejemplo: +593 987 879 143.
+                    </small>
+                  </p>
                 </div>
 
                 <div class="form-group">
-                  <label class="control-label">Email <span class="required">*</span></label>
-                  <input class="form-control" name="InputEmail" id="InputEmail" type="text" placeholder="Ingresar email">
+                  <label id="labelEmail" class="labelForm">Email <span class="required">*</span></label>
+                  <input class="form-control inputForm" name="InputEmail" id="InputEmail" type="text" placeholder="Ingresar email" required>
+                  <p class="leyenda none-block text-danger" id="leyenda-email">
+                    <small> 
+                      El campo email debe tener un valor valido a un email<br>ejemplo: asd@example.com.
+                    </small>
+                  </p>
                 </div>
 
                 <div class="form-group">

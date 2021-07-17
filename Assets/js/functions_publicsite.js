@@ -1,4 +1,79 @@
+//Expreciones para validar formularios
+const expresiones = {
+	titulo: /^[a-zA-ZÀ-ÿ¿?¡!.,:;\s]{1,60}$/,
+	descripcionCorta: /^[a-zA-ZÀ-ÿ0-9¡!%""$#.,:;()\s]{1,100}$/,
+	descripcionLarga: /^[a-zA-ZÀ-ÿ0-9¡!%""$#.,:;()\s]{1,65535}$/,
+	codigoFont: /^[a-zA-Z0-9]{1,4}$/,
+	nombreFont: /^[a-zA-Z0-9\_\-]{4,45}$/,
+	ubicacion: /^[a-zA-ZÀ-ÿ0-9\_\-\s]{1,75}$/,
+	longitud: /^[a-zA-Z0-9''""°.:;\_\-]{1,25}$/,
+	latitud: /^[a-zA-Z0-9''""°.:;\_\-]{1,25}$/,
+	telefono: /^[0-9+\-\s]{7,35}$/,
+	email: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+	nombreRedSocial: /^[a-zA-Z0-9]{1,15}$/,
+	url: /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
+}
+//Limpiar residuo validacion
+function cleanResiduoVali() {
+	var ocuLeyenda = document.querySelectorAll('.labelForm');	
+	ocuLeyenda.forEach.call(ocuLeyenda, c => {
+		c.classList.remove('text-danger');
+	});
+	var ocuLeyenda = document.querySelectorAll('.inputForm');	
+	ocuLeyenda.forEach.call(ocuLeyenda, c => {
+		c.classList.remove('invalid');
+	});
+	var ocuLeyenda = document.querySelectorAll('.leyenda');	
+	ocuLeyenda.forEach.call(ocuLeyenda, c => {
+		c.classList.add('none-block');
+	});
+}
 /* Start home */
+
+/* Starts validacion de formulario add Contents home galery */
+const inputsFHG = document.querySelectorAll('#formHomeGalery input');
+const textareaFHG = document.querySelectorAll('#formHomeGalery textarea');
+
+const camposFHG = {
+	InputTitulo: false,
+	InputDescripcion: false
+}
+
+const validarFormularioFHG = (e) => {
+	switch (e.target.name) {
+		case "InputTitulo":
+			validarCamposFHG(expresiones.titulo, e.target, 'labelTituloHG', 'InputTitulo', 'leyenda-titulo-hg');
+		break;
+		case "InputDescripcion":
+			validarCamposFHG(expresiones.descripcionCorta, e.target, 'labelDescripcionHG', 'InputDescripcion', 'leyenda-descripcion-hg');
+		break;
+	}
+}
+
+const validarCamposFHG = (expresion, input, label, id_input, leyenda) => {
+	if(expresion.test(input.value)){
+        document.getElementById(`${id_input}`).classList.remove('invalid');
+        document.getElementById(`${leyenda}`).classList.add('none-block');
+		document.getElementById(`${label}`).classList.remove('text-danger');
+		camposFHG[id_input] = true;
+	} else {
+		document.getElementById(`${id_input}`).classList.add('invalid');
+		document.getElementById(`${leyenda}`).classList.remove('none-block');
+		document.getElementById(`${label}`).classList.add('text-danger');
+		camposFHG[id_input] = false;
+	}
+}
+
+inputsFHG.forEach((input) => {
+	input.addEventListener('keyup', validarFormularioFHG);
+	input.addEventListener('blur', validarFormularioFHG);
+});
+textareaFHG.forEach((textarea) => {
+	textarea.addEventListener('keyup', validarFormularioFHG);
+	textarea.addEventListener('blur', validarFormularioFHG);
+});
+/* Finish validacion de formulario add Contents home galery */
+
 document.addEventListener('DOMContentLoaded', function(){
     if(document.querySelector("#image")){
         var image = document.querySelector("#image");
@@ -58,8 +133,12 @@ document.addEventListener('DOMContentLoaded', function(){
 			swal("¡Atención!", "Todos los campos son obligatorios.", "warning");
 			return false;
 		}
+		if (!camposFHG.InputTitulo || !camposFHG.InputDescripcion) {
+			swal("¡Atención!", "Verifica los campos en rojo.", "warning");
+			return false;
+		}
 
-        //divLoading.style.display = "flex";
+        divLoading.style.display = "flex";
 		var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
 		var ajaxUrl = BASE_URL + 'publicsite/setContentGaleryHome';
 		var formData = new FormData(formHomeGalery);
@@ -73,7 +152,6 @@ document.addEventListener('DOMContentLoaded', function(){
                     $('#ModalFormHomeGalery').modal('hide');
 					formHomeGalery.reset();
 					swal("¡Contenido!", objData.msg, "success");
-                    //parent.document.getElementById("home").reload();
                     $("#home").load(" #home");
 				} else {
 					swal("¡Atención!", objData.msg, "warning");
@@ -81,8 +159,8 @@ document.addEventListener('DOMContentLoaded', function(){
 			} else {
 				swal("ERROR!", "Error", "error");
 			}
-            //divLoading.style.display = "none";
-            //return false;
+            divLoading.style.display = "none";
+            return false;
 		}
 	}
 }, false);
@@ -101,6 +179,9 @@ function FctBtnEditarConteHome(id_cont) {
 	document.querySelector('.modal-header').classList.replace("header-register", "header-update");
 	document.querySelector('#btn-action-form').classList.replace("btn-success", "btn-info");
 	document.querySelector('#text-btn').innerHTML = "Actualizar";
+	cleanResiduoVali();
+	camposFHG.InputTitulo = true;
+	camposFHG.InputDescripcion = true;
 
     var id_cont = id_cont;
 	var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
@@ -185,6 +266,7 @@ function OpenModalAddContentsHomeGalery() {
 	document.querySelector('#btn-action-form').classList.replace("btn-info", "btn-success");
 	document.querySelector('#text-btn').innerHTML = "Guardar";
 	document.querySelector('#formHomeGalery').reset();
+	cleanResiduoVali();
 	$('#ModalFormHomeGalery').modal('show');
     removePhoto();
     document.querySelector('#name_photo').innerHTML = "";
@@ -193,6 +275,45 @@ function OpenModalAddContentsHomeGalery() {
 /* Finish home */
 
 /* Start icons */
+/* Starts validacion de formulario add icons */
+const inputsFIC = document.querySelectorAll('#formIcons input');
+
+const camposFIC = {
+	InputCodigo: false,
+	InputNombre: false
+}
+
+const validarFormularioFIC = (e) => {
+	switch (e.target.name) {
+		case "InputCodigo":
+			validarCamposFIC(expresiones.codigoFont, e.target, 'labelCodigo', 'InputCodigo', 'leyenda-codigo');
+		break;
+		case "InputNombre":
+			validarCamposFIC(expresiones.nombreFont, e.target, 'labelNombreIC', 'InputNombre', 'leyenda-nombreic');
+		break;
+	}
+}
+
+const validarCamposFIC = (expresion, input, label, id_input, leyenda) => {
+	if(expresion.test(input.value)){
+        document.getElementById(`${id_input}`).classList.remove('invalid');
+        document.getElementById(`${leyenda}`).classList.add('none-block');
+		document.getElementById(`${label}`).classList.remove('text-danger');
+		camposFIC[id_input] = true;
+	} else {
+		document.getElementById(`${id_input}`).classList.add('invalid');
+		document.getElementById(`${leyenda}`).classList.remove('none-block');
+		document.getElementById(`${label}`).classList.add('text-danger');
+		camposFIC[id_input] = false;
+	}
+}
+
+inputsFIC.forEach((input) => {
+	input.addEventListener('keyup', validarFormularioFIC);
+	input.addEventListener('blur', validarFormularioFIC);
+});
+/* Finish validacion de formulario add icons */
+
 document.addEventListener('DOMContentLoaded', function(){
 	//add icons
 	var formIcons = document.querySelector("#formIcons");
@@ -205,8 +326,12 @@ document.addEventListener('DOMContentLoaded', function(){
 			swal("¡Atención!", "Todos los campos son obligatorios.", "warning");
 			return false;
 		}
+		if (!camposFIC.InputCodigo || !camposFIC.InputNombre) {
+			swal("¡Atención!", "Verifica los campos en rojo.", "warning");
+			return false;
+		}
 
-		//divLoading.style.display = "flex";
+		divLoading.style.display = "flex";
 		var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
 		var ajaxUrl = BASE_URL + 'publicsite/setIcon';
 		var formData = new FormData(formIcons);
@@ -228,8 +353,8 @@ document.addEventListener('DOMContentLoaded', function(){
 			} else {
 				swal("ERROR!", "Error", "error");
 			}
-			//divLoading.style.display = "none";
-			//return false;
+			divLoading.style.display = "none";
+			return false;
 		}
 	}
 }, false);
@@ -277,11 +402,55 @@ function getIconsSocialMedia() {
 
 function OpenModalAddIcons() {
 	document.querySelector('#formIcons').reset();
+	cleanResiduoVali();
 	$('#ModalFormIcons').modal('show');
 }
 /* Finish icons */
 
 /* Start about */
+/* Starts validacion de formulario add Contents about */
+const inputsFAB = document.querySelectorAll('#formAbout input');
+const textareaFAB = document.querySelectorAll('#formAbout textarea');
+
+const camposFAB = {
+	InputTituloAbout: false,
+	InputDescripcionAbout: false
+}
+
+const validarFormularioFAB = (e) => {
+	switch (e.target.name) {
+		case "InputTituloAbout":
+			validarCamposFAB(expresiones.titulo, e.target, 'labelTituloAB', 'InputTituloAbout', 'leyenda-titulo-ab');
+		break;
+		case "InputDescripcionAbout":
+			validarCamposFAB(expresiones.descripcionLarga, e.target, 'labelDescripcionAB', 'InputDescripcionAbout', 'leyenda-descripcion-ab');
+		break;
+	}
+}
+
+const validarCamposFAB = (expresion, input, label, id_input, leyenda) => {
+	if(expresion.test(input.value)){
+        document.getElementById(`${id_input}`).classList.remove('invalid');
+        document.getElementById(`${leyenda}`).classList.add('none-block');
+		document.getElementById(`${label}`).classList.remove('text-danger');
+		camposFAB[id_input] = true;
+	} else {
+		document.getElementById(`${id_input}`).classList.add('invalid');
+		document.getElementById(`${leyenda}`).classList.remove('none-block');
+		document.getElementById(`${label}`).classList.add('text-danger');
+		camposFAB[id_input] = false;
+	}
+}
+
+inputsFAB.forEach((input) => {
+	input.addEventListener('keyup', validarFormularioFAB);
+	input.addEventListener('blur', validarFormularioFAB);
+});
+textareaFAB.forEach((textarea) => {
+	textarea.addEventListener('keyup', validarFormularioFAB);
+	textarea.addEventListener('blur', validarFormularioFAB);
+});
+/* Finish validacion de formulario add Contents about */
 document.addEventListener('DOMContentLoaded', function(){
     //add content to about
     var formAbout = document.querySelector("#formAbout");
@@ -296,8 +465,12 @@ document.addEventListener('DOMContentLoaded', function(){
 			swal("¡Atención!", "Todos los campos son obligatorios.", "warning");
 			return false;
 		}
+		if (!camposFAB.InputTituloAbout || !camposFAB.InputDescripcionAbout) {
+			swal("¡Atención!", "Verifica los campos en rojo.", "warning");
+			return false;
+		}
 
-        //divLoading.style.display = "flex";
+        divLoading.style.display = "flex";
 		var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
 		var ajaxUrl = BASE_URL + 'publicsite/setContentAbout';
 		var formData = new FormData(formAbout);
@@ -318,8 +491,8 @@ document.addEventListener('DOMContentLoaded', function(){
 			} else {
 				swal("ERROR!", "Error", "error");
 			}
-            //divLoading.style.display = "none";
-            //return false;
+            divLoading.style.display = "none";
+            return false;
 		}
 	}
 }, false);
@@ -329,6 +502,9 @@ function FctBtnEditarConteAbout(id_contAbout) {
 	document.querySelector('.modal-about').classList.replace("header-register", "header-update");
 	document.querySelector('#btn-action-form-about').classList.replace("btn-success", "btn-info");
 	document.querySelector('#text-btn-about').innerHTML = "Actualizar";
+	cleanResiduoVali();
+	camposFAB.InputTituloAbout = true;
+	camposFAB.InputDescripcionAbout = true;
 
     var id_contAbout = id_contAbout;
 	var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
@@ -409,6 +585,7 @@ function OpenModalAddContentsAbout() {
 	document.querySelector('#btn-action-form-about').classList.replace("btn-info", "btn-success");
 	document.querySelector('#text-btn-about').innerHTML = "Guardar";
 	document.querySelector('#formAbout').reset();
+	cleanResiduoVali();
 	$('#ModalFormAbout').modal('show');
 }
 
@@ -432,6 +609,48 @@ function leerMenos(id, t1, t2) {
 /* Footer */
 
 /* Start Headquarter */
+/* Starts validacion de formulario add Contents headquarter */
+const inputsFHQ = document.querySelectorAll('#formHeadquarter input');
+
+const camposFHQ = {
+	InputUbicacion: false,
+	InputLongitud: false,
+	InputLatitud: false
+}
+
+const validarFormularioFHQ = (e) => {
+	switch (e.target.name) {
+		case "InputUbicacion":
+			validarCamposFHQ(expresiones.ubicacion, e.target, 'labelUbicación', 'InputUbicacion', 'leyenda-ubicación');
+		break;
+		case "InputLongitud":
+			validarCamposFHQ(expresiones.longitud, e.target, 'labelLongitud', 'InputLongitud', 'leyenda-longitud');
+		break;
+		case "InputLatitud":
+			validarCamposFHQ(expresiones.latitud, e.target, 'labelLatitud', 'InputLatitud', 'leyenda-latitud');
+		break;
+	}
+}
+
+const validarCamposFHQ = (expresion, input, label, id_input, leyenda) => {
+	if(expresion.test(input.value)){
+        document.getElementById(`${id_input}`).classList.remove('invalid');
+        document.getElementById(`${leyenda}`).classList.add('none-block');
+		document.getElementById(`${label}`).classList.remove('text-danger');
+		camposFHQ[id_input] = true;
+	} else {
+		document.getElementById(`${id_input}`).classList.add('invalid');
+		document.getElementById(`${leyenda}`).classList.remove('none-block');
+		document.getElementById(`${label}`).classList.add('text-danger');
+		camposFHQ[id_input] = false;
+	}
+}
+
+inputsFHQ.forEach((input) => {
+	input.addEventListener('keyup', validarFormularioFHQ);
+	input.addEventListener('blur', validarFormularioFHQ);
+});
+/* Finish validacion de formulario add Contents headquarter */
 document.addEventListener('DOMContentLoaded', function(){
     //add content to about
     var formHeadquarter = document.querySelector("#formHeadquarter");
@@ -446,8 +665,12 @@ document.addEventListener('DOMContentLoaded', function(){
 			swal("¡Atención!", "Todos los campos son obligatorios.", "warning");
 			return false;
 		}
+		if (!camposFHQ.InputUbicacion || !camposFHQ.InputLongitud || !camposFHQ.InputLatitud) {
+			swal("¡Atención!", "Verifica los campos en rojo.", "warning");
+			return false;
+		}
 
-        //divLoading.style.display = "flex";
+        divLoading.style.display = "flex";
 		var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
 		var ajaxUrl = BASE_URL + 'publicsite/setHeadquarter';
 		var formData = new FormData(formHeadquarter);
@@ -468,8 +691,8 @@ document.addEventListener('DOMContentLoaded', function(){
 			} else {
 				swal("ERROR!", "Error", "error");
 			}
-            //divLoading.style.display = "none";
-            //return false;
+            divLoading.style.display = "none";
+            return false;
 		}
 	}
 }, false);
@@ -479,6 +702,10 @@ function FctBtnEditarHeadquarter(id_Headquarter) {
 	document.querySelector('.modal-Headquarter').classList.replace("header-register", "header-update");
 	document.querySelector('#btn-action-form-Headquarter').classList.replace("btn-success", "btn-info");
 	document.querySelector('#text-btn-Headquarter').innerHTML = "Actualizar";
+	cleanResiduoVali();
+	camposFHQ.InputUbicacion = true;
+	camposFHQ.InputLongitud = true;
+	camposFHQ.InputLatitud = true;
 
     var id_Headquarter = id_Headquarter;
 	var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
@@ -559,11 +786,50 @@ function OpenModalAddHeadquarter() {
 	document.querySelector('#btn-action-form-Headquarter').classList.replace("btn-info", "btn-success");
 	document.querySelector('#text-btn-Headquarter').innerHTML = "Guardar";
 	document.querySelector('#formHeadquarter').reset();
+	cleanResiduoVali();
 	$('#ModalFormHeadquarter').modal('show');
 }
 /* Finish Headquarter */
 
 /* Starts contacts */
+/* Starts validacion de formulario add contacts */
+const inputsFCT = document.querySelectorAll('#formContacts input');
+
+const camposFCT = {
+	InputTelefono: false,
+	InputEmail: false
+}
+
+const validarFormularioFCT = (e) => {
+	switch (e.target.name) {
+		case "InputTelefono":
+			validarCamposFCT(expresiones.telefono, e.target, 'labelTelefono', 'InputTelefono', 'leyenda-telefono');
+		break;
+		case "InputEmail":
+			validarCamposFCT(expresiones.email, e.target, 'labelEmail', 'InputEmail', 'leyenda-email');
+		break;
+	}
+}
+
+const validarCamposFCT = (expresion, input, label, id_input, leyenda) => {
+	if(expresion.test(input.value)){
+        document.getElementById(`${id_input}`).classList.remove('invalid');
+        document.getElementById(`${leyenda}`).classList.add('none-block');
+		document.getElementById(`${label}`).classList.remove('text-danger');
+		camposFCT[id_input] = true;
+	} else {
+		document.getElementById(`${id_input}`).classList.add('invalid');
+		document.getElementById(`${leyenda}`).classList.remove('none-block');
+		document.getElementById(`${label}`).classList.add('text-danger');
+		camposFCT[id_input] = false;
+	}
+}
+
+inputsFCT.forEach((input) => {
+	input.addEventListener('keyup', validarFormularioFCT);
+	input.addEventListener('blur', validarFormularioFCT);
+});
+/* Finish validacion de formulario add contacts */
 
 document.addEventListener('DOMContentLoaded', function(){
     //add content to about
@@ -578,8 +844,12 @@ document.addEventListener('DOMContentLoaded', function(){
 			swal("¡Atención!", "Todos los campos son obligatorios.", "warning");
 			return false;
 		}
+		if (!camposFCT.InputTelefono || !camposFCT.InputEmail) {
+			swal("¡Atención!", "Verifica los campos en rojo.", "warning");
+			return false;
+		}
 
-        //divLoading.style.display = "flex";
+        divLoading.style.display = "flex";
 		var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
 		var ajaxUrl = BASE_URL + 'publicsite/setContacts';
 		var formData = new FormData(formContacts);
@@ -600,8 +870,8 @@ document.addEventListener('DOMContentLoaded', function(){
 			} else {
 				swal("ERROR!", "Error", "error");
 			}
-            //divLoading.style.display = "none";
-            //return false;
+            divLoading.style.display = "none";
+            return false;
 		}
 	}
 }, false);
@@ -611,6 +881,9 @@ function FctBtnEditarContacts(id_Contacts) {
 	document.querySelector('.modal-Contacts').classList.replace("header-register", "header-update");
 	document.querySelector('#btn-action-form-Contacts').classList.replace("btn-success", "btn-info");
 	document.querySelector('#text-btn-Contacts').innerHTML = "Actualizar";
+	cleanResiduoVali();
+	camposFCT.InputTelefono = true;
+	camposFCT.InputEmail = true;
 
     var id_Contacts = id_Contacts;
 	var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
@@ -690,13 +963,51 @@ function OpenModalAddContacts() {
 	document.querySelector('#btn-action-form-Contacts').classList.replace("btn-info", "btn-success");
 	document.querySelector('#text-btn-Contacts').innerHTML = "Guardar";
 	document.querySelector('#formContacts').reset();
+	cleanResiduoVali();
 	$('#ModalFormContacts').modal('show');
 }
 
 /* Finish contacts */
 
 /* Starts social media */
+/* Starts validacion de formulario add social media */
+const inputsFSM = document.querySelectorAll('#formSocialMedia input');
 
+const camposFSM = {
+	InputNombreRS: false,
+	InputLinkRS: false
+}
+
+const validarFormularioFSM = (e) => {
+	switch (e.target.name) {
+		case "InputNombreRS":
+			validarCamposFSM(expresiones.nombreRedSocial, e.target, 'labelNombre', 'InputNombreRS', 'leyenda-nombre');
+		break;
+		case "InputLinkRS":
+			validarCamposFSM(expresiones.url, e.target, 'labelLink', 'InputLinkRS', 'leyenda-link');
+		break;
+	}
+}
+
+const validarCamposFSM = (expresion, input, label, id_input, leyenda) => {
+	if(expresion.test(input.value)){
+        document.getElementById(`${id_input}`).classList.remove('invalid');
+        document.getElementById(`${leyenda}`).classList.add('none-block');
+		document.getElementById(`${label}`).classList.remove('text-danger');
+		camposFSM[id_input] = true;
+	} else {
+		document.getElementById(`${id_input}`).classList.add('invalid');
+		document.getElementById(`${leyenda}`).classList.remove('none-block');
+		document.getElementById(`${label}`).classList.add('text-danger');
+		camposFSM[id_input] = false;
+	}
+}
+
+inputsFSM.forEach((input) => {
+	input.addEventListener('keyup', validarFormularioFSM);
+	input.addEventListener('blur', validarFormularioFSM);
+});
+/* Finish validacion de formulario add social media */
 document.addEventListener('DOMContentLoaded', function(){
     //add content to about
     var formSocialMedia = document.querySelector("#formSocialMedia");
@@ -704,15 +1015,17 @@ document.addEventListener('DOMContentLoaded', function(){
 		e.preventDefault();
 		var InputNombreRS = document.querySelector('#InputNombreRS').value;
 		var InputLinkRS = document.querySelector('#InputLinkRS').value;
-		//var InputIconoRS = document.querySelector('#InputIconoRS').value;
-		//var InputEstadoRS = document.querySelector('#InputEstadoRS').value;
 
-		if (InputNombreRS == '' || InputLinkRS == '' /*|| InputIconoRS == '' || InputEstadoRS == ''*/) {
+		if (InputNombreRS == '' || InputLinkRS == '') {
 			swal("¡Atención!", "Todos los campos son obligatorios.", "warning");
 			return false;
 		}
+		if (!camposFSM.InputNombreRS || !camposFSM.InputLinkRS) {
+			swal("¡Atención!", "Verifica los campos en rojo.", "warning");
+			return false;
+		}
 
-        //divLoading.style.display = "flex";
+        divLoading.style.display = "flex";
 		var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
 		var ajaxUrl = BASE_URL + 'publicsite/setSocialMedia';
 		var formData = new FormData(formSocialMedia);
@@ -733,8 +1046,8 @@ document.addEventListener('DOMContentLoaded', function(){
 			} else {
 				swal("ERROR!", "Error", "error");
 			}
-            //divLoading.style.display = "none";
-            //return false;
+            divLoading.style.display = "none";
+            return false;
 		}
 	}
 }, false);
@@ -744,6 +1057,9 @@ function FctBtnEditarSocialMedia(id_socialMedia) {
 	document.querySelector('.modal-SocialMedia').classList.replace("header-register", "header-update");
 	document.querySelector('#btn-action-form-SocialMedia').classList.replace("btn-success", "btn-info");
 	document.querySelector('#text-btn-SocialMedia').innerHTML = "Actualizar";
+	cleanResiduoVali();
+	camposFSM.InputNombreRS = true;
+	camposFSM.InputLinkRS = true;
 
     var id_socialMedia = id_socialMedia;
 	var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
@@ -824,6 +1140,7 @@ function OpenModalAddSocialMedia() {
 	document.querySelector('#btn-action-form-SocialMedia').classList.replace("btn-info", "btn-success");
 	document.querySelector('#text-btn-SocialMedia').innerHTML = "Guardar";
 	document.querySelector('#formSocialMedia').reset();
+	cleanResiduoVali();
 	$('#ModalFormSocialMedia').modal('show');
 }
 /* Finish social media */
