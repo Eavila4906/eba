@@ -30,4 +30,10 @@
     const DB_NAME = "cursosingles_db";
     const DB_CHARSET = "utf8";
 
+    //Datos envio de correo
+	const SENDER_NAME = "English Bootcamp Academy";
+	const SENDER_EMAIL = "eavila4906@gmail.com";
+	const COMPANY_NAME = "English Bootcamp Academy";
+	const WEB_COMPANY = "www.eba.com.ec";
+
 ?>

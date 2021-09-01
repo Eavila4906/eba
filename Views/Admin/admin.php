@@ -33,7 +33,7 @@
             </div><br>
 
             <button class="btn btn-lg btn-primary btn-block" type="submit">Iniciar Sesión</button><br>
-            <center><a class="text-primary" href="">¿Olvidaste tu contraseña?</a></center>
+            <center><a class="text-primary" href="<?=BASE_URL();?>login/reset_password">¿Olvidaste tu contraseña?</a></center>
             <p class="mt-3 mb-5 text-muted text-center">&copy; <?= NAME_PROJECT ?> - 2021</p>
         </form>
     </div>

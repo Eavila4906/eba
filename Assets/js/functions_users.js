@@ -210,7 +210,7 @@ function FctBtnVerInfoUser(id_user) {
 			var objData = JSON.parse(request.responseText);
 
 			//foto
-			var foto = `<img  src="${objData.photo}" width="150" height="200">`;
+			var foto = `<img  src="Assets/images/image-profiles/${objData.photo}" width="150" height="200">`;
 			document.querySelector('#getFoto').innerHTML = foto;
 			document.querySelector('#title').innerHTML = objData.nombresApellidos;
 			document.querySelector('#getUsername').innerHTML = objData.username;

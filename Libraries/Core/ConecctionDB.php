@@ -1,7 +1,6 @@
 <?php
     class ConecctionDB {
         private $connec;
-
         public function __construct(){
             $str_Conecction = "mysql:host=".DB_HOST.";dbname=".DB_NAME.";charset=".DB_CHARSET;
             try {
@@ -12,10 +11,8 @@
                 echo "ERROR: ".$e->getMessage();
             }
         }
-
         public function Connec(){
             return $this->connec;
         }
-
     }
 ?>

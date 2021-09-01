@@ -24,7 +24,7 @@
                     <input type="password" id="InputPassword" name="InputPassword" class="btn-lg form-control login" placeholder="Password" required>
                 </div><br>
 
-                <center><a class="text-green" href="">¿Olvidaste tu contraseña?</a></center>
+                <center><a class="text-green" href="<?=BASE_URL();?>login/reset_password">¿Olvidaste tu contraseña?</a></center>
                 <p class="mt-3 mb-5 text-muted text-center">&copy; <?= NAME_PROJECT ?> - 2021</p>
             </div>
 

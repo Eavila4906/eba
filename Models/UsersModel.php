@@ -43,7 +43,6 @@
         }
 
         public function InsertUser(String $InputCedulaPasaporte, String $InputUsername, String $InputPassword, String $InputNombres, String $InputApellidoP, String $InputApellidoM, String $InputEmail, String $InputTelefono, String $InputfechaNaci, String $InputSexo, int $InputTipoRol, int $InputEstado, String $InputPhoto) {
-            
             $this->InputCedulaPasaporte = $InputCedulaPasaporte;
             $this->InputUsername = $InputUsername;
             $this->InputPassword = $InputPassword;
@@ -69,9 +68,22 @@
             } elseif (!empty($result_Select_All_Email)) {
                 $result = "ExistsEmail";
             } else {
-                $Query_Insert = "INSERT INTO usuario (DNI, username, password, nombres, apellidoP, apellidoM, email, telefono, sexo, fechaNaci, rol, estado, photo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-                $Array_Query = array($this->InputCedulaPasaporte, $this->InputUsername, $this->InputPassword, $this->InputNombres, $this->InputApellidoP, $this->InputApellidoM, $this->InputEmail, $this->InputTelefono, $this->InputSexo, $this->InputfechaNaci, $this->InputTipoRol, $this->InputEstado, $this->InputPhoto);
-                $result = $this->InsertMySQL($Query_Insert, $Array_Query);  
+                $Query_Select_Rol_Student = "SELECT id_rol FROM roles WHERE nombreRol = 'Estudiante'  AND estadoRol != 0 ";
+                $result_Select_Rol_Student = $this->SelectMySQL($Query_Select_Rol_Student);
+                
+                if ($this->InputTipoRol == $result_Select_Rol_Student['id_rol']) {
+                    $Query_Insert2 = "INSERT INTO usuario (DNI, username, password, nombres, apellidoP, apellidoM, email, telefono, sexo, fechaNaci, rol, token, estado, photo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    $Array_Query2 = array($this->InputCedulaPasaporte, $this->InputUsername, $this->InputPassword, $this->InputNombres, $this->InputApellidoP, $this->InputApellidoM, $this->InputEmail, $this->InputTelefono, $this->InputSexo, $this->InputfechaNaci, $this->InputTipoRol, "",$this->InputEstado, $this->InputPhoto);
+                    $result = $this->InsertMySQL($Query_Insert2, $Array_Query2);
+
+                    $Query_Insert1 = "INSERT INTO student (estudiante, proceso_contable) VALUES (?, ?)";
+                    $Array_Query1 = array($this->InputCedulaPasaporte, 0);
+                    $result = $this->InsertMySQL($Query_Insert1, $Array_Query1); 
+                } else {
+                    $Query_Insert = "INSERT INTO usuario (DNI, username, password, nombres, apellidoP, apellidoM, email, telefono, sexo, fechaNaci, rol, token, estado, photo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    $Array_Query = array($this->InputCedulaPasaporte, $this->InputUsername, $this->InputPassword, $this->InputNombres, $this->InputApellidoP, $this->InputApellidoM, $this->InputEmail, $this->InputTelefono, $this->InputSexo, $this->InputfechaNaci, $this->InputTipoRol, "",$this->InputEstado, $this->InputPhoto);
+                    $result = $this->InsertMySQL($Query_Insert, $Array_Query);
+                }
             }
             return $result;
         }

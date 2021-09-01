@@ -6,7 +6,7 @@
 
         public function __construct() {
             $this->conexion =new ConecctionDB();
-            $this->conexion =  $this->conexion->Connec();
+            $this->conexion = $this->conexion->Connec();
         }
 
         // insertar registros

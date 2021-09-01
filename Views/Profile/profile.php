@@ -119,7 +119,7 @@
                       <input class="form-control" type="text" name="InputEmail" id="InputEmail">
                       <p class="none-block text-danger" id="leyenda-email">
                         <small> 
-                          Email incorrecto, solo puede contener letras, numeros, puntos, guiones y guion bajo!<br>ejemplo: ads@ads.com
+                          Email incorrecto!<br>ejemplo: ads@ads.com
                         </small>
                       </p>
                     </div>

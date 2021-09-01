@@ -125,7 +125,7 @@
                     //Generate credenciales de acceso
                     $username = usernameGenerator($this->InputNombres, $this->InputApellidoP, $this->InputCedulaPasaporte);
                     $password = hash("SHA256", $this->InputCedulaPasaporte);
-                    $Photo = "Assets/images/profile-default/profile-default.ico";
+                    $Photo = "profile-default.ico";
 
                     $arrayData = $this->model->InsertUser($this->InputCedulaPasaporte, $username, $password, $this->InputNombres, $this->InputApellidoP, $this->InputApellidoM, $this->InputEmail, $this->InputTelefono, $this->InputfechaNaci, $this->InputSexo, $this->InputTipoRol, $this->InputEstado, $Photo);
                     $opcion = 1;
@@ -136,7 +136,20 @@
 
                 if ($arrayData > 0) {
                     if ($opcion == 1) {
-                        $arrayData = array('status' => true, 'msg' => 'Reguistrado exitosmente.'); 
+                        $dataNewUser = array(
+                            'usuario' => $this->InputNombres." ".$this->InputApellidoP." ".$this->InputApellidoM,
+                            'username' => $username,
+                            'password' => $this->InputCedulaPasaporte,
+                            'email' => $this->InputEmail,
+                            'asunto' => 'Bienvenida - Datos de accesso - '.SENDER_NAME,
+                            'url' => BASE_URL()
+                        );
+                        $sendEmail = sendEmail($dataNewUser,'email_accessData');
+                        if ($sendEmail) {
+                            $arrayData = array('status' => true, 'msg' => 'Reguistrado exitosmente.');
+                        } else {
+                            $arrayData = array('status' => true, 'msg' => 'email filed.');
+                        }  
                     } else {
                         $arrayData = array('status' => true, 'msg' => 'Actualizado exitosamente.');
                     }  

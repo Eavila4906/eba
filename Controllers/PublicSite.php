@@ -7,6 +7,13 @@
         }
 
         public function PublicSite(){
+            if (empty($_SESSION['permisosModulo']['r'])) {
+                if ($_SESSION['dataUser']['nombreRol'] == 'Super Administrador') {
+                    header('location: '.BASE_URL().'dashboard');
+                } else {
+                    header('location: '.BASE_URL().'my');
+                }
+            }
             $data['functions_js'] = "./Assets/js/functions_publicsite.js";
             $data['name_page'] = "Sitio Publico";
             $this->views->getViews($this,"publicsite", $data);

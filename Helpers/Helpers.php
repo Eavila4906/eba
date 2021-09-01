@@ -6,15 +6,15 @@
 
     // Assets kn
     function ASSETS_KN() {
-        return ASSETS_KN;
+        return BASE_URL.ASSETS_KN;
     }
     // Assets Vali
     function ASSETS_VALI() {
-        return ASSETS_VALI;
+        return BASE_URL.ASSETS_VALI;
     }
     // Assets
     function MEDIA() {
-        return MEDIA;
+        return BASE_URL.MEDIA;
     }
 
     //View header
@@ -143,4 +143,41 @@
         $format .= print_r('</pre>');
         return $format;
     }
+
+    //Genera un token
+    function token()
+    {
+        $r1 = bin2hex(random_bytes(10));
+        $r2 = bin2hex(random_bytes(10));
+        $r3 = bin2hex(random_bytes(10));
+        $r4 = bin2hex(random_bytes(10));
+        $token = $r1.'-'.$r2.'-'.$r3.'-'.$r4;
+        return $token;
+    }
+
+    //Envio de correos
+    function sendEmail($data,$template) {
+        $asunto = $data['asunto'];
+        $emailDestino = $data['email'];
+        $empresa = SENDER_NAME;
+        $remitente = SENDER_EMAIL;
+        //ENVIO DE CORREO
+        $de = "MIME-Version: 1.0\r\n";
+        $de .= "Content-type: text/html; charset=UTF-8\r\n";
+        $de .= "From: {$empresa} <{$remitente}>\r\n";
+        ob_start();
+        require_once("Views/Templates/Emails/".$template.".php");
+        $mensaje = ob_get_clean();
+        $send = mail($emailDestino, $asunto, $mensaje, $de);
+        return $send;
+    }
+
+    //Calcular rango de fechas
+    function calculateRangeDate($initialDate, $endDate, $differenceFormat="%m") {
+        $initialDate  = date_create($initialDate);
+        $endDate = date_create($endDate);
+        $difference = date_diff($initialDate, $endDate);
+        $calculation = $difference->format($differenceFormat);
+        return $calculation+1;
+    }   
 ?>

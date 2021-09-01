@@ -23,3 +23,11 @@
     background-color: rgb(25, 185, 87);
     color: #fff;
 }
+
+.not-read {
+    background-color: #00968736;
+}
+
+.color-orange {
+    background-color: rgb(255, 195, 30);
+}
