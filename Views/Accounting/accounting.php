@@ -45,7 +45,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Estudiante</th>
-                        <th>Fecha inicio - final</th>
+                        <th>Periodo</th>
                         <th>Ultimo pago</th>
                         <th>Proximo pago</th>
                         <th>Cuota</th>

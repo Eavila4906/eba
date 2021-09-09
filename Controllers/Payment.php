@@ -47,7 +47,7 @@
                 for ($i=0; $i < count($arrayData); $i++) { 
                     //validacion de estado
                     if ($arrayData[$i]['estado'] == 0) {
-                        $arrayData[$i]['estado'] = '<spam class="badge badge-success" style="font-size:.9em;">Pagado</spam>';
+                        $arrayData[$i]['estado'] = '<spam class="badge badge-success" style="font-size:.9em;">Completo</spam>';
                     } else if ($arrayData[$i]['estado'] == 1) {
                         $arrayData[$i]['estado'] = '<spam class="badge badge-info" style="font-size:.9em;">En proceso de pago</spam>';
                     } else if ($arrayData[$i]['estado'] == 2) {

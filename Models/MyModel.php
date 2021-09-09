@@ -6,7 +6,7 @@
 
         public function SelectAllNotifications(String $user) {
             $this->user = $user;
-            $Query_Select_All = "SELECT * FROM notifications WHERE usuario = '$this->user'";
+            $Query_Select_All = "SELECT * FROM notifications WHERE usuario = '$this->user' ORDER BY fecha DESC";
             $result = $this->SelectAllMySQL($Query_Select_All);
             return $result;
         }

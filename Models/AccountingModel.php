@@ -84,7 +84,14 @@
             $Array_Query_TP = array(4);
             $result_update_TP = $this->UpdateMySQL($Query_Update_TP, $Array_Query_TP);
 
-            if ($result_update_TS > 0 && $result_update_TA > 0 && $result_update_TP > 0) {
+            //Insert notifications
+            $tipo = "Contabilidad detenida";
+            $Query_Insert_notifications = "INSERT INTO notifications (usuario, tipo, fecha, leida) VALUES (?, ?, CURRENT_DATE(), ?)";
+            $Array_Query_notifications = array($this->id_student, $tipo, 0);
+            $result_insert_notifications = $this->InsertMySQL($Query_Insert_notifications, $Array_Query_notifications);
+
+            if ($result_update_TS > 0 && $result_update_TA > 0 && $result_update_TP > 0 
+                && $result_insert_notifications > 0) {
                 $result = 1; 
             } else {
                 $result = 0; 
@@ -96,7 +103,9 @@
             $this->id_student = $id_student;
             $this->periodo = $periodo;
 
-            $Query_Update_TA = "UPDATE accounting SET estado=? WHERE estudiante = '$this->id_student'";
+            $Query_Update_TA = "UPDATE accounting SET estado=? WHERE estudiante = '$this->id_student' AND 
+                                       CONCAT(fecha_IC, ' - ', fecha_FC) = '$this->periodo' AND 
+                                       estado = 1";
             $Array_Query_TA = array(2);
             $result_update_TA = $this->UpdateMySQL($Query_Update_TA, $Array_Query_TA);
 
@@ -104,7 +113,13 @@
             $Array_Query_TP = array(3);
             $result_update_TP = $this->UpdateMySQL($Query_Update_TP, $Array_Query_TP);
 
-            if ($result_update_TA > 0 && $result_update_TP > 0) {
+            //Insert notifications
+            $tipo = "Contabilidad pausada";
+            $Query_Insert_notifications = "INSERT INTO notifications (usuario, tipo, fecha, leida) VALUES (?, ?, CURRENT_DATE(), ?)";
+            $Array_Query_notifications = array($this->id_student, $tipo, 0);
+            $result_insert_notifications = $this->InsertMySQL($Query_Insert_notifications, $Array_Query_notifications);
+
+            if ($result_update_TA > 0 && $result_update_TP > 0 && $result_insert_notifications > 0) {
                 $result = 1; 
             } else {
                 $result = 0; 
@@ -116,7 +131,9 @@
             $this->id_student = $id_student;
             $this->periodo = $periodo;
             
-            $Query_Update_TA = "UPDATE accounting SET estado=? WHERE estudiante = '$this->id_student'";
+            $Query_Update_TA = "UPDATE accounting SET estado=? WHERE estudiante = '$this->id_student' AND 
+                                       CONCAT(fecha_IC, ' - ', fecha_FC) = '$this->periodo' AND 
+                                       estado = 2";
             $Array_Query_TA = array(1);
             $result_update_TA = $this->UpdateMySQL($Query_Update_TA, $Array_Query_TA);
 
@@ -124,7 +141,13 @@
             $Array_Query_TP = array(1);
             $result_update_TP = $this->UpdateMySQL($Query_Update_TP, $Array_Query_TP);
 
-            if ($result_update_TA > 0 && $result_update_TP > 0) {
+            //Insert notifications
+            $tipo = "Contabilidad reanudada";
+            $Query_Insert_notifications = "INSERT INTO notifications (usuario, tipo, fecha, leida) VALUES (?, ?, CURRENT_DATE(), ?)";
+            $Array_Query_notifications = array($this->id_student, $tipo, 0);
+            $result_insert_notifications = $this->InsertMySQL($Query_Insert_notifications, $Array_Query_notifications);
+
+            if ($result_update_TA > 0 && $result_update_TP > 0 && $result_insert_notifications > 0) {
                 $result = 1; 
             } else {
                 $result = 0; 

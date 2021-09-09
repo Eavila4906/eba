@@ -108,7 +108,7 @@
               <tbody>
                 <tr>
                   <td style="width: 100px" class="font-weight text-center">
-                    <a href="javascripts:;" title="Banco Pichincha">
+                    <a href="https://www.pichincha.com/portal/inicio" target="_blank" title="Banco Pichincha">
                       <img src="<?= MEDIA();?>images/image-notifications/Banco-Pichincha.jpg" 
                       width="50px" height="50px" style="border-radius:100%;">
                     </a>

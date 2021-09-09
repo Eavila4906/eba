@@ -16,7 +16,6 @@ document.addEventListener('DOMContentLoaded', function () {
 			{ "data": "estudiante" },
 			{ "data": "Ultimo_pago" },
             { "data": "Proximo_pago" },
-            { "data": "V_cuota" },
 			{ "data": "Acciones" },
 		],
 		"responsieve": "true",
@@ -26,28 +25,55 @@ document.addEventListener('DOMContentLoaded', function () {
 	});
 });
 
-function FctBtnPaymentRecord(DNI, id_accounting, fecha_UP) {
-    var DNI = DNI;
+function FctBtnPaymentRecord(accion, DNI, nombres, id_accounting, fecha_UP) {
+    var accion = accion;
+	var DNI = DNI;
     var id_accounting = id_accounting;
     var fecha_UP = fecha_UP;
-    
+	var nombres = nombres;
+	var title = "";
+	var text = "";
 
-    var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-	var ajaxUrl = BASE_URL + 'payment_record/setPaymentRecord/';
-	var data = 'DNI=' + DNI + '&' + 'id_accounting=' + id_accounting + '&' + 'fecha_UP=' + fecha_UP;
-	request.open("POST", ajaxUrl, true);
-	request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	request.send(data);
+	if (accion == 1) {
+		title = "¡Realizar pago!";
+		text = "¿Deceas realizar el pago de "+nombres+"?";
+	} else if (accion == 2) {
+		title = "¡Realizar pago (No Contable)!";
+		text = "¿Deceas realizar el pago no contable de "+nombres+"?";
+	}
 
-	request.onreadystatechange = function () {
-		if (request.readyState == 4 && request.status == 200) {
-			var objData = JSON.parse(request.responseText);
-			if (objData.status) {
-				swal("¡Hecho!", objData.msg, "success");
-				DataTablePaymentRecord.ajax.reload();
-			} else {
-			    swal("ERROR!", objData.msg, "error");
+	swal({
+		title: title,
+		text: text,
+		type: "warning",
+		showCancelButton: true,
+		confirmButtonText: "Si, Realizar",
+		cancelButtonText: "No, Cancelar",
+		closeOnConfirm: false,
+		closeOnCancel: true,
+	}, function (isConfirm) {
+		if (isConfirm) {
+			//swal.close();
+			divLoading.style.display = "flex";
+			var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+			var ajaxUrl = BASE_URL + 'payment_record/setPaymentRecord/';
+			var data = 'accion=' + accion + '&' + 'DNI=' + DNI + '&' + 'id_accounting=' + id_accounting + '&' + 'fecha_UP=' + fecha_UP;
+			request.open("POST", ajaxUrl, true);
+			request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			request.send(data);
+			request.onreadystatechange = function () {
+				if (request.readyState == 4 && request.status == 200) {
+					var objData = JSON.parse(request.responseText);
+					if (objData.status) {
+						swal("¡Hecho!", objData.msg, "success");
+						DataTablePaymentRecord.ajax.reload();
+					} else {
+						swal("ERROR!", objData.msg, "error");
+					}
+				}
+				divLoading.style.display = "none";
+				return false;
 			}
 		}
-	}
+	});
 }

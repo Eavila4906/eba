@@ -26,7 +26,6 @@
                         <th>Estudiante</th>
                         <th>Ultimo pago</th>
                         <th>Proximo pago</th>
-                        <th>Valor</th>
                         <th>Acción</th>
                     </tr>
                   </thead>

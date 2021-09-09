@@ -72,11 +72,11 @@
                     $btnPlayAccounting = '<button class="btn btn-info btn-sm btnPlayAccounting" onclick="FctBtnPlayAccounting('.$arrayData[$i]['DNI'].','.$periodo.')" title="Continuar contabilidad"><i class="fas fa-play-circle fa-lg"></i></button>';   
                 }
                 //Formato de fecha
-                //setlocale(LC_ALL,"es-ES");
-                $arrayData[$i]['Inicio_contable'] = strftime("%d de %B de %Y", strtotime($arrayData[$i]['fecha_IC']));
-                $arrayData[$i]['Final_contable'] = strftime("%d de %B de %Y", strtotime($arrayData[$i]['fecha_FC']));
-                $arrayData[$i]['Ultimo_pago'] = strftime("%A, %d de %B de %Y", strtotime($arrayData[$i]['fecha_UP']));
-                $arrayData[$i]['Proximo_pago'] = strftime("%A, %d de %B de %Y", strtotime($arrayData[$i]['fecha_PP']));
+                setlocale(LC_ALL,"es-ES");
+                $arrayData[$i]['Inicio_contable'] = strftime("%B %Y", strtotime($arrayData[$i]['fecha_IC']));
+                $arrayData[$i]['Final_contable'] = strftime("%B %Y", strtotime($arrayData[$i]['fecha_FC']));
+                $arrayData[$i]['Ultimo_pago'] = strftime("%d de %B de %Y", strtotime($arrayData[$i]['fecha_UP']));
+                $arrayData[$i]['Proximo_pago'] = strftime("%d de %B de %Y", strtotime($arrayData[$i]['fecha_PP']));
                 $arrayData[$i]['Fecha_inicio-final'] = $arrayData[$i]['Inicio_contable']." - ".$arrayData[$i]['Final_contable'];
                 $arrayData[$i]['V_cuota'] = '<spam class="badge badge-success">$ '.$arrayData[$i]['valor'].'</spam>';
                 
@@ -140,7 +140,7 @@
                     $this->periodo = $_POST['periodo'];
                     $arrayData = $this->model->playAccounting($this->id_student, $this->periodo);
                     if ($arrayData > 0) {
-                        $arrayData = array('status' => true, 'msg' => 'exitosamente.');
+                        $arrayData = array('status' => true, 'msg' => 'Contabilidad reanudada.');
                     } else {
                         $arrayData = array('status' => false, 'msg' => 'the process failed.');
                     }

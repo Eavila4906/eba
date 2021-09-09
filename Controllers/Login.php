@@ -46,7 +46,7 @@
 				$arrayData = $this->model->getUserEmail($this->InputEmailRP);
 
 				if(empty($arrayData)){
-					$arrayResponse = array('status' => false, 'msg' => 'El usuario no existente, o esta inactivo.' ); 
+					$arrayResponse = array('status' => false, 'msg' => 'El usuario no existente, o esta inactivo.'); 
 				}else{
 					$id_usuario = $arrayData['id_usuario'];
 					$nombreUsuario = $arrayData['nombres'].' '.$arrayData['apellidoP'].' '.$arrayData['apellidoM'];

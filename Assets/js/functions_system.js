@@ -133,7 +133,8 @@ function ftnSeeNotifications(id_notification, tipo, fecha, leida, mes, descripci
             }
         }
     }
-    if (tipo == "Pago" || tipo == "Pago Inicial" || tipo == "Pago Final") {
+    if (tipo == "Pago" || tipo == "Pago Inicial" || tipo == "Pago Final" || tipo == "Pago (No contable)" 
+        || tipo == "Pago Final (No contable)") {
         var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
         var ajaxUrl = BASE_URL+'my/infoNotificaionsPayment';
         var data = 'date=' + fecha;
@@ -149,7 +150,7 @@ function ftnSeeNotifications(id_notification, tipo, fecha, leida, mes, descripci
                     document.querySelector('#fechapago').innerHTML = objData.data.fecha_pago;
                     document.querySelector('#cantidad').innerHTML = "$"+objData.data.valor;
                     //info payment next
-                    if (tipo == "Pago Final") {
+                    if (tipo == "Pago Final" || tipo == "Pago Final (No contable)") {
                         document.querySelector('#periodo-pp').innerHTML = "--------------------------------------";
                         document.querySelector('#fecha-pp').innerHTML = "--------------------------------------";
                         document.querySelector('#cantidad-pp').innerHTML = "--------------------------------------";
@@ -175,7 +176,10 @@ function ftnSeeNotifications(id_notification, tipo, fecha, leida, mes, descripci
         document.querySelector('#modal-header').classList.remove('bg-warning');
         document.querySelector('#modal-header').classList.remove('text-dark');
         document.querySelector('#modal-header').classList.remove('bg-danger');
-    } else if (tipo == "Recordatorio de pago") {
+        $('#ModalNotificacions').modal('show');
+    } 
+    
+    if (tipo == "Recordatorio de pago") {
         var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
         var ajaxUrl = BASE_URL+'my/infoNotificationPaymentReminder';
         var data = 'date=' + fecha;
@@ -203,7 +207,10 @@ function ftnSeeNotifications(id_notification, tipo, fecha, leida, mes, descripci
         document.querySelector('#title').innerHTML = tipo;
         document.querySelector('#Mes').innerHTML = mes;
         document.querySelector('#descripcion').innerHTML = descripcion;
-    } else {
+        $('#ModalNotificacions').modal('show');
+    } 
+    
+    if (tipo == "Pago atrasado") {
         var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
         var ajaxUrl = BASE_URL+'my/infoNotificationPaymentReminder';
         var data = 'date=' + fecha;
@@ -231,8 +238,8 @@ function ftnSeeNotifications(id_notification, tipo, fecha, leida, mes, descripci
         document.querySelector('#title').innerHTML = tipo;
         document.querySelector('#Mes').innerHTML = mes;
         document.querySelector('#descripcion-pa').innerHTML = descripcion;
-    }
-    $('#ModalNotificacions').modal('show');
+        $('#ModalNotificacions').modal('show');
+    }  
 }
 
 //notifications
@@ -269,8 +276,9 @@ function notifications() {
                     var tipo = "'"+item.tipo+"'";
                     var fecha = "'"+item.fecha+"'";
                     var mes = "'"+item.Mes+"'";
-                    var descripcion = new String("'"+item.descripcion+"'");
-                    if (item.tipo == "Pago" || item.tipo == "Pago Inicial" || item.tipo == "Pago Final") {
+                    var descripcion ="'"+item.descripcion+"'";
+                    if (item.tipo == "Pago" || item.tipo == "Pago Inicial" || item.tipo == "Pago Final" 
+                        || item.tipo == "Pago (No contable)" || item.tipo == "Pago Final (No contable)") {
                         if (item.leida == 0) {
                             html.innerHTML += `
                                 <li class="not-read">
@@ -351,7 +359,7 @@ function notifications() {
                                 </li>
                             `;
                         }  
-                    }  else {
+                    } else if (item.tipo == "Pago atrasado") {
                         if (item.leida == 0) {
                             html.innerHTML += `
                                 <li class="not-read">
@@ -381,6 +389,126 @@ function notifications() {
                                             <span class="fa-stack fa-lg">
                                                 <i class="fa fa-circle fa-stack-2x text-danger"></i>
                                                 <i class="fas fa-hand-holding-usd fa-stack-1x fa-inverse"></i>
+                                            </span>
+                                        </span>
+                                        <div>
+                                            <p class="app-notification__message">${item.tipo}</p>
+                                            <p class="app-notification__meta">${item.fecha}</p>
+                                        </div>  
+                                    </a>
+                                </li>
+                            `;
+                        }
+                    } else if (item.tipo == "Contabilidad pausada") {
+                        if (item.leida == 0) {
+                            html.innerHTML += `
+                                <li class="not-read">
+                                    <a class="app-notification__item" href="javascript:;"
+                                        onclick="ftnSeeNotifications(${item.id_notifications}, ${tipo}, ${fecha}, ${item.leida}, ${mes}, ${descripcion})"
+                                        title="Leer">
+                                        <span class="app-notification__icon">
+                                            <span class="fa-stack fa-lg">
+                                                <i class="fa fa-circle fa-stack-2x text-info"></i>
+                                                <i class="fas fa-pause fa-stack-1x fa-inverse"></i>
+                                            </span>
+                                        </span>
+                                        <div>
+                                            <p class="app-notification__message">${item.tipo}</p>
+                                            <p class="app-notification__meta">${item.fecha}</p>
+                                        </div>  
+                                    </a>
+                                </li>
+                            `;
+                        } else {
+                            html.innerHTML += `
+                                <li>
+                                    <a class="app-notification__item" href="javascript:;"
+                                        onclick="ftnSeeNotifications(${item.id_notifications}, ${tipo}, ${fecha}, ${item.leida}, ${mes}, ${descripcion})"
+                                        title="Ver">
+                                        <span class="app-notification__icon">
+                                            <span class="fa-stack fa-lg">
+                                                <i class="fa fa-circle fa-stack-2x text-info"></i>
+                                                <i class="fas fa-pause fa-stack-1x fa-inverse"></i>
+                                            </span>
+                                        </span>
+                                        <div>
+                                            <p class="app-notification__message">${item.tipo}</p>
+                                            <p class="app-notification__meta">${item.fecha}</p>
+                                        </div>  
+                                    </a>
+                                </li>
+                            `;
+                        }
+                    } else if (item.tipo == "Contabilidad reanudada") {
+                        if (item.leida == 0) {
+                            html.innerHTML += `
+                                <li class="not-read">
+                                    <a class="app-notification__item" href="javascript:;"
+                                        onclick="ftnSeeNotifications(${item.id_notifications}, ${tipo}, ${fecha}, ${item.leida}, ${mes}, ${descripcion})"
+                                        title="Leer">
+                                        <span class="app-notification__icon">
+                                            <span class="fa-stack fa-lg">
+                                                <i class="fa fa-circle fa-stack-2x text-info"></i>
+                                                <i class="fas fa-play fa-stack-1x fa-inverse"></i>
+                                            </span>
+                                        </span>
+                                        <div>
+                                            <p class="app-notification__message">${item.tipo}</p>
+                                            <p class="app-notification__meta">${item.fecha}</p>
+                                        </div>  
+                                    </a>
+                                </li>
+                            `;
+                        } else {
+                            html.innerHTML += `
+                                <li>
+                                    <a class="app-notification__item" href="javascript:;"
+                                        onclick="ftnSeeNotifications(${item.id_notifications}, ${tipo}, ${fecha}, ${item.leida}, ${mes}, ${descripcion})"
+                                        title="Ver">
+                                        <span class="app-notification__icon">
+                                            <span class="fa-stack fa-lg">
+                                                <i class="fa fa-circle fa-stack-2x text-info"></i>
+                                                <i class="fas fa-play fa-stack-1x fa-inverse"></i>
+                                            </span>
+                                        </span>
+                                        <div>
+                                            <p class="app-notification__message">${item.tipo}</p>
+                                            <p class="app-notification__meta">${item.fecha}</p>
+                                        </div>  
+                                    </a>
+                                </li>
+                            `;
+                        }
+                    } else if (item.tipo == "Contabilidad detenida") {
+                        if (item.leida == 0) {
+                            html.innerHTML += `
+                                <li class="not-read">
+                                    <a class="app-notification__item" href="javascript:;"
+                                        onclick="ftnSeeNotifications(${item.id_notifications}, ${tipo}, ${fecha}, ${item.leida}, ${mes}, ${descripcion})"
+                                        title="Leer">
+                                        <span class="app-notification__icon">
+                                            <span class="fa-stack fa-lg">
+                                                <i class="fa fa-circle fa-stack-2x text-info"></i>
+                                                <i class="fas fa-stop fa-stack-1x fa-inverse"></i>
+                                            </span>
+                                        </span>
+                                        <div>
+                                            <p class="app-notification__message">${item.tipo}</p>
+                                            <p class="app-notification__meta">${item.fecha}</p>
+                                        </div>  
+                                    </a>
+                                </li>
+                            `;
+                        } else {
+                            html.innerHTML += `
+                                <li>
+                                    <a class="app-notification__item" href="javascript:;"
+                                        onclick="ftnSeeNotifications(${item.id_notifications}, ${tipo}, ${fecha}, ${item.leida}, ${mes}, ${descripcion})"
+                                        title="Ver">
+                                        <span class="app-notification__icon">
+                                            <span class="fa-stack fa-lg">
+                                                <i class="fa fa-circle fa-stack-2x text-info"></i>
+                                                <i class="fas fa-stop fa-stack-1x fa-inverse"></i>
                                             </span>
                                         </span>
                                         <div>

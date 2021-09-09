@@ -179,6 +179,8 @@ function FctBtnStopAccounting(id_student, periodo) {
 		closeOnCancel: true,
 	}, function (isConfirm) {
 		if (isConfirm) {
+			swal.close();
+			divLoading.style.display = "flex";
 			var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
 			var ajaxUrl = BASE_URL + 'accounting/stopAccounting/';
 			var data = 'id_student=' + id_student + '&' + 'periodo=' + periodo;
@@ -197,6 +199,8 @@ function FctBtnStopAccounting(id_student, periodo) {
 						swal("ERROR!", objData.msg, "error");
 					}
 				}
+				divLoading.style.display = "none";
+            	return false;
 			}
 		}
 	});
@@ -216,6 +220,8 @@ function FctBtnPauseAccounting(id_student, periodo) {
 		closeOnCancel: true,
 	}, function (isConfirm) {
 		if (isConfirm) {
+			swal.close();
+			divLoading.style.display = "flex";
 			var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
 			var ajaxUrl = BASE_URL + 'accounting/PauseAccounting/';
 			var data = 'id_student=' + id_student + '&' + 'periodo=' + periodo;
@@ -233,6 +239,8 @@ function FctBtnPauseAccounting(id_student, periodo) {
 						swal("ERROR!", objData.msg, "error");
 					}
 				}
+				divLoading.style.display = "none";
+            	return false;
 			}
 		}
 	});
@@ -241,6 +249,8 @@ function FctBtnPauseAccounting(id_student, periodo) {
 function FctBtnPlayAccounting(id_student, periodo) {
 	var id_student = id_student;
 	var periodo = periodo;
+
+	divLoading.style.display = "flex";
 	var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
 	var ajaxUrl = BASE_URL + 'accounting/PlayAccounting/';
 	var data = 'id_student=' + id_student + '&' + 'periodo=' + periodo;
@@ -252,12 +262,14 @@ function FctBtnPlayAccounting(id_student, periodo) {
 		if (request.readyState == 4 && request.status == 200) {
 			var objData = JSON.parse(request.responseText);
 			if (objData.status) {
-				//swal("¡Contabilidad!", objData.msg, "success");
+				swal("¡Contabilidad!", objData.msg, "success");
 				DataTableAccounting.ajax.reload();
 			} else {
 				swal("ERROR!", objData.msg, "error");
 			}
 		}
+		divLoading.style.display = "none";
+    	return false;
 	}
 }
 /* Finish stopt accounting */
