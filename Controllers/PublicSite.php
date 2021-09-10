@@ -21,31 +21,50 @@
 
         /* Start home */
         public function getAllContentGaleryHome() {
-            $arrayData = $this->model->SelectAllContentGaleryHome();
-            //$datas = array('datas' => $arrayData);
-            return $arrayData;
+            if ($_SESSION['permisosModulo']['r']) {
+                $arrayData = $this->model->SelectAllContentGaleryHome();
+                return $arrayData;
+            } else {
+                echo '<div class="alert alert-danger" role="alert" 
+                        style="position: relative;padding: 0.75rem 1.25rem;margin-bottom: 1rem;border: 
+                        1px solid transparent;border-radius: 0.25rem;color: #721c24;background-color: #f8d7da;
+                        border-color: #f5c6cb;border-top-color: #f1b0b7;">
+                        ¡Acceso restringido!
+                      </div>';
+            }
             die();
         }
 
-        public function getContents(int $id_cont) {
+        public function getContents($id_cont) {
             if ($_GET) {
-                $this->id_cont = intval($id_cont);
-                if ($this->id_cont > 0) {
-                    $arrayData = $this->model->SelectContents($this->id_cont);
-                    if (!empty($arrayData)) {
-                        $arrayData['url_image'] = MEDIA().'images/image-public-site/carousel-image-home/'.$arrayData['image'];
-                        $arrayData = array('status' => true, 'data' => $arrayData);
-                    } else {
-                        $arrayData = array('status' => false, 'msg' => 'Datos no encontrados!');
+                if ($_SESSION['permisosModulo']['r']) {
+                    $arrayData = "";
+                    $this->id_cont = intval($id_cont);
+                    if ($this->id_cont > 0) {
+                        $arrayData = $this->model->SelectContents($this->id_cont);
+                        if (!empty($arrayData)) {
+                            $arrayData['url_image'] = MEDIA().'images/image-public-site/carousel-image-home/'.$arrayData['image'];
+                            $arrayData = array('status' => true, 'data' => $arrayData);
+                        } else {
+                            $arrayData = array('status' => false, 'msg' => 'Datos no encontrados!');
+                        }
                     }
                     echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
+                } else {
+                    echo '<div class="alert alert-danger" role="alert" 
+                            style="position: relative;padding: 0.75rem 1.25rem;margin-bottom: 1rem;border: 
+                            1px solid transparent;border-radius: 0.25rem;color: #721c24;background-color: #f8d7da;
+                            border-color: #f5c6cb;border-top-color: #f1b0b7;">
+                            ¡Acceso restringido!
+                        </div>';
                 }
-                die();
             }
+            die();
         }
 
         public function setContentGaleryHome() {
             if ($_POST) {
+                $arrayData = "";
                 $this->InputId_cont = intval($_POST['id_cont']);
                 $this->InputTitulo = $_POST['InputTitulo'];
                 $this->InputDescripcion = $_POST['InputDescripcion'];
@@ -61,16 +80,20 @@
                 }
 
                 if ($this->InputId_cont == 0) {
-                    $arrayData = $this->model->InsertContentGaleryHome($this->InputTitulo, $this->InputDescripcion, $this->InputEstado, $imgPortada);
-                    $opcion = 1;
-                } else {
-                    if($this->nameImage == ''){
-                        if($_POST['image_actual'] != 'imageDefault.jpg' && $_POST['image_remove'] == 0 ){
-                            $imgPortada = $_POST['image_actual'];
-                        }
+                    if ($_SESSION['permisosModulo']['w']) {
+                        $arrayData = $this->model->InsertContentGaleryHome($this->InputTitulo, $this->InputDescripcion, $this->InputEstado, $imgPortada);
+                        $opcion = 1;
                     }
-                    $arrayData = $this->model->UpdateContentGaleryHome($this->InputId_cont, $this->InputTitulo, $this->InputDescripcion, $this->InputEstado, $imgPortada);
-                    $opcion = 2;
+                } else {
+                    if ($_SESSION['permisosModulo']['u']) {
+                        if($this->nameImage == ''){
+                            if($_POST['image_actual'] != 'imageDefault.jpg' && $_POST['image_remove'] == 0 ){
+                                $imgPortada = $_POST['image_actual'];
+                            }
+                        }
+                        $arrayData = $this->model->UpdateContentGaleryHome($this->InputId_cont, $this->InputTitulo, $this->InputDescripcion, $this->InputEstado, $imgPortada);
+                        $opcion = 2;
+                    }
                 }
 
                 if ($arrayData > 0) {
@@ -92,11 +115,11 @@
                 } else if ($arrayData == "exists") {
                     $arrayData = array('status' => false, 'msg' => 'El contenido ya esta registrado en el sistema.');
                 } else {
-                    $arrayData = array('status' => false, 'msg' => 'Filed Register!');
+                    $arrayData = array('status' => false, 'msg' => 'No se pudo ejecutar este proceso.');
                 }
                 echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
-                die();
             }
+            die();
         }
 
         public function deleteContents() {
@@ -104,12 +127,15 @@
                 $this->id_cont = intval($_POST['id_cont']);
                 $this->img = intval($_POST['img']);
                 if ($this->id_cont > 0) {
-                    $arrayData = $this->model->DeleteContents($this->id_cont);
+                    $arrayData = "";
+                    if ($_SESSION['permisosModulo']['d']) {
+                        $arrayData = $this->model->DeleteContents($this->id_cont);
+                    }
                     if ($arrayData == "ok") {
                         $arrayData = array('status' => true, 'msg' => 'Eliminado con exito.');
                         deleteImageServer($_POST['img']);
                     } else {
-                        $arrayData = array('status' => false, 'msg' => 'Error!');
+                        $arrayData = array('status' => false, 'msg' => 'No se pudo ejecutar este proceso.');
                     }
                     echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
                 }
@@ -121,7 +147,10 @@
         /* Start icons */
         public function getAllIconsAbout() {
             $htmlOptions = "";
-			$arrayData = $this->model->SelectAllIconsAbout();
+            $arrayData = "";
+            if ($_SESSION['permisosModulo']['r']) {
+                $arrayData = $this->model->SelectAllIconsAbout();
+            }
 			if(!empty($arrayData)){
 				for ($i=0; $i < count($arrayData); $i++) { 	
 				    $htmlOptions .= '<option value="'.$arrayData[$i]['id_icon'].'" class="fas">'.$arrayData[$i]['codigo'].' '.$arrayData[$i]['nombre'].'</option>';	
@@ -135,7 +164,10 @@
 
         public function getAllIconsSocialMedia() {
             $htmlOptions = "";
-			$arrayData = $this->model->SelectAllIconsSocialMedia();
+            $arrayData = "";
+            if ($_SESSION['permisosModulo']['r']) {
+			    $arrayData = $this->model->SelectAllIconsSocialMedia();
+            }
 			if(!empty($arrayData)){
 				for ($i=0; $i < count($arrayData); $i++) { 	
 				    $htmlOptions .= '<option value="'.$arrayData[$i]['id_icon'].'" class="fab">'.$arrayData[$i]['codigo'].' '.$arrayData[$i]['nombre'].'</option>';	
@@ -152,13 +184,16 @@
                 $this->InputNombre = $_POST['InputNombre'];
                 $this->InputCodigo = '&#x'.$_POST['InputCodigo'].';';
                 $this->InputUtilidad = $_POST['InputUtilidad'];
-                $arrayData = $this->model->InsertIcons($this->InputCodigo, $this->InputNombre, $this->InputUtilidad);
+                $arrayData = "";
+                if ($_SESSION['permisosModulo']['w']) {
+                    $arrayData = $this->model->InsertIcons($this->InputCodigo, $this->InputNombre, $this->InputUtilidad);
+                }
                 if ($arrayData > 0) {
                     $arrayData = array('status' => true, 'msg' => 'Reguistrado exitosmente.');       
                 } else if ($arrayData == "exists") {
                     $arrayData = array('status' => false, 'msg' => 'El icono ya esta registrado.');
                 } else {
-                    $arrayData = array('status' => false, 'msg' => 'Filed Register!');
+                    $arrayData = array('status' => false, 'msg' => 'No se pudo ejecutar este proceso.');
                 }
                 echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
                 die();
@@ -168,25 +203,43 @@
 
         /* Start about */
         public function getAllContentAbout() {
-            $arrayData = $this->model->SelectAllContentAbout();
-            return $arrayData;
+            if ($_SESSION['permisosModulo']['r']) {
+                $arrayData = $this->model->SelectAllContentAbout();
+                return $arrayData;
+            } else {
+                echo '<div class="alert alert-danger" role="alert" 
+                        style="position: relative;padding: 0.75rem 1.25rem;margin-bottom: 1rem;border: 
+                        1px solid transparent;border-radius: 0.25rem;color: #721c24;background-color: #f8d7da;
+                        border-color: #f5c6cb;border-top-color: #f1b0b7;">
+                        ¡Acceso restringido!
+                      </div>';
+            }
             die();
         }
 
-        public function getContentsAbout(int $id_contAbout) {
+        public function getContentsAbout($id_contAbout) {
             if ($_GET) {
-                $this->id_contAbout = intval($id_contAbout);
-                if ($this->id_contAbout > 0) {
-                    $arrayData = $this->model->SelectContentsAbout($this->id_contAbout);
-                    if (!empty($arrayData)) {
-                        $arrayData = array('status' => true, 'data' => $arrayData);
-                    } else {
-                        $arrayData = array('status' => false, 'msg' => 'Datos no encontrados!');
+                if ($_SESSION['permisosModulo']['r']) {
+                    $this->id_contAbout = intval($id_contAbout);
+                    if ($this->id_contAbout > 0) {
+                        $arrayData = $this->model->SelectContentsAbout($this->id_contAbout);
+                        if (!empty($arrayData)) {
+                            $arrayData = array('status' => true, 'data' => $arrayData);
+                        } else {
+                            $arrayData = array('status' => false, 'msg' => 'Datos no encontrados!');
+                        }
+                        echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
                     }
-                    echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
+                } else {
+                    echo '<div class="alert alert-danger" role="alert" 
+                            style="position: relative;padding: 0.75rem 1.25rem;margin-bottom: 1rem;border: 
+                            1px solid transparent;border-radius: 0.25rem;color: #721c24;background-color: #f8d7da;
+                            border-color: #f5c6cb;border-top-color: #f1b0b7;">
+                            ¡Acceso restringido!
+                        </div>';
                 }
-                die();
             }
+            die();
         }
 
         public function setContentAbout() {
@@ -196,13 +249,18 @@
                 $this->InputDescripcionAbout = $_POST['InputDescripcionAbout'];
                 $this->InputEstadoAbout = $_POST['InputEstadoAbout'];
                 $this->InputIcono = $_POST['InputIconoAbout'];
+                $arrayData = "";
 
                 if ($this->InputId_contAbout == 0) {
-                    $arrayData = $this->model->InsertContentAbout($this->InputTituloAbout, $this->InputDescripcionAbout, $this->InputIcono, $this->InputEstadoAbout);
-                    $opcion = 1;
+                    if ($_SESSION['permisosModulo']['w']) {
+                        $arrayData = $this->model->InsertContentAbout($this->InputTituloAbout, $this->InputDescripcionAbout, $this->InputIcono, $this->InputEstadoAbout);
+                        $opcion = 1;
+                    }
                 } else {
-                    $arrayData = $this->model->UpdateContentAbout($this->InputId_contAbout, $this->InputTituloAbout, $this->InputDescripcionAbout, $this->InputIcono, $this->InputEstadoAbout);
-                    $opcion = 2;
+                    if ($_SESSION['permisosModulo']['u']) {
+                        $arrayData = $this->model->UpdateContentAbout($this->InputId_contAbout, $this->InputTituloAbout, $this->InputDescripcionAbout, $this->InputIcono, $this->InputEstadoAbout);
+                        $opcion = 2;
+                    }
                 }
 
                 if ($arrayData > 0) {
@@ -214,22 +272,25 @@
                 } else if ($arrayData == "exists") {
                     $arrayData = array('status' => false, 'msg' => 'El contenido ya esta registrado en el sistema.');
                 } else {
-                    $arrayData = array('status' => false, 'msg' => 'Filed Register!');
+                    $arrayData = array('status' => false, 'msg' => 'No se pudo ejecutar este proceso.');
                 }
-                echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
-                die();
+                echo json_encode($arrayData, JSON_UNESCAPED_UNICODE); 
             }
+            die();
         }
 
         public function deleteContentsAbout() {
             if ($_POST) {
                 $this->id_contAbout = intval($_POST['id_contAbout']);
                 if ($this->id_contAbout > 0) {
-                    $arrayData = $this->model->DeleteContentsAbout($this->id_contAbout);
+                    $arrayData = "";
+                    if ($_SESSION['permisosModulo']['d']) {
+                        $arrayData = $this->model->DeleteContentsAbout($this->id_contAbout);
+                    }
                     if ($arrayData == "ok") {
                         $arrayData = array('status' => true, 'msg' => 'Eliminado con exito.');
                     } else {
-                        $arrayData = array('status' => false, 'msg' => 'Error!');
+                        $arrayData = array('status' => false, 'msg' => 'No se pudo ejecutar este proceso.');
                     }
                     echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
                 }
@@ -240,25 +301,43 @@
 
         /* Start headquarter */
         public function getAllHeadquarter() {
-            $arrayData = $this->model->SelectAllHeadquarter();
-            return $arrayData;
+            if ($_SESSION['permisosModulo']['r']) {
+                $arrayData = $this->model->SelectAllHeadquarter();
+                return $arrayData;
+            } else {
+                echo '<div class="alert alert-danger" role="alert" 
+                        style="position: relative;padding: 0.75rem 1.25rem;margin-bottom: 1rem;border: 
+                        1px solid transparent;border-radius: 0.25rem;color: #721c24;background-color: #f8d7da;
+                        border-color: #f5c6cb;border-top-color: #f1b0b7;">
+                        ¡Acceso restringido!
+                      </div>';
+            }
             die();
         }
 
-        public function getHeadquarter(int $id_headquarter) {
+        public function getHeadquarter($id_headquarter) {
             if ($_GET) {
-                $this->id_headquarter = intval($id_headquarter);
-                if ($this->id_headquarter > 0) {
-                    $arrayData = $this->model->SelectHeadquarter($this->id_headquarter);
-                    if (!empty($arrayData)) {
-                        $arrayData = array('status' => true, 'data' => $arrayData);
-                    } else {
-                        $arrayData = array('status' => false, 'msg' => 'Datos no encontrados!');
+                if ($_SESSION['permisosModulo']['r']) {
+                    $this->id_headquarter = intval($id_headquarter);
+                    if ($this->id_headquarter > 0) {
+                        $arrayData = $this->model->SelectHeadquarter($this->id_headquarter);
+                        if (!empty($arrayData)) {
+                            $arrayData = array('status' => true, 'data' => $arrayData);
+                        } else {
+                            $arrayData = array('status' => false, 'msg' => 'Datos no encontrados!');
+                        }
+                        echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
                     }
-                    echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
+                } else {
+                    echo '<div class="alert alert-danger" role="alert" 
+                            style="position: relative;padding: 0.75rem 1.25rem;margin-bottom: 1rem;border: 
+                            1px solid transparent;border-radius: 0.25rem;color: #721c24;background-color: #f8d7da;
+                            border-color: #f5c6cb;border-top-color: #f1b0b7;">
+                            ¡Acceso restringido!
+                        </div>';
                 }
-                die();
             }
+            die();
         }
 
         public function setHeadquarter() {
@@ -268,13 +347,18 @@
                 $this->InputLongitud = $_POST['InputLongitud'];
                 $this->InputLatitud = $_POST['InputLatitud'];
                 $this->InputEstadoH = $_POST['InputEstadoH'];
+                $arrayData = "";
 
                 if ($this->InputId_headquarter == 0) {
-                    $arrayData = $this->model->InsertHeadquarter($this->InputUbicacion, $this->InputLongitud, $this->InputLatitud, $this->InputEstadoH);
-                    $opcion = 1;
+                    if ($_SESSION['permisosModulo']['w']) {
+                        $arrayData = $this->model->InsertHeadquarter($this->InputUbicacion, $this->InputLongitud, $this->InputLatitud, $this->InputEstadoH);
+                        $opcion = 1;
+                    }
                 } else {
-                    $arrayData = $this->model->UpdateHeadquarter($this->InputId_headquarter, $this->InputUbicacion, $this->InputLongitud, $this->InputLatitud, $this->InputEstadoH);
-                    $opcion = 2;
+                    if ($_SESSION['permisosModulo']['u']) {
+                        $arrayData = $this->model->UpdateHeadquarter($this->InputId_headquarter, $this->InputUbicacion, $this->InputLongitud, $this->InputLatitud, $this->InputEstadoH);
+                        $opcion = 2;
+                    }
                 }
 
                 if ($arrayData > 0) {
@@ -286,22 +370,25 @@
                 } else if ($arrayData == "exists") {
                     $arrayData = array('status' => false, 'msg' => 'La sede ya esta registrado en el sistema.');
                 } else {
-                    $arrayData = array('status' => false, 'msg' => 'Filed Register!');
+                    $arrayData = array('status' => false, 'msg' => 'No se pudo ejecutar este proceso.');
                 }
                 echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
-                die();
             }
+            die();
         }
 
         public function deleteHeadquarter() {
             if ($_POST) {
                 $this->id_headquarter = intval($_POST['id_headquarter']);
                 if ($this->id_headquarter > 0) {
-                    $arrayData = $this->model->DeleteHeadquarter($this->id_headquarter);
+                    $arrayData = "";
+                    if ($_SESSION['permisosModulo']['d']) {
+                        $arrayData = $this->model->DeleteHeadquarter($this->id_headquarter);
+                    }
                     if ($arrayData == "ok") {
                         $arrayData = array('status' => true, 'msg' => 'Eliminada con exito.');
                     } else {
-                        $arrayData = array('status' => false, 'msg' => 'Error!');
+                        $arrayData = array('status' => false, 'msg' => 'No se pudo ejecutar este proceso.');
                     }
                     echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
                 }
@@ -312,25 +399,43 @@
 
         /* Start contacts */
         public function getAllContacts() {
-            $arrayData = $this->model->SelectAllContacts();
-            return $arrayData;
+            if ($_SESSION['permisosModulo']['r']) {
+                $arrayData = $this->model->SelectAllContacts();
+                return $arrayData;
+            } else {
+                echo '<div class="alert alert-danger" role="alert" 
+                        style="position: relative;padding: 0.75rem 1.25rem;margin-bottom: 1rem;border: 
+                        1px solid transparent;border-radius: 0.25rem;color: #721c24;background-color: #f8d7da;
+                        border-color: #f5c6cb;border-top-color: #f1b0b7;">
+                        ¡Acceso restringido!
+                      </div>';
+            }
             die();
         }
 
-        public function getContacts(int $id_contacts) {
+        public function getContacts($id_contacts) {
             if ($_GET) {
-                $this->id_contacts = intval($id_contacts);
-                if ($this->id_contacts > 0) {
-                    $arrayData = $this->model->SelectContacts($this->id_contacts);
-                    if (!empty($arrayData)) {
-                        $arrayData = array('status' => true, 'data' => $arrayData);
-                    } else {
-                        $arrayData = array('status' => false, 'msg' => 'Datos no encontrados!');
+                if ($_SESSION['permisosModulo']['r']) {
+                    $this->id_contacts = intval($id_contacts);
+                    if ($this->id_contacts > 0) {
+                        $arrayData = $this->model->SelectContacts($this->id_contacts);
+                        if (!empty($arrayData)) {
+                            $arrayData = array('status' => true, 'data' => $arrayData);
+                        } else {
+                            $arrayData = array('status' => false, 'msg' => 'Datos no encontrados!');
+                        }
+                        echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
                     }
-                    echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
+                } else {
+                    echo '<div class="alert alert-danger" role="alert" 
+                            style="position: relative;padding: 0.75rem 1.25rem;margin-bottom: 1rem;border: 
+                            1px solid transparent;border-radius: 0.25rem;color: #721c24;background-color: #f8d7da;
+                            border-color: #f5c6cb;border-top-color: #f1b0b7;">
+                            ¡Acceso restringido!
+                          </div>';
                 }
-                die();
             }
+            die();
         }
 
         public function setContacts() {
@@ -339,13 +444,18 @@
                 $this->InputTelefono = $_POST['InputTelefono'];
                 $this->InputEmail = $_POST['InputEmail'];
                 $this->InputEstadoC = $_POST['InputEstadoC'];
+                $arrayData = "";
 
                 if ($this->InputId_contacts == 0) {
-                    $arrayData = $this->model->InsertContacts($this->InputTelefono, $this->InputEmail, $this->InputEstadoC);
-                    $opcion = 1;
+                    if ($_SESSION['permisosModulo']['w']) {
+                        $arrayData = $this->model->InsertContacts($this->InputTelefono, $this->InputEmail, $this->InputEstadoC);
+                        $opcion = 1;
+                    }
                 } else {
-                    $arrayData = $this->model->UpdateContacts($this->InputId_contacts, $this->InputTelefono, $this->InputEmail, $this->InputEstadoC);
-                    $opcion = 2;
+                    if ($_SESSION['permisosModulo']['u']) {
+                        $arrayData = $this->model->UpdateContacts($this->InputId_contacts, $this->InputTelefono, $this->InputEmail, $this->InputEstadoC);
+                        $opcion = 2;
+                    }
                 }
 
                 if ($arrayData > 0) {
@@ -357,22 +467,25 @@
                 } else if ($arrayData == "exists") {
                     $arrayData = array('status' => false, 'msg' => 'Los datos ya estan registrados en el sistema.');
                 } else {
-                    $arrayData = array('status' => false, 'msg' => 'Filed Register!');
+                    $arrayData = array('status' => false, 'msg' => 'No se pudo ejecutar este proceso.');
                 }
                 echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
-                die();
             }
+            die();
         }
 
         public function deleteContacts() {
             if ($_POST) {
                 $this->id_contacts = intval($_POST['id_contacts']);
                 if ($this->id_contacts > 0) {
-                    $arrayData = $this->model->DeleteContacts($this->id_contacts);
+                    $arrayData = "";
+                    if ($_SESSION['permisosModulo']['d']) {
+                        $arrayData = $this->model->DeleteContacts($this->id_contacts);
+                    }
                     if ($arrayData == "ok") {
                         $arrayData = array('status' => true, 'msg' => 'Eliminado con exito.');
                     } else {
-                        $arrayData = array('status' => false, 'msg' => 'Error!');
+                        $arrayData = array('status' => false, 'msg' => 'No se pudo ejecutar este proceso.');
                     }
                     echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
                 }
@@ -383,25 +496,43 @@
 
         /* Start social media */
         public function getAllSocialMedia() {
-            $arrayData = $this->model->SelectAllSocialMedia();
-            return $arrayData;
+            if ($_SESSION['permisosModulo']['r']) {
+                $arrayData = $this->model->SelectAllSocialMedia();
+                return $arrayData;
+            } else {
+                echo '<div class="alert alert-danger" role="alert" 
+                        style="position: relative;padding: 0.75rem 1.25rem;margin-bottom: 1rem;border: 
+                        1px solid transparent;border-radius: 0.25rem;color: #721c24;background-color: #f8d7da;
+                        border-color: #f5c6cb;border-top-color: #f1b0b7;">
+                        ¡Acceso restringido!
+                      </div>';
+            }
             die();
         }
 
-        public function getSocialMedia(int $id_socialMedia) {
+        public function getSocialMedia($id_socialMedia) {
             if ($_GET) {
-                $this->id_socialMedia = intval($id_socialMedia);
-                if ($this->id_socialMedia > 0) {
-                    $arrayData = $this->model->SelectSocialMedia($this->id_socialMedia);
-                    if (!empty($arrayData)) {
-                        $arrayData = array('status' => true, 'data' => $arrayData);
-                    } else {
-                        $arrayData = array('status' => false, 'msg' => 'Datos no encontrados!');
+                if ($_SESSION['permisosModulo']['r']) {
+                    $this->id_socialMedia = intval($id_socialMedia);
+                    if ($this->id_socialMedia > 0) {
+                        $arrayData = $this->model->SelectSocialMedia($this->id_socialMedia);
+                        if (!empty($arrayData)) {
+                            $arrayData = array('status' => true, 'data' => $arrayData);
+                        } else {
+                            $arrayData = array('status' => false, 'msg' => 'Datos no encontrados!');
+                        }
+                        echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
                     }
-                    echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
+                } else {
+                    echo '<div class="alert alert-danger" role="alert" 
+                            style="position: relative;padding: 0.75rem 1.25rem;margin-bottom: 1rem;border: 
+                            1px solid transparent;border-radius: 0.25rem;color: #721c24;background-color: #f8d7da;
+                            border-color: #f5c6cb;border-top-color: #f1b0b7;">
+                            ¡Acceso restringido!
+                          </div>';
                 }
-                die();
             }
+            die();
         }
 
         public function setSocialMedia() {
@@ -411,13 +542,18 @@
                 $this->InputLinkRS = $_POST['InputLinkRS'];
                 $this->InputIconoRS = $_POST['InputIconoRS'];
                 $this->InputEstadoRS = $_POST['InputEstadoRS'];
+                $arrayData = "";
 
                 if ($this->InputId_socialMedia == 0) {
-                    $arrayData = $this->model->InsertSocialMedia($this->InputNombreRS, $this->InputLinkRS, $this->InputIconoRS, $this->InputEstadoRS);
-                    $opcion = 1;
+                    if ($_SESSION['permisosModulo']['w']) {
+                        $arrayData = $this->model->InsertSocialMedia($this->InputNombreRS, $this->InputLinkRS, $this->InputIconoRS, $this->InputEstadoRS);
+                        $opcion = 1;
+                    }
                 } else {
-                    $arrayData = $this->model->UpdateSocialMedia($this->InputId_socialMedia, $this->InputNombreRS, $this->InputLinkRS, $this->InputIconoRS, $this->InputEstadoRS);
-                    $opcion = 2;
+                    if ($_SESSION['permisosModulo']['u']) {
+                        $arrayData = $this->model->UpdateSocialMedia($this->InputId_socialMedia, $this->InputNombreRS, $this->InputLinkRS, $this->InputIconoRS, $this->InputEstadoRS);
+                        $opcion = 2;
+                    }
                 }
 
                 if ($arrayData > 0) {
@@ -429,22 +565,25 @@
                 } else if ($arrayData == "exists") {
                     $arrayData = array('status' => false, 'msg' => 'Los datos ya estan registrados en el sistema.');
                 } else {
-                    $arrayData = array('status' => false, 'msg' => 'Filed Register!');
+                    $arrayData = array('status' => false, 'msg' => 'No se pudo ejecutar este proceso.');
                 }
                 echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
-                die();
             }
+            die();
         }
 
         public function deleteSocialMedia() {
             if ($_POST) {
                 $this->id_socialMedia = intval($_POST['id_socialMedia']);
                 if ($this->id_socialMedia > 0) {
-                    $arrayData = $this->model->DeleteSocialMedia($this->id_socialMedia);
+                    $arrayData = "";
+                    if ($_SESSION['permisosModulo']['d']) {
+                        $arrayData = $this->model->DeleteSocialMedia($this->id_socialMedia);
+                    }
                     if ($arrayData == "ok") {
                         $arrayData = array('status' => true, 'msg' => 'Eliminada con exito.');
                     } else {
-                        $arrayData = array('status' => false, 'msg' => 'Error!');
+                        $arrayData = array('status' => false, 'msg' => 'No se pudo ejecutar este proceso.');
                     }
                     echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
                 }
