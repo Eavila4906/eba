@@ -20,28 +20,36 @@
         }
 
         public function getAllAccounting() {
-            $arrayData = $this->model->SelectAllAccounting();
-            for ($i=0; $i < count($arrayData); $i++) { 
-                $btnPaymentRecord = "";
-                $btnPaymentNotAccounting = "";
-                $dni = "'".$arrayData[$i]['DNI']."'";
-                $nombres = "'".$arrayData[$i]['estudiante']."'";
-                $fecha_UP = "'".$arrayData[$i]['fecha_PP']."'";
-                if ($_SESSION['permisosModulo']['w']){
-                    $btnPaymentRecord = '<button class="btn btn-success btn-sm btnPaymentRecord" onclick="FctBtnPaymentRecord(1,'.$dni.','.$nombres.','.$arrayData[$i]['id_accounting'].','.$fecha_UP.')" title="Registrar pago"><i class="fas fa-check-circle fa-lg"></i></button>';
-                    $btnPaymentNotAccounting = '<button class="btn btn-danger btn-sm btnPaymentRecord" onclick="FctBtnPaymentRecord(2,'.$dni.','.$nombres.','.$arrayData[$i]['id_accounting'].','.$fecha_UP.')" title="Registrar pago no contable"><i class="fas fa-calendar-times fa-lg"></i></button>';
-                }
-                //Formato de fecha
-                setlocale(LC_ALL,"es-ES");
-                $arrayData[$i]['Ultimo_pago'] = strftime("%d de %B de %Y", strtotime($arrayData[$i]['fecha_UP']));
-                $arrayData[$i]['Proximo_pago'] = strftime("%d de %B de %Y", strtotime($arrayData[$i]['fecha_PP']));
+            if ($_SESSION['permisosModulo']['r']) {
+                $arrayData = $this->model->SelectAllAccounting();
+                for ($i=0; $i < count($arrayData); $i++) { 
+                    $btnPaymentRecord = "";
+                    $btnPaymentNotAccounting = "";
+                    $dni = "'".$arrayData[$i]['DNI']."'";
+                    $nombres = "'".$arrayData[$i]['estudiante']."'";
+                    $fecha_UP = "'".$arrayData[$i]['fecha_PP']."'";
+                    if ($_SESSION['permisosModulo']['w']){
+                        $btnPaymentRecord = '<button class="btn btn-success btn-sm btnPaymentRecord" onclick="FctBtnPaymentRecord(1,'.$dni.','.$nombres.','.$arrayData[$i]['id_accounting'].','.$fecha_UP.')" title="Registrar pago"><i class="fas fa-check-circle fa-lg"></i></button>';
+                        $btnPaymentNotAccounting = '<button class="btn btn-danger btn-sm btnPaymentRecord" onclick="FctBtnPaymentRecord(2,'.$dni.','.$nombres.','.$arrayData[$i]['id_accounting'].','.$fecha_UP.')" title="Registrar pago no contable"><i class="fas fa-calendar-times fa-lg"></i></button>';
+                    }
+                    //Formato de fecha
+                    setlocale(LC_ALL,"es-ES");
+                    $arrayData[$i]['Ultimo_pago'] = strftime("%d de %B de %Y", strtotime($arrayData[$i]['fecha_UP']));
+                    $arrayData[$i]['Proximo_pago'] = strftime("%d de %B de %Y", strtotime($arrayData[$i]['fecha_PP']));
 
-                $arrayData[$i]['V_cuota'] = '<spam class="badge badge-success">$ '.$arrayData[$i]['valor'].'</spam>';
-                $acciones = '<div class="text-center">'.$btnPaymentRecord.' '.$btnPaymentNotAccounting.'</div>';
-                $arrayData[$i]['Acciones'] = $acciones;  
+                    $arrayData[$i]['V_cuota'] = '<spam class="badge badge-success">$ '.$arrayData[$i]['valor'].'</spam>';
+                    $acciones = '<div class="text-center">'.$btnPaymentRecord.' '.$btnPaymentNotAccounting.'</div>';
+                    $arrayData[$i]['Acciones'] = $acciones;  
+                }
+                echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
+            } else {
+                echo '<div class="alert alert-danger" role="alert" 
+                        style="position: relative;padding: 0.75rem 1.25rem;margin-bottom: 1rem;border: 
+                        1px solid transparent;border-radius: 0.25rem;color: #721c24;background-color: #f8d7da;
+                        border-color: #f5c6cb;border-top-color: #f1b0b7;">
+                        <b>¡Restricted access!</b> you do not have permission to manipulate this module.
+                    </div>';
             }
-            
-            echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
             die();
         }
 
@@ -54,13 +62,18 @@
                     $this->DNI = $_POST['DNI'];
                     $this->id_accounting = intval($_POST['id_accounting']);
                     $this->fecha_UP = $_POST['fecha_UP'];
+                    $arrayData = "";
 
                     if ($this->accion == 1) {
-                        $arrayData = $this->model->InsertPaymentRecord($this->DNI, $this->id_accounting, $this->fecha_UP);
-                        $request = 1;
+                        if ($_SESSION['permisosModulo']['w']) {
+                            $arrayData = $this->model->InsertPaymentRecord($this->DNI, $this->id_accounting, $this->fecha_UP);
+                            $request = 1;
+                        }
                     } else if ($this->accion == 2) {
-                        $arrayData = $this->model->InsertPaymentRecordNotAccounting($this->DNI, $this->id_accounting, $this->fecha_UP);
-                        $request = 2;
+                        if ($_SESSION['permisosModulo']['w']) {
+                            $arrayData = $this->model->InsertPaymentRecordNotAccounting($this->DNI, $this->id_accounting, $this->fecha_UP);
+                            $request = 2;
+                        }
                     } else {
                         $arrayData = array('status' => false, 'msg' => 'the process failed, try again later!');
                     }
@@ -124,14 +137,12 @@
                         );
                         sendEmail($dataUser, 'email_payment_no_accounting_notifications');
                     } else {
-                        $arrayData = array('status' => false, 'msg' => 'the process failed.');
-                    }
-                    
-                    
+                        $arrayData = array('status' => false, 'msg' => 'No se pudo ejecutar este proceso.');
+                    }  
                 }
                 echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
-                die();
             }
+            die();
         }
     }
 ?>

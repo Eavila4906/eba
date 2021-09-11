@@ -53,7 +53,7 @@ function FctBtnPaymentRecord(accion, DNI, nombres, id_accounting, fecha_UP) {
 		closeOnCancel: true,
 	}, function (isConfirm) {
 		if (isConfirm) {
-			//swal.close();
+			swal.close();
 			divLoading.style.display = "flex";
 			var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
 			var ajaxUrl = BASE_URL + 'payment_record/setPaymentRecord/';
