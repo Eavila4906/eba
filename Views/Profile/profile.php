@@ -176,7 +176,7 @@
                                 La contraseñas debe de tener de 8 a 16 caracteres!
                               </small>
                             </p>
-                          </div>
+                        </div>
                         <div class="col-md-4">
                             <label id="labelConfirmPass" class="">Confirmar contraseña</label>
                             <input class="form-control ConfirmPass" type="password" name="InputConfirmPass" id="InputConfirmPass" required>

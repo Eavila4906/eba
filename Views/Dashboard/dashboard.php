@@ -1,6 +1,5 @@
 <?php
   header_view($data);
-  getModal('notificacion_modal', $data);
 ?>
     
     <main class="app-content">
@@ -23,11 +22,11 @@
               <b>
                 <p id="CountUsers"></p>
               </b>
-              <a href="users" class="small-box-footer">Mas información</a>
+              <a href="<?= BASE_URL(); ?>users" class="small-box-footer">Mas información</a>
             </div>
           </div>
         </div>
-        <div class="col-md-6 col-lg-3">
+        <div class="col-md-6 col-lg-3 notBlock">
           <div class="widget-small info coloured-icon"><i class="icon fas fa-book-open fa-3x"></i>
             <div class="info">
               <h4>Cursos</h4>
@@ -45,7 +44,7 @@
               <b> 
                 <p id="CountStudens"></p>
               </b>
-              <a href="" class="small-box-footer">Mas información</a>
+              <a href="<?= BASE_URL(); ?>users" class="small-box-footer">Mas información</a>
             </div>
           </div>
         </div>
@@ -56,7 +55,7 @@
               <b> 
                 <p id="CountTeachers"></p>
               </b>
-              <a href="" class="small-box-footer">Mas información</i></a>
+              <a href="<?= BASE_URL(); ?>users" class="small-box-footer">Mas información</i></a>
             </div>
           </div>
         </div>

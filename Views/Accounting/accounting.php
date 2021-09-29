@@ -1,6 +1,7 @@
 <?php 
   header_view($data);
   getModal('startsAccounting_modal', $data);
+  getModal('totalPurchaseAccounting_modal', $data);
 ?>    
 <main class="app-content">
     <div class="app-title">

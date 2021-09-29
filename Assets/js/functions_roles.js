@@ -125,8 +125,8 @@ $(document).ready(function () {
 
 function openModal() {
 	document.querySelector('#id_rol').value = "";
-	document.querySelector('#title-modal').innerHTML = "Nuevo Rol";
-	document.querySelector('.modal-header').classList.replace("header-update", "header-register");
+	document.querySelector('#title-modal-rol').innerHTML = "Nuevo Rol";
+	document.querySelector('#modal-header-rol').classList.replace("header-update", "header-register");
 	document.querySelector('#btn-action-form').classList.replace("btn-info", "btn-success");
 	document.querySelector('#text-btn').innerHTML = "Guardar";
 	document.querySelector('#formRoles').reset();
@@ -196,8 +196,8 @@ function fctSavePermisosRol(evnet) {
 
 //Accion editar
 function FctBtnEditarRol(id_rol) {
-	document.querySelector('#title-modal').innerHTML = "Actualizar Rol";
-	document.querySelector('.modal-header').classList.replace("header-register", "header-update");
+	document.querySelector('#title-modal-rol').innerHTML = "Actualizar Rol";
+	document.querySelector('#modal-header-rol').classList.replace("header-register", "header-update");
 	document.querySelector('#btn-action-form').classList.replace("btn-success", "btn-info");
 	document.querySelector('#text-btn').innerHTML = "Actualizar";
 

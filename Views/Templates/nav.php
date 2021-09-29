@@ -55,7 +55,7 @@
             <?php } ?>
 
             <?php if (!empty($_SESSION['permisos'][8]['r'])) { ?>
-            <li><a class="treeview-item" href="payment"><i class="icon fa fa-circle-o"></i> Pagos</a></li>
+            <li><a class="treeview-item" href="payment"><i class="icon fa fa-circle-o"></i> Reportes</a></li>
             <?php } ?>
           </ul>
         </li>

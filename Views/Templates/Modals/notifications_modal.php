@@ -34,8 +34,8 @@
               </tbody>
             </table>
             <br><br>
-            <h4 class="font-weight-bold">Información del proximo pago</h4><br>
-            <table class="default">
+            <h4 class="font-weight-bold" id="nt-info-pp1">Información del proximo pago</h4><br>
+            <table class="default" id="nt-info-pp2">
               <tbody>
                 <tr>
                   <td style="width: 100px" class="font-weight-bold">Periodo:</td>
@@ -52,8 +52,8 @@
               </tbody>
             </table>
             <br><br>
-            <h4 class="font-weight-bold">Información de pagos</h4>
-            <table class="default">
+            <h4 class="font-weight-bold" id="nt-info-ip1">Información de pagos</h4>
+            <table class="default" id="nt-info-ip2">
                 <tbody>
                   <tr>
                     <td style="width: 50px" class="font-weight-bold">Pagados:</td>
@@ -114,20 +114,20 @@
                     </a>
                   </td>
                   <td style="width: 100px" class="font-weight text-center">
-                    <a href="javascripts:;" title="Banco del Pacifico">
-                      <img src="<?= MEDIA();?>images/image-notifications/Banco-del-pacifico.png" 
+                    <a href="javascripts:;" title="MasterCard">
+                      <img src="<?= MEDIA();?>images/image-notifications/MasterCard.jpg" 
                       width="50px" height="50px" style="border-radius:100%;">
                     </a>
                   </td>
                   <td style="width: 100px" class="font-weight text-center">
-                    <a href="javascripts:;" title="Banco Guayaquil">
-                      <img src="<?= MEDIA();?>images/image-notifications/Banco-Guayaquil.png" 
+                    <a href="javascripts:;" title="Visa">
+                      <img src="<?= MEDIA();?>images/image-notifications/Visa.png" 
                       width="50px" height="50px" style="border-radius:100%;">
                     </a>
                   </td>
                 </tr>
                 <tr>
-                  <td id="" title="Número de cuenta" class="font-weight text-center"><B>N.</B>0054886897</td>
+                  <td id="" title="Número de cuenta" class="font-weight text-center"><B>N.</B>2100232502</td>
                   <td id="" title="Número de cuenta" class="font-weight text-center"><B>N.</B>0021086542</td>
                   <td id="" title="Número de cuenta" class="font-weight text-center"><B>N.</B>0000408545</td>
                 </tr>

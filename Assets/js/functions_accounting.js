@@ -1,12 +1,17 @@
 /* Starts starts accounting */
 /* Starts validacion de formulario starts accounting */
 const inputs = document.querySelectorAll('#formStartsAccounting input');
+const inputs2 = document.querySelectorAll('#formTotalPurchaseAccounting input');
 const expresiones = {
 	cuota: /^\d.{1,7}$/,
 }
 
 const campos = {
 	InputValor: false
+}
+
+const campos2 = {
+	InputValorTP: false
 }
 
 const validarFormulario = (e) => {
@@ -34,6 +39,33 @@ const validarCamposForm = (expresion, input, label, id_input, leyenda) => {
 inputs.forEach((input) => {
 	input.addEventListener('keyup', validarFormulario);
 	input.addEventListener('blur', validarFormulario);
+});
+
+const validarFormulario2 = (e) => {
+	switch (e.target.name) {
+		case "InputValorTP":
+			validarCamposForm2(expresiones.cuota, e.target, 'labelValor-TP', 'InputValorTP', 'leyenda-Valor-TP');
+		break;
+	}
+}
+
+const validarCamposForm2 = (expresion, input, label, id_input, leyenda) => {
+	if(expresion.test(input.value)){
+        document.getElementById(`${id_input}`).classList.remove('invalid');
+        document.getElementById(`${leyenda}`).classList.add('none-block');
+		document.getElementById(`${label}`).classList.remove('text-danger');
+		campos2[id_input] = true;
+	} else {
+		document.getElementById(`${id_input}`).classList.add('invalid');
+		document.getElementById(`${leyenda}`).classList.remove('none-block');
+		document.getElementById(`${label}`).classList.add('text-danger');
+		campos2[id_input] = false;
+	}
+}
+
+inputs2.forEach((input) => {
+	input.addEventListener('keyup', validarFormulario2);
+	input.addEventListener('blur', validarFormulario2);
 });
 
 function cleanResiduoVali() {
@@ -139,6 +171,49 @@ document.addEventListener('DOMContentLoaded', function () {
 				if (objData.status) {
 					$('#ModalFormStartsAccounting').modal('hide');
 					formStartsAccounting.reset();
+					swal("¡Contabilidad!", objData.msg, "success");
+					DataTableStartsAccounting.ajax.reload();
+					DataTableAccounting.ajax.reload();
+				} else {
+					swal("¡Atención!", objData.msg, "warning");
+				}
+			}
+			divLoading.style.display = "none";
+            return false;
+		}
+	}
+
+	var formTotalPurchaseAccounting = document.querySelector("#formTotalPurchaseAccounting");
+	formTotalPurchaseAccounting.onsubmit = function (e) {
+		e.preventDefault();
+		var id_studentTP = document.querySelector('#id_student-TP').value;
+		var InputValorTP = document.querySelector('#InputValorTP').value;
+		var InputFechaInicio = document.querySelector('#InputFechaInicio').value;
+		var InputFechaFinal = document.querySelector('#InputFechaFinal').value;
+
+		if (id_studentTP == '' || InputValorTP == '' || InputFechaInicio == '' || InputFechaFinal == '') {
+			swal("¡Atención!", "Todos los campos son obligatorios.", "warning");
+			return false;
+		}
+		if (!campos2.InputValorTP) {
+			swal("¡Atención!", "Verifica los campos en rojo.", "warning");
+			return false;
+		}
+
+		divLoading.style.display = "flex";
+		var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+		var ajaxUrl = BASE_URL + 'accounting/setTotalPurchaseAccounting';
+		var formData = new FormData(formTotalPurchaseAccounting);
+		request.open("POST", ajaxUrl, true);
+		request.send(formData);
+
+		request.onreadystatechange = function () {
+			if (request.readyState == 4 && request.status == 200) {
+				var objData = JSON.parse(request.responseText);
+				if (objData.status) {
+					$('#ModalFormTotalPurchaseAccounting').modal('hide');
+					formTotalPurchaseAccounting.reset();
+					swal("¡Compra total!", objData.msg, "success");
 					DataTableStartsAccounting.ajax.reload();
 					DataTableAccounting.ajax.reload();
 				} else {
@@ -152,13 +227,54 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 
+//functio date
+function initialDate(id) {
+	var date = new Date();
+	var M = date.getMonth()+1;
+	var D = date.getDate();
+	var Y = date.getFullYear();
+	if (D != '05' || D != '5') {
+		D = '05';
+	} 
+	if (M < 10) {
+		M = "0"+M;
+	}
+	document.querySelector(id).value = Y+"-"+M+"-"+D;
+}
+
+function finishDate(id) {
+	var date = new Date();
+	var M = date.getMonth()+2;
+	var D = date.getDate();
+	var Y = date.getFullYear();
+	if (D != '05' || D != '5') {
+		D = '05';
+	} 
+	if (M < 10) {
+		M = "0"+M;
+	}
+	document.querySelector(id).value = Y+"-"+M+"-"+D;
+}
+
 //Function form starts accounting
 function FctBtnStartsAccounting(id_student) {
 	var id_student = id_student;
 	document.querySelector('#id_student').value = id_student;
 	document.querySelector("#formStartsAccounting").reset();
 	cleanResiduoVali();
+	setTimeout(initialDate('#InputFechaIC'), 10);
+	setTimeout(finishDate('#InputFechaFC'), 10);
 	$('#ModalFormStartsAccounting').modal('show');
+} 
+
+function FctBtnTotalPurchaseAccounting(id_student) {
+	var id_student = id_student;
+	document.querySelector('#id_student-TP').value = id_student;
+	document.querySelector("#formTotalPurchaseAccounting").reset();
+	cleanResiduoVali();
+	setTimeout(initialDate('#InputFechaInicio'), 10);
+	setTimeout(finishDate('#InputFechaFinal'), 10);
+	$('#ModalFormTotalPurchaseAccounting').modal('show');
 } 
 
 /* Finish starts accounting */

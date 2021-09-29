@@ -175,7 +175,7 @@
                         if ($sendEmail) {
                             $arrayData = array('status' => true, 'msg' => 'Reguistrado exitosmente.');
                         } else {
-                            $arrayData = array('status' => true, 'msg' => 'email filed.');
+                            $arrayData = array('status' => true, 'msg' => 'Reguistrado exitosmente, pero hubo un error al enviar el email.');
                         }  
                     } else {
                         $arrayData = array('status' => true, 'msg' => 'Actualizado exitosamente.');

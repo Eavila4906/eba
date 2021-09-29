@@ -60,15 +60,20 @@
                          <li><a href="#top" class="smoothScroll">Home</a></li>
                          <li><a href="#about" class="smoothScroll">About</a></li>
                          <li><a href="#team" class="smoothScroll">teachers</a></li>  
-                         <li><a href="#courses" class="smoothScroll">Courses</a></li>       
+                         <!--<li><a href="#courses" class="smoothScroll">Courses</a></li>-->   
                          <li><a href="#contact" class="smoothScroll">Contact</a></li>
                     </ul>
-
+                    <!-- Btn disable
                     <ul class="nav navbar-nav navbar-right">
                          <li><a href="javascript:;" type="Button" onclick="OpenSolicitarRegistroForm();"><i class="fa fa-user-plus"></i>Registrarse</a></li>
                     </ul>
+                    -->
                     <ul class="nav navbar-nav navbar-right">
-                         <li><a href="javascript:;" type="Button" onclick="OpenLoginForm();"><i class="fa fa-sign-in-alt"></i>Login</a></li>
+                         <li>
+                              <a href="javascript:;" type="Button" onclick="OpenLoginForm();">
+                                   <i class="fa fa-sign-in-alt"></i>Log in
+                              </a>
+                         </li>
                     </ul>
                     
                </div>
@@ -83,6 +88,7 @@
           $ContentsHeadquarter = $Site->getAllContentsHeadquarter();
           $ContentsContacts = $Site->getAllContentsContacts();
           $ContentsSocialMedia = $Site->getAllContentsSocialMedia();
+          $ContentsTeachers = $Site->getAllTeachers();
      ?>
 
      <!-- HOME -->
@@ -173,78 +179,41 @@
                          </div>
                     </div>
 
+                    <?php
+                    if (!empty($ContentsTeachers)) {
+                         for ($i=0; $i < count($ContentsTeachers); $i++) { 
+                    ?>
                     <div class="col-md-3 col-sm-6">
                          <div class="team-thumb">
                               <div class="team-image">
-                                   <img src="<?= ASSETS_KN; ?>images/author-image1.jpg" class="img-responsive" alt="">
+                                   <img src="<?= MEDIA().'images/image-profiles/'.$ContentsTeachers[$i]['photo']?>" class="img-responsive" alt="">
                               </div>
                               <div class="team-info">
-                                   <h3>Mark Wilson</h3>
-                                   <span>I love Teaching</span>
+                                   <h3><?=$ContentsTeachers[$i]['nombres']?></h3>
+                                   <!--<span>I love Teaching</span>-->
                               </div>
-                              <ul class="social-icon">
+                              <!--<ul class="social-icon">
                                    <li><a href="#" class="fa fa-facebook-square" attr="facebook icon"></a></li>
                                    <li><a href="#" class="fa fa-twitter"></a></li>
                                    <li><a href="#" class="fa fa-instagram"></a></li>
-                              </ul>
+                              </ul>-->
                          </div>
                     </div>
-
-                    <div class="col-md-3 col-sm-6">
-                         <div class="team-thumb">
-                              <div class="team-image">
-                                   <img src="<?= ASSETS_KN; ?>images/author-image2.jpg" class="img-responsive" alt="">
-                              </div>
-                              <div class="team-info">
-                                   <h3>Catherine</h3>
-                                   <span>Education is the key!</span>
-                              </div>
-                              <ul class="social-icon">
-                                   <li><a href="#" class="fa fa-google"></a></li>
-                                   <li><a href="#" class="fa fa-instagram"></a></li>
-                              </ul>
-                         </div>
-                    </div>
-
-                    <div class="col-md-3 col-sm-6">
-                         <div class="team-thumb">
-                              <div class="team-image">
-                                   <img src="<?= ASSETS_KN; ?>images/author-image3.jpg" class="img-responsive" alt="">
-                              </div>
-                              <div class="team-info">
-                                   <h3>Jessie Ca</h3>
-                                   <span>I like Online Courses</span>
-                              </div>
-                              <ul class="social-icon">
-                                   <li><a href="#" class="fa fa-twitter"></a></li>
-                                   <li><a href="#" class="fa fa-envelope-o"></a></li>
-                                   <li><a href="#" class="fa fa-linkedin"></a></li>
-                              </ul>
-                         </div>
-                    </div>
-
-                    <div class="col-md-3 col-sm-6">
-                         <div class="team-thumb">
-                              <div class="team-image">
-                                   <img src="<?= ASSETS_KN; ?>images/author-image4.jpg" class="img-responsive" alt="">
-                              </div>
-                              <div class="team-info">
-                                   <h3>Andrew Berti</h3>
-                                   <span>Learning is fun</span>
-                              </div>
-                              <ul class="social-icon">
-                                   <li><a href="#" class="fa fa-twitter"></a></li>
-                                   <li><a href="#" class="fa fa-google"></a></li>
-                                   <li><a href="#" class="fa fa-behance"></a></li>
-                              </ul>
-                         </div>
-                    </div>
+                    <?php
+                         }
+                    } else {
+                    ?>
+                    <h3 class="text-muted" style="margin-left: 370px;">No existen datos para mostrar!</h3>
+                    <?php   
+                    }
+                    ?>
 
                </div>
           </div>
      </section>
 
      <!-- COURSES -->
+     <!--
      <section id="courses">
           <div class="container">
                <div class="row">
@@ -412,30 +381,43 @@
                </div>
           </div>
      </section>
+     -->
 
      <!-- CONTACT -->
      <section id="contact">
           <div class="container">
                <div class="row">
-
                     <div class="col-md-6 col-sm-12">
-                         <form id="contact-form" role="form" action="" method="post">
+                         <form id="contact-form">
                               <div class="section-title">
                                    <h2>Contact us <small>Send an email to know your situation</small></h2>
                               </div>
-
                               <div class="col-md-12 col-sm-12">
-                                   <input type="text" class="form-control" placeholder="Enter full name" name="name" required="">
-                    
-                                   <input type="email" class="form-control" placeholder="Enter email address" name="email" required="">
-
-                                   <textarea class="form-control" rows="6" placeholder="Tell us about your message" name="message" required=""></textarea>
+                                   <input type="text" class="form-control" id="InputFullNameC" name="InputFullNameC" placeholder="Enter full name" required="">
+                                   <div class="row mb-6">
+                                        <div class="col-md-6">
+                                             <input type="email" class="form-control inputForm" id="InputEmailC" name="InputEmailC" placeholder="Enter email address" required="">
+                                             <p class="leyenda none-block text-danger" id="leyenda-emailC">
+                                                  <small> 
+                                                       Email incorrecto! <br>ejemplo: ads@ads.com
+                                                  </small>
+                                             </p>
+                                        </div>
+                                        <div class="col-md-6">
+                                             <input type="text" class="form-control inputForm" id="InputTelefonoC" name="InputTelefonoC" placeholder="Enter full cell phone number" required="">
+                                             <p class="leyenda none-block text-danger" id="leyenda-telefonoC">
+                                                  <small> 
+                                                       El telefono solo puede contener numeros y el maximo son 10 dígitos!
+                                                  </small>
+                                             </p>
+                                        </div>
+                                   </div>
+                                   <textarea class="form-control" id="InputMessageC" name="InputMessageC" rows="6" placeholder="Tell us about your message" required=""></textarea>
+                                   <div id="AlertContactForm"></div>
                               </div>
-
                               <div class="col-md-4 col-sm-12">
                                    <input type="submit" class="form-control" name="send message" value="Send Message">
                               </div>
-
                          </form>
                     </div>
 

@@ -6,6 +6,7 @@
   getModal('headquarter_modal', $data);
   getModal('contacts_modal', $data);
   getModal('socialMedia_modal', $data);
+  getModal('teachers_modal', $data);
 ?> 
 <main class="app-content">
   <div class="app-title">
@@ -30,6 +31,7 @@
     $dataHeadquarter = $PublicSite->getAllHeadquarter();
     $dataContacts = $PublicSite->getAllContacts();
     $dataSocialMedia = $PublicSite->getAllSocialMedia();
+    $dataTeachers = $PublicSite->getAllTeachers();
   ?>
   <!--Home-->
   <div id="home">
@@ -176,6 +178,59 @@
               <?php if ($_SESSION['permisosModulo']['w']) {?>
               <button class="btn text-success" onclick="OpenModalAddIcons();"><i class="fas fa-plus fa-fw"></i>Agregar icono</button>
               <?php } ?>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Teacher-->
+  <div id="teacher">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="tile">
+          <div class="tile-body">
+            <div class="row">
+              <div class="col-md-11">
+                <h4 class="text-secondary" id="title-teachers"><i class="fas fa-chalkboard-teacher"></i> Teachers
+                <?php if ($_SESSION['permisosModulo']['w']) { ?>
+                <button class="btn btn-success" id="btn-add-teachers" onclick="OpenModalAddContentsTeachers();"><i class="fas fa-plus fa-fw"></i>Agregar contenido</button>
+                <?php } ?>
+              </h4>
+              </div>
+              <div class="col-md-1">
+                <a id="hideTeachers" href="javascript:;" title="Ocultar" onclick="fctHide('.body-Teachers', '#hideTeachers', '#showTeachers', '#spaceTeachers', '#btn-add-teachers', '#title-teachers');"><i class="fas fa-angle-up fa-lg text-secondary"></i></a>
+                <a id="showTeachers" href="javascript:;" style="display: none;" title="Mostrar" onclick="fctShow('.body-Teachers', '#hideTeachers', '#showTeachers', '#spaceTeachers', '#btn-add-teachers', '#title-teachers');"><i class="fas fa-angle-down fa-lg text-secondary"></i></a>
+              </div>
+            </div>
+          </div>
+          <br id="spaceTeachers">
+          <div class="body-Teachers"> 
+            <div class="row">
+            <?php
+              if (!empty($dataTeachers)) {
+                for ($i=0; $i < count($dataTeachers); $i++) {
+            ?>
+              <div class="col-md-3">
+                <div class="card mb-3">
+                  <img src="<?= MEDIA().'images/image-profiles/'.$dataTeachers[$i]['photo']?>" class="img-responsive" width="100%" height="200%">
+                  <div class="card-body">
+                    <h3><?=$dataTeachers[$i]['nombres']?></h3>
+                    <?php if ($_SESSION['permisosModulo']['u']) { ?>
+                    <button type="button" class="btn btn-sm btn-danger btnEditarConteHome" onclick="FctBtnOnOrOffTeacher(<?= $dataTeachers[$i]['id_teacher']; ?>, 0)" title="Quitar de la portada"><i class="fas fa-power-off fa-lg"></i></button>
+                    <?php } ?>
+                  </div>
+                </div>
+              </div>
+            <?php
+                }
+              } else {
+            ?>
+                <h3 class="text-muted" style="margin-left: 370px;">No existen datos para mostrar!</h3>
+            <?php
+              }
+            ?>
             </div>
           </div>
         </div>

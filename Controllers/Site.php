@@ -10,45 +10,83 @@
             $this -> views -> getViews($this,"site", $data);
         }
 
-        /* Start home */
+        /* Start get home */
         public function getAllContentsHome() {
 			$arrayData = $this->model->SelectAllContentsHome();
             return $arrayData;
 			die();
         }
-        /* Finish home */
+        /* Finish get home */
 
-        /* Start about */
+        /* Start get about */
         public function getAllContentsAbout() {
 			$arrayData = $this->model->SelectAllContentsAbout();
             return $arrayData;
 			die();
         }
-        /* Finish about */
+        /* Finish get about */
 
-        /* Start headquarter */
+        /* Start get headquarter */
         public function getAllContentsHeadquarter() {
 			$arrayData = $this->model->SelectAllContentsHeadquarter();
             return $arrayData;
 			die();
         }
-        /* Finish headquarter */
+        /* Finish get headquarter */
 
-        /* Start contacts */
+        /* Start get contacts */
         public function getAllContentsContacts() {
 			$arrayData = $this->model->SelectAllContentsContacts();
             return $arrayData;
 			die();
         }
-        /* Finish contacts */
+        /* Finish get contacts */
 
-        /* Start social media */
+        /* Start get social media */
         public function getAllContentsSocialMedia() {
 			$arrayData = $this->model->SelectAllContentsSocialMedia();
             return $arrayData;
 			die();
         }
-        /* Finish social media */
+        /* Finish get social media */
+
+        /* Start get teachers */
+        public function getAllTeachers() {
+            $arrayData = $this->model->SelectAllTeachers();
+            return $arrayData;
+            die();
+        }
+        /* Finish get teachers */
+
+        /* sendEmail */
+        public function sendEmailInformation() {
+            if ($_POST) {
+                if ($_POST['InputFullNameC'] == "" || $_POST['InputEmailC'] == "" 
+                || $_POST['InputTelefonoC'] == "" || $_POST['InputMessageC'] == "") {
+                    $arrayData = array('status' => false, 'msg' => 'No se pudo ejecutar este proceso, por favor intente mas tarde.');
+                } else {
+                    $this->InputFullNameC = $_POST['InputFullNameC'];
+                    $this->InputEmailC = $_POST['InputEmailC'];
+                    $this->InputTelefonoC = $_POST['InputTelefonoC'];
+                    $this->InputMessageC = $_POST['InputMessageC'];
+                    $data = array(
+                        'fullName' => $this->InputFullNameC,
+                        'emailUser' => $this->InputEmailC,
+                        'cell' => $this->InputTelefonoC,
+                        'email' => SENDER_EMAIL,
+                        'asunto' => 'Mensaje de parte de '.$this->InputEmailC,
+                        'message' => $this->InputMessageC
+                    );
+                    $sendEmail = sendEmail($data,'email_contact');
+                    if ($sendEmail) {
+                        $arrayData = array('status' => true, 'msg' => 'Tu mensaje ha sido enviado exitosamente.');
+                    } else {
+                        $arrayData = array('status' => false, 'msg' => 'No se pudo ejecutar este proceso, por favor intente mas tarde.');
+                    }
+                }
+                echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
+            }
+            die();
+        }
     }
-    
 ?>

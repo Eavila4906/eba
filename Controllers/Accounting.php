@@ -24,10 +24,12 @@
                 $arrayData = $this->model->SelectAllStudents();
                 for ($i=0; $i < count($arrayData); $i++) { 
                     $btnStartsAccounting = "";
+                    $btnTotal_Purchase = "";
                     if ($_SESSION['permisosModulo']['w']){
-                        $btnStartsAccounting = '<button class="btn btn-success btn-sm btnStartsAccounting" onclick="FctBtnStartsAccounting('.$arrayData[$i]['DNI'].')" title="Iniciar contabilidad"><i class="fas fa-play-circle fa-lg"></i></button>';
+                        $btnStartsAccounting = '<button class="btn btn-success btn-sm btnStartsAccounting" onclick="FctBtnStartsAccounting('.$arrayData[$i]['DNI'].')" title="Iniciar contabilidad"><i class="fas fa-calculator fa-lg"></i></button>';
+                        $btnTotal_Purchase = '<button class="btn btn-info btn-sm btnStartsAccounting" onclick="FctBtnTotalPurchaseAccounting('.$arrayData[$i]['DNI'].')" title="Compra total"><i class="fas fa-cash-register fa-lg"></i></button>';
                     }
-                    $acciones = '<div class="text-center">'.$btnStartsAccounting.'</div>';
+                    $acciones = '<div class="text-center">'.$btnStartsAccounting.' '.$btnTotal_Purchase.'</div>';
                     $arrayData[$i]['Acciones'] = $acciones;  
                 }
                 echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
@@ -45,18 +47,99 @@
         public function setAccounting() {
             if ($_POST) {
                 $arrayData = "";
-                if ($_POST['id_student'] == "" || $_POST['InputCuota'] == "" || $_POST['InputValor'] == "" || $_POST['InputFechaFC'] == "") {
+                if ($_POST['id_student'] == "" || $_POST['InputTypePayment-sa'] == "" 
+                    || $_POST['InputCuota'] == "" || $_POST['InputValor'] == "" 
+                    || $_POST['InputFechaIC'] == "" || $_POST['InputFechaFC'] == "") {
                     $arrayData = array('status' => false, 'msg' => 'No se pudo ejecutar este proceso.');
                 } else {
                     $this->id_student = $_POST['id_student'];
+                    $this->InputTypePayment_sa = $_POST['InputTypePayment-sa'];
                     $this->InputCuota = $_POST['InputCuota'];
                     $this->InputValor = $_POST['InputValor'];
+                    $this->InputFechaIC = $_POST['InputFechaIC'];
                     $this->InputFechaFC = $_POST['InputFechaFC'];
                     if ($_SESSION['permisosModulo']['w']) {
-                        $arrayData = $this->model->InsertAccounting($this->id_student, $this->InputCuota, $this->InputValor, $this->InputFechaFC);
+                        $arrayData = $this->model->InsertAccounting($this->id_student,
+                                                                    $this->InputTypePayment_sa, 
+                                                                    $this->InputCuota, 
+                                                                    $this->InputValor, 
+                                                                    $this->InputFechaIC, 
+                                                                    $this->InputFechaFC);
                     }
                     if ($arrayData > 0) {
-                        $arrayData = array('status' => true, 'msg' => 'Contabilidad iniciada.');
+                        setlocale(LC_ALL,"es-ES");
+                        $arrDataUser = $this->model->SelectDataUserAccounting($this->id_student);
+                        $mes = ucwords(strftime("%B", strtotime($arrDataUser['fecha_UP'])));
+                        $dataUser = array(
+                            'usuario' => $arrDataUser['nombres'],
+                            'DNI' => $arrDataUser['DNI'],
+                            'email' => $arrDataUser['email'],
+                            'asunto' => 'Notificación de pago inicial '.$mes.' - '.SENDER_NAME,
+                            'url' => BASE_URL(),
+                            'mes' => $mes
+                        );
+                        $sendEmail = sendEmail($dataUser, 'email_payment_notifications');
+                        if ($sendEmail) {
+                            $arrayData = array('status' => true, 'msg' => 'La contabilidad ha sido iniciado exitosamente.');
+                        } else {
+                            $arrayData = array('status' => true, 'msg' => 'La contabilidad ha sido iniciado, pero hubo un error al enviar el email.');
+                        }
+                    } else if ($arrayData == "invalid date") {
+                        $arrayData = array('status' => false, 'msg' => 'La fecha que ingresastes no es valida.');
+                    } else {
+                        $arrayData = array('status' => false, 'msg' => 'No se pudo ejecutar este proceso.');
+                    }
+                }
+                echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
+            }
+            die();
+        }
+
+        public function setTotalPurchaseAccounting() {
+            if ($_POST) {
+                $arrayData = "";
+                if ($_POST['id_student-TP'] == "" || $_POST['InputValorTP'] == "" 
+                    || $_POST['InputFechaInicio'] == "" || $_POST['InputFechaFinal'] == "") {
+                    $arrayData = array('status' => false, 'msg' => 'No se pudo ejecutar este proceso.');
+                } else {
+                    $this->id_studentTP = $_POST['id_student-TP'];
+                    $this->InputTypePayment = $_POST['InputTypePayment'];
+                    $this->InputValorTP = $_POST['InputValorTP'];
+                    $this->InputFechaInicio = $_POST['InputFechaInicio'];
+                    $this->InputFechaFinal = $_POST['InputFechaFinal'];
+                    $this->InputDescripcion = $_POST['InputDescripcion'];
+
+                    $cm = intval(calculateRangeDate($this->InputFechaInicio, $this->InputFechaFinal));
+                    $valor = $this->InputValorTP * $cm;
+                    if ($_SESSION['permisosModulo']['w']) {
+                        $arrayData = $this->model->InsertTotalPurchaseAccounting($this->id_studentTP, 
+                                                                                 $this->InputTypePayment,
+                                                                                 $this->InputValorTP,
+                                                                                 $valor, 
+                                                                                 $this->InputFechaInicio, 
+                                                                                 $this->InputFechaFinal,
+                                                                                 $this->InputDescripcion);
+                    }
+                    if ($arrayData > 0) {
+                        setlocale(LC_ALL,"es-ES");
+                        $arrDataUser = $this->model->SelectDataUserPT($this->id_studentTP);
+                        $Inicio_periodo = ucwords(strftime("%B %Y", strtotime($this->InputFechaInicio)));
+                        $Fin_periodo = ucwords(strftime("%B %Y", strtotime($this->InputFechaFinal)));
+                        $periodo = $Inicio_periodo." - ".$Fin_periodo;
+                        $dataUser = array(
+                            'usuario' => $arrDataUser['nombres'],
+                            'DNI' => $this->id_studentTP,
+                            'email' => $arrDataUser['email'],
+                            'asunto' => 'Notificación de pago total '.$periodo.' - '.SENDER_NAME,
+                            'url' => BASE_URL(),
+                            'periodo' => $periodo
+                        );
+                        $sendEmail = sendEmail($dataUser, 'email_payment_total_notifications');
+                        if ($sendEmail) {
+                            $arrayData = array('status' => true, 'msg' => 'realizada exitosamente.');
+                        } else {
+                            $arrayData = array('status' => true, 'msg' => 'realizada exitosamente, pero hubo un error al enviar el email.');
+                        }
                     } else if ($arrayData == "invalid date") {
                         $arrayData = array('status' => false, 'msg' => 'La fecha que ingresastes no es valida.');
                     } else {

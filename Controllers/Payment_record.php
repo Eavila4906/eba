@@ -24,12 +24,14 @@
                 $arrayData = $this->model->SelectAllAccounting();
                 for ($i=0; $i < count($arrayData); $i++) { 
                     $btnPaymentRecord = "";
+                    //$btnPaymentRecordTotal = "";
                     $btnPaymentNotAccounting = "";
                     $dni = "'".$arrayData[$i]['DNI']."'";
                     $nombres = "'".$arrayData[$i]['estudiante']."'";
                     $fecha_UP = "'".$arrayData[$i]['fecha_PP']."'";
                     if ($_SESSION['permisosModulo']['w']){
-                        $btnPaymentRecord = '<button class="btn btn-success btn-sm btnPaymentRecord" onclick="FctBtnPaymentRecord(1,'.$dni.','.$nombres.','.$arrayData[$i]['id_accounting'].','.$fecha_UP.')" title="Registrar pago"><i class="fas fa-check-circle fa-lg"></i></button>';
+                        $btnPaymentRecord = '<button class="btn btn-success btn-sm btnPaymentRecord" onclick="FctBtnPaymentRecord(1,'.$dni.','.$nombres.','.$arrayData[$i]['id_accounting'].','.$fecha_UP.')" title="Registrar pago mensual"><i class="far fa-calendar-check fa-lg"></i></button>';
+                        //$btnPaymentRecordTotal = '<button class="btn btn-info btn-sm btnPaymentRecord" onclick="FctBtnPaymentRecord(2,'.$dni.','.$nombres.','.$arrayData[$i]['id_accounting'].','.$fecha_UP.')" title="Registrar todos los pagos"><i class="fas fa-calendar-check fa-lg"></i></button>';
                         $btnPaymentNotAccounting = '<button class="btn btn-danger btn-sm btnPaymentRecord" onclick="FctBtnPaymentRecord(2,'.$dni.','.$nombres.','.$arrayData[$i]['id_accounting'].','.$fecha_UP.')" title="Registrar pago no contable"><i class="fas fa-calendar-times fa-lg"></i></button>';
                     }
                     //Formato de fecha
@@ -56,31 +58,62 @@
         public function setPaymentRecord() {
             if ($_POST) {
                 if (intval($_POST['accion']) == 0 || $_POST['DNI'] == "" || intval($_POST['id_accounting']) == 0 || $_POST['fecha_UP'] == "") {
-                    $arrayData = array('status' => false, 'msg' => 'the process failed, try again later!');
+                    $arrayData = array('status' => false, 'msg' => 'No se pudo ejecutar este proceso.');
                 } else {
                     $this->accion = intval($_POST['accion']);
                     $this->DNI = $_POST['DNI'];
                     $this->id_accounting = intval($_POST['id_accounting']);
                     $this->fecha_UP = $_POST['fecha_UP'];
+                    $this->InputTypePayment = $_POST['InputTypePayment'];
+                    $this->InputDescripcion = $_POST['InputDescripcion'];
                     $arrayData = "";
 
                     if ($this->accion == 1) {
-                        if ($_SESSION['permisosModulo']['w']) {
-                            $arrayData = $this->model->InsertPaymentRecord($this->DNI, $this->id_accounting, $this->fecha_UP);
-                            $request = 1;
+                        if ($_POST['InputTypePayment'] == "") {
+                            $arrayData = array('status' => false, 'msg' => 'No se pudo ejecutar este proceso.');  
+                        } else {
+                            if ($_SESSION['permisosModulo']['w']) {
+                                $arrayData = $this->model->InsertPaymentRecord($this->DNI, 
+                                                                               $this->id_accounting, 
+                                                                               $this->fecha_UP,
+                                                                               $this->InputTypePayment,
+                                                                               $this->InputDescripcion);
+                                $request = 1;
+                            }
                         }
                     } else if ($this->accion == 2) {
+                        if ($_POST['InputDescripcion'] == "") {
+                            $arrayData = array('status' => false, 'msg' => 'No se pudo ejecutar este proceso.');
+                        } else {
+                            if ($_SESSION['permisosModulo']['w']) {
+                                $arrayData = $this->model->InsertPaymentRecordNotAccounting($this->DNI, 
+                                                                                            $this->id_accounting, 
+                                                                                            $this->fecha_UP,
+                                                                                            $this->InputDescripcion);
+                                $request = 2;
+                            }
+                        }
+                    } else if ($this->accion == 3) {
                         if ($_SESSION['permisosModulo']['w']) {
-                            $arrayData = $this->model->InsertPaymentRecordNotAccounting($this->DNI, $this->id_accounting, $this->fecha_UP);
-                            $request = 2;
+                            $data = $this->model->SelectPeriodo($this->DNI, $this->id_accounting);
+                            $fecha_IC = $data['fecha_IC'];
+                            $fecha_FC = $data['fecha_FC'];
+                            $rango = calculateRangeDate($fecha_IC, $fecha_FC);
+                            for ($i=0; $i < $rango; $i++) { 
+                                $data = $this->model->SelectPeriodo($this->DNI, $this->id_accounting);
+                                $this->fecha_UP = $data['fecha_UP'];
+                                $arrayData = $this->model->InsertPaymentRecordTotal($this->DNI, 
+                                                                                    $this->id_accounting, 
+                                                                                    $this->fecha_UP);
+                            }
+                            $request = 3;
                         }
                     } else {
-                        $arrayData = array('status' => false, 'msg' => 'the process failed, try again later!');
+                        $arrayData = array('status' => false, 'msg' => 'No se pudo ejecutar este proceso.');
                     }
 
                     if ($arrayData > 0) {
                         if ($request == 1) {
-                            $arrayData = array('status' => true, 'msg' => 'El pago se ha realizado exitosamente.');
                             setlocale(LC_ALL,"es-ES");
                             $arrDataUser = $this->model->SelectDataUserAccounting($this->DNI, $this->id_accounting);
                             $mes = ucwords(strftime("%B", strtotime($arrDataUser['fecha_UP'])));
@@ -92,9 +125,13 @@
                                 'url' => BASE_URL(),
                                 'mes' => $mes
                             );
-                            sendEmail($dataUser, 'email_payment_notifications');
-                        } else {
-                            $arrayData = array('status' => true, 'msg' => 'Se registro el pago no contable exitosamente.');
+                            $sendEmail = sendEmail($dataUser, 'email_payment_notifications');
+                            if ($sendEmail) {
+                                $arrayData = array('status' => true, 'msg' => 'El pago se ha realizado exitosamente.');
+                            } else {
+                                $arrayData = array('status' => true, 'msg' => 'El pago se ha realizado exitosamente, pero hubo un error al enviar el email.');
+                            }
+                        } else if ($request == 2) {
                             setlocale(LC_ALL,"es-ES");
                             $arrDataUser = $this->model->SelectDataUserAccounting($this->DNI, $this->id_accounting);
                             $mes = ucwords(strftime("%B", strtotime($arrDataUser['fecha_UP'])));
@@ -106,10 +143,30 @@
                                 'url' => BASE_URL(),
                                 'mes' => $mes
                             );
-                            sendEmail($dataUser, 'email_payment_no_accounting_notifications');
+                            $sendEmail = sendEmail($dataUser, 'email_payment_no_accounting_notifications');
+                            if ($sendEmail) {
+                                $arrayData = array('status' => true, 'msg' => 'Se registro el pago no contable exitosamente.');
+                            } else {
+                                $arrayData = array('status' => true, 'msg' => 'Se registro el pago no contable exitosamente, pero hubo un error al enviar el email.');
+                            }
+                        } else if ($request == 3) {
+                            $arrayData = array('status' => true, 'msg' => 'Se ha registrado el pago total de su contabilidad.');
+                            /*
+                            setlocale(LC_ALL,"es-ES");
+                            $arrDataUser = $this->model->SelectDataUserAccounting($this->DNI, $this->id_accounting);
+                            $mes = ucwords(strftime("%B", strtotime($arrDataUser['fecha_UP'])));
+                            $dataUser = array(
+                                'usuario' => $arrDataUser['nombres'],
+                                'DNI' => $arrDataUser['DNI'],
+                                'email' => $arrDataUser['email'],
+                                'asunto' => 'Notificación de pago '.$mes.' - '.SENDER_NAME,
+                                'url' => BASE_URL(),
+                                'mes' => $mes
+                            );
+                            sendEmail($dataUser, 'email_payment_total_notifications');
+                            */
                         }
                     } else if ($arrayData == "rango completo") {
-                        $arrayData = array('status' => true, 'msg' => 'Se ha realizado el ultimo pago en su contabilidad.');
                         setlocale(LC_ALL,"es-ES");
                         $arrDataUser = $this->model->SelectDataUserAccounting($this->DNI, $this->id_accounting);
                         $mes = ucwords(strftime("%B", strtotime($arrDataUser['fecha_UP'])));
@@ -117,13 +174,17 @@
                             'usuario' => $arrDataUser['nombres'],
                             'DNI' => $arrDataUser['DNI'],
                             'email' => $arrDataUser['email'],
-                            'asunto' => 'Notificación de pago '.$mes.' - '.SENDER_NAME,
+                            'asunto' => 'Notificación de pago final '.$mes.' - '.SENDER_NAME,
                             'url' => BASE_URL(),
                             'mes' => $mes
                         );
-                        sendEmail($dataUser, 'email_payment_notifications');
+                        $sendEmail = sendEmail($dataUser, 'email_payment_notifications');
+                        if ($sendEmail) {
+                            $arrayData = array('status' => true, 'msg' => 'Se ha realizado el ultimo pago en su contabilidad.');
+                        } else {
+                            $arrayData = array('status' => true, 'msg' => 'Se ha realizado el ultimo pago en su contabilidad, pero hubo un error al enviar el email.');
+                        }
                     } else if ($arrayData == "rango completo - no contable") {
-                        $arrayData = array('status' => true, 'msg' => 'Se registro el pago no contable exitosamente, y se ha culminado el periodo de su contabilidad');
                         setlocale(LC_ALL,"es-ES");
                         $arrDataUser = $this->model->SelectDataUserAccounting($this->DNI, $this->id_accounting);
                         $mes = ucwords(strftime("%B", strtotime($arrDataUser['fecha_UP'])));
@@ -135,7 +196,12 @@
                             'url' => BASE_URL(),
                             'mes' => $mes
                         );
-                        sendEmail($dataUser, 'email_payment_no_accounting_notifications');
+                        $sendEmail = sendEmail($dataUser, 'email_payment_no_accounting_notifications');
+                        if ($sendEmail) {
+                            $arrayData = array('status' => true, 'msg' => 'Se registro el pago no contable exitosamente, y se ha culminado el periodo de su contabilidad');
+                        } else {
+                            $arrayData = array('status' => true, 'msg' => 'Se registro el pago no contable exitosamente, y se ha culminado el periodo de su contabilidad, pero hubo un error al enviar el email.');
+                        }
                     } else {
                         $arrayData = array('status' => false, 'msg' => 'No se pudo ejecutar este proceso.');
                     }  

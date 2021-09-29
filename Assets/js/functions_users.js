@@ -1,6 +1,5 @@
 /* Starts validacion de formulario add users */
 const inputs = document.querySelectorAll('#formUsers input');
-
 const expresiones = {
 	cedula: /^\d{9,10}$/,
 	nombres: /^[a-zA-ZÀ-ÿ\s]{1,45}$/,
@@ -150,8 +149,8 @@ document.addEventListener('DOMContentLoaded', function () {
 //Abrir formulario de registro
 function openModal() {
 	document.querySelector('#id_usuario').value = "";
-	document.querySelector('#title-modal').innerHTML = "Nuevo Usuario";
-	document.querySelector('.modal-header').classList.replace("header-update", "header-register");
+	document.querySelector('#title-modal-user').innerHTML = "Nuevo Usuario";
+	document.querySelector('#modal-header-user').classList.replace("header-update", "header-register");
 	document.querySelector('#cajaPassword').classList.replace("pass-update", "pass-register");
 	document.querySelector('#InputTipoRol').classList.replace("rol-update", "rol-register");
 	document.querySelector('#btn-action-form').classList.replace("btn-info", "btn-success");
@@ -244,8 +243,8 @@ function FctBtnVerInfoUser(id_user) {
 
 //Accion editar
 function FctBtnEditarUser(id_user) {
-	document.querySelector('#title-modal').innerHTML = "Actualizar usuario";
-	document.querySelector('.modal-header').classList.replace("header-register", "header-update");
+	document.querySelector('#title-modal-user').innerHTML = "Actualizar usuario";
+	document.querySelector('#modal-header-user').classList.replace("header-register", "header-update");
 	document.querySelector('#btn-action-form').classList.replace("btn-success", "btn-info");
 	document.querySelector('#cajaPassword').classList.replace("pass-register", "pass-update");
 	document.querySelector('#InputTipoRol').classList.replace("rol-register", "rol-update");

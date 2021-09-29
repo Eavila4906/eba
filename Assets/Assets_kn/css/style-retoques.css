@@ -132,3 +132,8 @@
     top: 200px;
     left: 50px;
 }
+
+/*forms*/
+.invalid {
+	border: red 1px solid;
+}

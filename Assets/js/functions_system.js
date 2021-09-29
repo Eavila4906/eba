@@ -134,7 +134,7 @@ function ftnSeeNotifications(id_notification, tipo, fecha, leida, mes, descripci
         }
     }
     if (tipo == "Pago" || tipo == "Pago Inicial" || tipo == "Pago Final" || tipo == "Pago (No contable)" 
-        || tipo == "Pago Final (No contable)") {
+        || tipo == "Pago Final (No contable)" || tipo == "Pago Total") {
         var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
         var ajaxUrl = BASE_URL+'my/infoNotificaionsPayment';
         var data = 'date=' + fecha;
@@ -145,6 +145,11 @@ function ftnSeeNotifications(id_notification, tipo, fecha, leida, mes, descripci
             if (request.readyState == 4 && request.status == 200) {
                 var objData = JSON.parse(request.responseText);
                 if (objData.status) {
+                    //
+                    document.querySelector('#nt-info-pp1').classList.replace("notBlock", "font-weight-bold");
+                    document.querySelector('#nt-info-pp2').classList.replace("notBlock", "default");
+                    document.querySelector('#nt-info-ip1').classList.replace("notBlock", "font-weight-bold");
+                    document.querySelector('#nt-info-ip2').classList.replace("notBlock", "default");
                     //info payment
                     document.querySelector('#periodo').innerHTML = objData.data.periodo;
                     document.querySelector('#fechapago').innerHTML = objData.data.fecha_pago;
@@ -158,6 +163,12 @@ function ftnSeeNotifications(id_notification, tipo, fecha, leida, mes, descripci
                         document.querySelector('#periodo-pp').innerHTML = objData.data.periodo;
                         document.querySelector('#fecha-pp').innerHTML = objData.data.fecha_pp;
                         document.querySelector('#cantidad-pp').innerHTML = "$"+objData.data.valor;
+                    }
+                    if (tipo == "Pago Total") {
+                        document.querySelector('#nt-info-pp1').classList.replace("font-weight-bold", "notBlock");
+                        document.querySelector('#nt-info-pp2').classList.replace("default", "notBlock");
+                        document.querySelector('#nt-info-ip1').classList.replace("font-weight-bold", "notBlock");
+                        document.querySelector('#nt-info-ip2').classList.replace("default", "notBlock");
                     }
                     //info of payments
                     document.querySelector('#meses-pagados').innerHTML = objData.data.meses_pagados;
@@ -318,7 +329,46 @@ function notifications() {
                             </li>
                         `;
                         }
-                        
+                    } else if (item.tipo == "Pago Total") {
+                        if (item.leida == 0) {
+                            html.innerHTML += `
+                                <li class="not-read">
+                                    <a class="app-notification__item" href="javascript:;" 
+                                        onclick="ftnSeeNotifications(${item.id_notifications}, ${tipo}, ${fecha}, ${item.leida}, ${mes})"
+                                        title="Leer">
+                                        <span class="app-notification__icon">
+                                            <span class="fa-stack fa-lg">
+                                                <i class="fa fa-circle fa-stack-2x text-success"></i>
+                                                <i class="fas fa-receipt fa-stack-1x fa-inverse"></i>
+                                            </span>
+                                        </span>
+                                        <div>
+                                            <p class="app-notification__message">${item.tipo} - Recibo</p>
+                                            <p class="app-notification__meta">${item.fecha}</p>
+                                        </div>  
+                                    </a>
+                                </li>
+                            `;
+                        } else {
+                            html.innerHTML += `
+                            <li>
+                                <a class="app-notification__item" href="javascript:;" 
+                                    onclick="ftnSeeNotifications(${item.id_notifications}, ${tipo}, ${fecha}, ${item.leida}, ${mes})"
+                                    title="Ver">
+                                    <span class="app-notification__icon">
+                                        <span class="fa-stack fa-lg">
+                                            <i class="fa fa-circle fa-stack-2x text-success"></i>
+                                            <i class="fas fa-receipt fa-stack-1x fa-inverse"></i>
+                                        </span>
+                                    </span>
+                                    <div>
+                                        <p class="app-notification__message">${item.tipo} - Recibo</p>
+                                        <p class="app-notification__meta">${item.fecha}</p>
+                                    </div>  
+                                </a>
+                            </li>
+                        `;
+                        }
                     } else if (item.tipo == "Recordatorio de pago"){
                         if (item.leida == 0) {
                             html.innerHTML += `

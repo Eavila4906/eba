@@ -18,9 +18,9 @@
     <section class="login-content">
       <div class="logo">
         <center><img src="<?= MEDIA(); ?>images/icons/icon.ico" style="width: 60px; height: 60px;"> </center>
-        <h1>
+        <h2 style="font-family: Segoe UI;">
           <?=NAME_PROJECT;?>
-        </h1>
+        </h2>
       </div>
       <div class="login-box flipped">
         <div id="divLoading" >

@@ -374,5 +374,33 @@
         }
         /* Finish social media */
 
+        /* Start teachers */
+        public function SelectAllTeachers() {
+            $Query_Select_All = "SELECT te.id_teacher, CONCAT(us.nombres, ' ', apellidoP) AS nombres, us.photo
+                                 FROM teacher te INNER JOIN usuario us ON (te.teacher=us.DNI) 
+                                 WHERE te.estado != 0";
+            $result = $this->SelectAllMySQL($Query_Select_All);
+            return $result;
+        }
+
+        public function SelectAllTeachers_2() {
+            $Query_Select_All = "SELECT te.id_teacher, te.teacher AS DNI, CONCAT(us.nombres, ' ', apellidoP) AS nombres
+                                 FROM teacher te INNER JOIN usuario us ON (te.teacher=us.DNI) 
+                                 WHERE te.estado = 0";
+            $result = $this->SelectAllMySQL($Query_Select_All);
+            return $result;
+        }
+
+        public function UpdateStatusTeacher($id_teacher, $status) {
+            $this->id_teacher = $id_teacher;
+            $this->status = $status;
+
+            $Query_Update = "UPDATE teacher SET estado = ? WHERE id_teacher = $this->id_teacher";
+            $Array_Query = array($this->status);
+            $result = $this->UpdateMySQL($Query_Update, $Array_Query);
+            return $result;
+        }
+        /* Finish teachers */
+
     }
 ?>

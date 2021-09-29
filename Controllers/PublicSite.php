@@ -591,6 +591,90 @@
             die();
         }
         /* Finish social media */
+
+        /* Start teachers */
+        public function getAllTeachers() {
+            if ($_SESSION['permisosModulo']['r']) {
+                $arrayData = $this->model->SelectAllTeachers();
+                return $arrayData;
+            } else {
+                echo '<div class="alert alert-danger" role="alert" 
+                        style="position: relative;padding: 0.75rem 1.25rem;margin-bottom: 1rem;border: 
+                        1px solid transparent;border-radius: 0.25rem;color: #721c24;background-color: #f8d7da;
+                        border-color: #f5c6cb;border-top-color: #f1b0b7;">
+                        <b>¡Restricted access!</b> you do not have permission to manipulate this module.
+                      </div>';
+            }
+            die();
+        }
+
+        public function getAllTeachersSelect() {
+            if ($_GET) {
+                if ($_SESSION['permisosModulo']['r']){
+                    $arrayData = $this->model->SelectAllTeachers_2();
+                    for ($i=0; $i < count($arrayData); $i++) { 
+                        $btnOn = "";
+                        $id = "'".$arrayData[$i]['id_teacher']."'";
+                        if ($_SESSION['permisosModulo']['r']){
+                            $btnOn = '<button class="btn btn-success btn-sm btnSeePayments" 
+                            onclick="FctBtnOnOrOffTeacher('.$id.', 1)" 
+                            title="Agregar a la portada">
+                                <i class="fas fa-power-off"></i>
+                            </button>'; 
+                        }
+                        $acciones = '<div class="text-center">'.$btnOn.'</div>';
+
+                        $arrayData[$i]['Accion'] = $acciones;  
+                    }
+                    echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
+                } else {
+                    echo '<div class="alert alert-danger" role="alert" 
+                            style="position: relative;padding: 0.75rem 1.25rem;margin-bottom: 1rem;border: 
+                            1px solid transparent;border-radius: 0.25rem;color: #721c24;background-color: #f8d7da;
+                            border-color: #f5c6cb;border-top-color: #f1b0b7;">
+                            <b>¡Restricted access!</b> you do not have permission to manipulate this module.
+                        </div>';
+                }
+            }
+            die();
+        }
+
+        public function setTeacherContent() {
+            if ($_POST) {
+                if ($_POST['id_teacher'] == "" || $_POST['option'] == "") {
+                    $arrayData = array('status' => false, 'msg' => 'No se pudo ejecutar este proceso.');
+                } else {
+                    $this->id_teacher = $_POST['id_teacher'];
+                    $this->option = intval($_POST['option']);
+
+                    if ($this->option == 1) {
+                        if ($_SESSION['permisosModulo']['w']) {
+                            $arrayData = $this->model->UpdateStatusTeacher($this->id_teacher, 1);
+                            $opcion = 1;
+                        }
+                    } else {
+                        if ($_SESSION['permisosModulo']['w']) {
+                            $arrayData = $this->model->UpdateStatusTeacher($this->id_teacher, 0);
+                            $opcion = 2;
+                        }
+                    }
+
+                    if ($arrayData > 0) {
+                        if ($opcion == 1) {
+                            $arrayData = array('status' => true, 'msg' => 'Se ha agregado a la portada.');
+                        } else {
+                            $arrayData = array('status' => true, 'msg' => 'Se ha quitado de la portada.');
+                        }  
+                    } else {
+                        $arrayData = array('status' => false, 'msg' => 'No se pudo ejecutar este proceso.');
+                    }
+                    echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
+                }
+            }
+            die();
+        }
+
+        /* Finish teachers */
     }
     
 ?>

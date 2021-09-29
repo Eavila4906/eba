@@ -1145,6 +1145,120 @@ function OpenModalAddSocialMedia() {
 }
 /* Finish social media */
 
+/* Start teacher */
+document.addEventListener('DOMContentLoaded', function(){
+    //add content to about
+    var formSocialMedia = document.querySelector("#formSocialMedia");
+	formSocialMedia.onsubmit = function (e) {
+		e.preventDefault();
+		var InputNombreRS = document.querySelector('#InputNombreRS').value;
+		var InputLinkRS = document.querySelector('#InputLinkRS').value;
+
+		if (InputNombreRS == '' || InputLinkRS == '') {
+			swal("¡Atención!", "Todos los campos son obligatorios.", "warning");
+			return false;
+		}
+		if (!camposFSM.InputNombreRS || !camposFSM.InputLinkRS) {
+			swal("¡Atención!", "Verifica los campos en rojo.", "warning");
+			return false;
+		}
+
+        divLoading.style.display = "flex";
+		var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+		var ajaxUrl = BASE_URL + 'publicsite/setSocialMedia';
+		var formData = new FormData(formSocialMedia);
+		request.open("POST", ajaxUrl, true);
+		request.send(formData);
+
+		request.onreadystatechange = function () {
+			if (request.readyState == 4 && request.status == 200) {
+				var objData = JSON.parse(request.responseText);
+				if (objData.status) {
+                    $('#ModalFormSocialMedia').modal('hide');
+					formSocialMedia.reset();
+					swal("¡Red social!", objData.msg, "success");
+                    $("#social_media").load(" #social_media");
+				} else {
+					swal("¡Atención!", objData.msg, "warning");
+				}
+			} else {
+				swal("ERROR!", "Error", "error");
+			}
+            divLoading.style.display = "none";
+            return false;
+		}
+	}
+}, false);
+
+function FctBtnOnOrOffTeacher(id_teacher, option) {
+	var title = "";
+	if (option == 1) {
+		title = "¡Agregar a portada!";
+	} else {
+		title = "¡Quitar de la portada!";
+	}
+
+	swal({
+		title: title,
+		text: "¿Decea continuar con el proceso?",
+		type: "warning",
+		showCancelButton: true,
+		confirmButtonText: "Si, continuar",
+		cancelButtonText: "No, cancelar",
+		closeOnConfirm: false,
+		closeOnCancel: true,
+	}, function (isConfirm) {
+		if (isConfirm) {
+			var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+			var ajaxUrl = BASE_URL + 'publicsite/setTeacherContent/';
+			var data = 'id_teacher=' + id_teacher + "&option=" +option;
+			request.open("POST", ajaxUrl, true);
+			request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			request.send(data);
+
+			request.onreadystatechange = function () {
+				if (request.readyState == 4 && request.status == 200) {
+					var objData = JSON.parse(request.responseText);
+					if (objData.status) {
+						swal("¡Docente!", objData.msg, "success");
+						$('#ModalFormTeachers').modal('hide');
+						$("#teacher").load(" #teacher");
+					} else {
+						swal("ERROR!", objData.msg, "error");
+					}
+				}
+			}
+		}
+	});
+}
+
+function OpenModalAddContentsTeachers() {
+	DataTableSeePayment = $('#DataTableTeachers').DataTable({ /*ID de la tabla*/
+        "aProcessing": true,
+        "aServerside": true,
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json" /*Idioma de visualizacion*/
+        },
+        "ajax": {
+            "url": BASE_URL + "publicsite/getAllTeachersSelect/",/* Ruta a la funcion getRoles que esta en el controlador roles.php*/
+            "dataSrc": ""
+        },
+        "columns": [/* Campos de la base de datos*/
+            { "data": "id_teacher" },
+            { "data": "DNI" },
+			{ "data": "nombres" },
+            { "data": "Accion" },
+        ],
+        "bAutoWidth": false,
+        "responsieve": "true",
+        "bDestroy": true,
+        "iDisplayLength": 10, /*Mostrará los primero 10 registros*/
+        "order": [[0, "desc"]] /*Ordenar de forma Desendente*/
+    });
+	$('#ModalFormTeachers').modal('show');
+}
+/* Finish teacher */
+
 /* Start hide and show contents */
 	function fctHide(contents, btnHide, btnShow, space, btnAdd, title) {
 		$(document).ready(() => {
