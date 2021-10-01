@@ -1,3 +1,13 @@
+$(document).ready(function () {
+	if (document.querySelector('#module-users')) {
+		document.querySelector('#module-users').classList.add('is-expanded');
+		if (document.querySelector('#icon-roles')) {
+            document.querySelector('#icon-roles').classList.replace('fa-circle-o', 'fa-circle');
+            document.querySelector('#icon-roles').classList.add('text-primary');
+        }
+	}
+});
+
 /* Starts validacion de formulario add roles */
 const inputs = document.querySelectorAll('#formRoles input');
 const textarea = document.querySelectorAll('#formRoles textarea');

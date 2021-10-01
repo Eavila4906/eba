@@ -1,3 +1,13 @@
+$(document).ready(function () {
+	if (document.querySelector('#module-accounting')) {
+		document.querySelector('#module-accounting').classList.add('is-expanded');
+		if (document.querySelector('#icon-resgistrar-pago')) {
+            document.querySelector('#icon-resgistrar-pago').classList.replace('fa-circle-o', 'fa-circle');
+            document.querySelector('#icon-resgistrar-pago').classList.add('text-primary');
+        }
+	}
+});
+
 var DataTablePaymentRecord;
 document.addEventListener('DOMContentLoaded', function () {
 

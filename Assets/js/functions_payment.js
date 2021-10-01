@@ -1,3 +1,13 @@
+$(document).ready(function () {
+	if (document.querySelector('#module-accounting')) {
+		document.querySelector('#module-accounting').classList.add('is-expanded');
+        if (document.querySelector('#icon-reportes')) {
+            document.querySelector('#icon-reportes').classList.replace('fa-circle-o', 'fa-circle');
+            document.querySelector('#icon-reportes').classList.add('text-primary');
+        }
+	}
+});
+
 var DataTablePayment;
 document.addEventListener('DOMContentLoaded', function () {
 

@@ -1,3 +1,13 @@
+$(document).ready(function () {
+	if (document.querySelector('#module-accounting')) {
+		document.querySelector('#module-accounting').classList.add('is-expanded');
+		if (document.querySelector('#icon-contabilidad')) {
+            document.querySelector('#icon-contabilidad').classList.replace('fa-circle-o', 'fa-circle');
+            document.querySelector('#icon-contabilidad').classList.add('text-primary');
+        }
+	}
+});
+
 /* Starts starts accounting */
 /* Starts validacion de formulario starts accounting */
 const inputs = document.querySelectorAll('#formStartsAccounting input');

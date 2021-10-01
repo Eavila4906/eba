@@ -1,3 +1,13 @@
+$(document).ready(function () {
+	if (document.querySelector('#module-users')) {
+		document.querySelector('#module-users').classList.add('is-expanded');
+		if (document.querySelector('#icon-users')) {
+            document.querySelector('#icon-users').classList.replace('fa-circle-o', 'fa-circle');
+            document.querySelector('#icon-users').classList.add('text-primary');
+        }
+	}
+});
+
 /* Starts validacion de formulario add users */
 const inputs = document.querySelectorAll('#formUsers input');
 const expresiones = {

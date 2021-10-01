@@ -30,32 +30,33 @@
         <?php } ?>
 
         <?php if (!empty($_SESSION['permisos'][4]['r']) || !empty($_SESSION['permisos'][5]['r'])) { ?>
-        <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-users"></i><span class="app-menu__label">Usuarios</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+        <li class="treeview" id="module-users"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-users"></i><span class="app-menu__label">Usuarios</span><i class="treeview-indicator fa fa-angle-right"></i></a>
           <ul class="treeview-menu">
             <?php if (!empty($_SESSION['permisos'][4]['r'])) { ?>
-            <li><a class="treeview-item" href="<?= BASE_URL(); ?>users"><i class="icon fa fa-circle-o"></i> Usuarios</a></li>
+            <li><a class="treeview-item" href="<?= BASE_URL(); ?>users"><i id="icon-users" class="icon fa fa-circle-o"></i> Usuarios</a></li>
             <?php } ?>
 
             <?php if (!empty($_SESSION['permisos'][5]['r'])) { ?>
-            <li><a class="treeview-item" href="<?= BASE_URL(); ?>roles"><i class="icon fa fa-circle-o"></i> Roles</a></li>
+            <li><a class="treeview-item" href="<?= BASE_URL(); ?>roles"><i id="icon-roles" class="icon fa fa-circle-o"></i> Roles</a></li>
             <?php } ?>
           </ul>
         </li>
         <?php } ?>
 
         <?php if (!empty($_SESSION['permisos'][6]['r']) || !empty($_SESSION['permisos'][7]['r']) || !empty($_SESSION['permisos'][8]['r'])) { ?>
-        <li class="treeview"><a class="app-menu__item" href="js:;" data-toggle="treeview"><i class="app-menu__icon fas fa-calculator"></i><span class="app-menu__label">Contabilidad</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+        <li class="treeview" id="module-accounting">
+          <a class="app-menu__item" href="js:;" data-toggle="treeview"><i class="app-menu__icon fas fa-calculator"></i><span class="app-menu__label">Contabilidad</span><i class="treeview-indicator fa fa-angle-right"></i></a>
           <ul class="treeview-menu">
             <?php if (!empty($_SESSION['permisos'][6]['r'])) { ?>
-            <li><a class="treeview-item" href="<?= BASE_URL(); ?>accounting"><i class="icon fa fa-circle-o"></i> Contabilidad</a></li>
+            <li><a class="treeview-item" href="<?= BASE_URL(); ?>accounting"><i id="icon-contabilidad" class="icon fa fa-circle-o"></i> Contabilidad</a></li>
             <?php } ?>
 
             <?php if (!empty($_SESSION['permisos'][7]['r'])) { ?>
-            <li><a class="treeview-item" href="<?= BASE_URL(); ?>payment_record"><i class="icon fa fa-circle-o"></i> Registrar Pago</a></li>
+            <li><a class="treeview-item" href="<?= BASE_URL(); ?>payment_record"><i id="icon-resgistrar-pago" class="icon fa fa-circle-o"></i> Registrar Pago</a></li>
             <?php } ?>
 
             <?php if (!empty($_SESSION['permisos'][8]['r'])) { ?>
-            <li><a class="treeview-item" href="payment"><i class="icon fa fa-circle-o"></i> Reportes</a></li>
+            <li><a class="treeview-item" href="payment"><i id="icon-reportes" class="icon fa fa-circle-o"></i> Reportes</a></li>
             <?php } ?>
           </ul>
         </li>
