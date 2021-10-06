@@ -71,7 +71,7 @@ function loadCountTeachers() {
 }
 
 setTimeout(loadCoutUsers, 1000);
-setTimeout(loadCountCourses, 1000);
+//setTimeout(loadCountCourses, 1000);
 setTimeout(loadCountStudens, 1000);
 setTimeout(loadCountTeachers, 1000);
 /*setInterval(loadCoutUsers, 2000);
