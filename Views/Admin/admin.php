@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
     <link rel="icon" href="<?= MEDIA(); ?>images/icons/icon.ico">
-    <title><?= NAME_PROJECT; ?> - Administración</title>
+    <title><?= NAME_PROJECT; ?> - Log in</title>
 
     
     <link rel="stylesheet" type="text/css" href="<?= ASSETS_VALI();?>css/main.css">
@@ -20,7 +20,7 @@
             <div class="text-center mb-4">
                 <center>
                     <img class="mb-4" src="<?= MEDIA(); ?>images/icons/icon.ico" alt="" width="72" height="72">
-                    <h1 class="h2 font-weight-normal text-primary">Administración</h1>
+                    <h1 class="h2 font-weight-normal text-primary">System administrator</h1>
                 </center>
             </div>
 
@@ -32,8 +32,8 @@
                 <input type="password" id="textPassword" name="textPassword" class="form-control login" placeholder="Password" >
             </div><br>
 
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Iniciar Sesión</button><br>
-            <center><a class="text-primary" href="<?=BASE_URL();?>login/reset_password">¿Olvidaste tu contraseña?</a></center>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button><br>
+            <center><a class="text-primary" href="<?=BASE_URL();?>login/reset_password">Did you forget your password?</a></center>
             <p class="mt-3 mb-5 text-muted text-center">&copy; <?= NAME_PROJECT ?> - 2021</p>
         </form>
     </div>
