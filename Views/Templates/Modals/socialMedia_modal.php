@@ -1,5 +1,6 @@
 <!-- Modal -->
-<div class="modal fade" id="ModalFormSocialMedia" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="ModalFormSocialMedia" tabindex="-1" role="dialog" aria-hidden="true"
+  data-keyboard="false" data-backdrop="static">
   <div class="modal-dialog modal-lg" >
     <div class="modal-content">
       <div class="modal-header modal-SocialMedia header-register">
