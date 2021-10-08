@@ -281,11 +281,22 @@ function FctBtnTotalPurchaseAccounting(id_student) {
 	var id_student = id_student;
 	document.querySelector('#id_student-TP').value = id_student;
 	document.querySelector("#formTotalPurchaseAccounting").reset();
+	$('#campoDescuento').hide();
 	cleanResiduoVali();
 	setTimeout(initialDate('#InputFechaInicio'), 10);
 	setTimeout(finishDate('#InputFechaFinal'), 10);
 	$('#ModalFormTotalPurchaseAccounting').modal('show');
 } 
+
+$(document).ready(function () {
+	$('#InputAD').click(function () {
+		if ($('#InputAD').is(':checked')) {
+			$('#campoDescuento').show('slow');
+		} else {
+			$('#campoDescuento').hide('slow');
+		}
+	});
+});
 
 /* Finish starts accounting */
 
