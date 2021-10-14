@@ -24,7 +24,7 @@
                 $arrayData = $this->model->SelectAllAccounting();
                 for ($i=0; $i < count($arrayData); $i++) { 
                     $btnPaymentRecord = "";
-                    //$btnPaymentRecordTotal = "";
+                    /*$btnPaymentRecordTotal = "";*/
                     //$btnPaymentNotAccounting = "";
                     $dni = "'".$arrayData[$i]['DNI']."'";
                     $nombres = "'".$arrayData[$i]['estudiante']."'";
