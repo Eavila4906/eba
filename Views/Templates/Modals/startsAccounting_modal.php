@@ -33,8 +33,8 @@
                     </select>
                   </div>
                   <div class="col-md-6">
-                    <label id="labelValor" class="labelForm">Valor <span class="required">*</span></label>
-                    <input class="form-control inputForm" name="InputValor" id="InputValor" type="text" placeholder="Ingresar valor de la cuota" required>
+                    <label id="labelValor" class="labelForm">Valor del curso <span class="required">*</span></label>
+                    <input class="form-control inputForm" name="InputValor" id="InputValor" type="text" placeholder="Ingresar valor del curso" required>
                     <p class="leyenda none-block text-danger" id="leyenda-Valor">
                       <small> 
                         Ingresar un valor numerico valido.
@@ -53,6 +53,44 @@
                     <input type="date" class="form-control inputForm" id="InputFechaFC" name="InputFechaFC" required>
                   </div>
                 </div><br>
+
+                <div class="row mb-1">
+                  <div class="col-md-6" style="right: -22px;">
+                    <label class="form-check-label" >
+                      <input class="form-check-input" type="checkbox" name="InputADIC" id="InputADIC" value="0">Aplicar descuento
+                    </label>
+                  </div>
+                  <div class="col-md-6" id="campoDescuentoIC">
+                    <label for="exampleSelect1">Descuento <span class="required">*</span></label>
+                    <select class="form-control selectpicker" name="InputDescuentoIC" id="InputDescuentoIC" required="">
+                      <option value="0">0%</option>
+                      <option value="5">5%</option>
+                      <option value="10">10%</option>
+                      <option value="15">15%</option>
+                      <option value="20">20%</option>
+                      <option value="25">25%</option>
+                      <option value="30">30%</option>
+                      <option value="35">35%</option>
+                      <option value="40">40%</option>
+                      <option value="45">45%</option>
+                      <option value="50">50%</option>
+                      <option value="55">55%</option>
+                      <option value="60">60%</option>
+                      <option value="65">65%</option>
+                      <option value="70">70%</option>
+                      <option value="75">75%</option>
+                      <option value="80">80%</option>
+                      <option value="85">85%</option>
+                      <option value="90">90%</option>
+                      <option value="95">95%</option>
+                    </select>
+                  </div>
+                </div><br>
+
+                <div class="form-group">
+                  <label id="labelDescripcion" class="labelForm">Descripción</label>
+                  <textarea class="form-control inputForm" name="InputDescripcionIC" id="InputDescripcionIC" cols="30" rows="2" placeholder="Ingresar Descripción"></textarea>
+                </div>
 
                 <div class="tile-footer">
                   <button class="btn btn-success" type="submit" id="btn-action-form-icons">
