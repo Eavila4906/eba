@@ -138,8 +138,6 @@ document.addEventListener('DOMContentLoaded', function () {
 			{ "data": "Fecha_inicio-final" },
 			{ "data": "Ultimo_pago" },
 			{ "data": "Proximo_pago" },
-			{ "data": "cuota" },
-			{ "data": "V_cuota" },
 			{ "data": "Acciones" },
 		],
 		"responsieve": "true",
@@ -158,6 +156,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		var InputCuota = document.querySelector('#InputCuota').value;
 		var InputValor = document.querySelector('#InputValor').value;
 		var InputFechaFC = document.querySelector('#InputFechaFC').value;
+		var InputDescuentoIC = document.querySelector('#InputDescuentoIC').value;
 
 		if (id_student == '' || InputCuota == '' || InputValor == '' || InputFechaFC == '') {
 			swal("¡Atención!", "Todos los campos son obligatorios.", "warning");
@@ -165,6 +164,10 @@ document.addEventListener('DOMContentLoaded', function () {
 		}
 		if (!campos.InputValor) {
 			swal("¡Atención!", "Verifica los campos en rojo.", "warning");
+			return false;
+		}
+		if ($('#InputADIC').prop('checked') && InputDescuentoIC == 0) {
+			swal("¡Atención!", "La opcion aplicar descuento esta activa, por lo tanto debes de aplicar un porcentaje de descuento.", "warning");
 			return false;
 		}
 
@@ -207,6 +210,10 @@ document.addEventListener('DOMContentLoaded', function () {
 		}
 		if (!campos2.InputValorTP) {
 			swal("¡Atención!", "Verifica los campos en rojo.", "warning");
+			return false;
+		}
+		if ($('#InputAD').prop('checked') && InputDescuentoIC == 0) {
+			swal("¡Atención!", "La opcion aplicar descuento esta activa, por lo tanto debes de aplicar un porcentaje de descuento.", "warning");
 			return false;
 		}
 
@@ -271,6 +278,8 @@ function FctBtnStartsAccounting(id_student) {
 	var id_student = id_student;
 	document.querySelector('#id_student').value = id_student;
 	document.querySelector("#formStartsAccounting").reset();
+	$('#campoDescuentoIC').hide();
+	document.querySelector('#InputADIC').value = 0;
 	cleanResiduoVali();
 	setTimeout(initialDate('#InputFechaIC'), 10);
 	setTimeout(finishDate('#InputFechaFC'), 10);
@@ -282,6 +291,7 @@ function FctBtnTotalPurchaseAccounting(id_student) {
 	document.querySelector('#id_student-TP').value = id_student;
 	document.querySelector("#formTotalPurchaseAccounting").reset();
 	$('#campoDescuento').hide();
+	document.querySelector('#InputAD').value = 0;
 	cleanResiduoVali();
 	setTimeout(initialDate('#InputFechaInicio'), 10);
 	setTimeout(finishDate('#InputFechaFinal'), 10);
@@ -292,15 +302,28 @@ $(document).ready(function () {
 	$('#InputAD').click(function () {
 		if ($('#InputAD').is(':checked')) {
 			$('#campoDescuento').show('slow');
+			document.querySelector('#InputAD').value = 1;
+			document.querySelector('#InputDescuento').value = 0;
 		} else {
 			$('#campoDescuento').hide('slow');
+			document.querySelector('#InputAD').value = 0;
 		}
 	});
 });
 
-/* Finish starts accounting */
+$(document).ready(function () {
+	$('#InputADIC').click(function () {
+		if ($('#InputADIC').is(':checked')) {
+			$('#campoDescuentoIC').show('slow');
+			document.querySelector('#InputADIC').value = 1;
+			document.querySelector('#InputDescuentoIC').value = 0;
+		} else {
+			$('#campoDescuentoIC').hide('slow');
+			document.querySelector('#InputADIC').value = 0;
+		}
+	});
+});
 
-/* Starts stopt accounting */
 
 function FctBtnStopAccounting(id_student, periodo) {
 	var id_student = id_student;
@@ -409,4 +432,55 @@ function FctBtnPlayAccounting(id_student, periodo) {
     	return false;
 	}
 }
-/* Finish stopt accounting */
+
+function FctBtnSeeDetailAccounting(id_student, periodo, student) {
+	document.querySelector('#name-student').innerHTML = student;
+	divLoading.style.display = "flex";
+	var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+	var ajaxUrl = BASE_URL + 'accounting/getSeeDetailsAccounting/' + id_student + "/" + periodo;
+	request.open("GET", ajaxUrl, true);
+	request.send();
+
+	request.onreadystatechange = function () {
+		if (request.readyState == 4 && request.status == 200) {
+			var objData = JSON.parse(request.responseText);
+			if (objData.descuento != "0%") {
+				document.querySelector('#dp-tr-sda').classList.remove('notBlock');
+				document.querySelector('#vd-tr-sda').classList.remove('notBlock');
+				document.querySelector('#vtd-tr-sda').classList.remove('notBlock');
+				document.querySelector('#md-tr-sda').classList.remove('notBlock');
+
+				document.querySelector('#periodo-sda').innerHTML = objData.periodo;
+				document.querySelector('#fup-sda').innerHTML = objData.fecha_UP;
+				document.querySelector('#fpp-sda').innerHTML = objData.fecha_PP;
+				document.querySelector('#cuota-sda').innerHTML = objData.cuota;
+				document.querySelector('#mensualidad-sda').innerHTML = objData.valor;
+				document.querySelector('#vtp-sda').innerHTML = objData.valor_total;
+				document.querySelector('#dp-sda').innerHTML = objData.descuento;
+				document.querySelector('#vd-sda').innerHTML = objData.valor_descuento;
+				document.querySelector('#vtd-sda').innerHTML = objData.valor_total_descuento;
+				document.querySelector('#md-sda').innerHTML = objData.valor;
+				document.querySelector('#descripcion-sda').innerHTML = objData.descripcion;
+				document.querySelector('#estado-sda').innerHTML = objData.estado;
+			} else {
+				document.querySelector('#dp-tr-sda').classList.add('notBlock');
+				document.querySelector('#vd-tr-sda').classList.add('notBlock');
+				document.querySelector('#vtd-tr-sda').classList.add('notBlock');
+				document.querySelector('#md-tr-sda').classList.add('notBlock');
+
+				document.querySelector('#periodo-sda').innerHTML = objData.periodo;
+				document.querySelector('#fup-sda').innerHTML = objData.fecha_UP;
+				document.querySelector('#fpp-sda').innerHTML = objData.fecha_PP;
+				document.querySelector('#cuota-sda').innerHTML = objData.cuota;
+				document.querySelector('#mensualidad-sda').innerHTML = objData.valor;
+				document.querySelector('#vtp-sda').innerHTML = objData.valor_total;
+				document.querySelector('#descripcion-sda').innerHTML = objData.descripcion;
+				document.querySelector('#estado-sda').innerHTML = objData.estado;
+			}
+			
+		}
+		divLoading.style.display = "none";
+        return false;
+	}
+	$('#modalSeeDetailsAccounting').modal('show');
+}
