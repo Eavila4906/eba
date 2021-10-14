@@ -25,14 +25,18 @@
                 for ($i=0; $i < count($arrayData); $i++) { 
                     $btnPaymentRecord = "";
                     //$btnPaymentRecordTotal = "";
-                    $btnPaymentNotAccounting = "";
+                    //$btnPaymentNotAccounting = "";
                     $dni = "'".$arrayData[$i]['DNI']."'";
                     $nombres = "'".$arrayData[$i]['estudiante']."'";
                     $fecha_UP = "'".$arrayData[$i]['fecha_PP']."'";
                     if ($_SESSION['permisosModulo']['w']){
-                        $btnPaymentRecord = '<button class="btn btn-success btn-sm btnPaymentRecord" onclick="FctBtnPaymentRecord(1,'.$dni.','.$nombres.','.$arrayData[$i]['id_accounting'].','.$fecha_UP.')" title="Registrar pago mensual"><i class="far fa-calendar-check fa-lg"></i></button>';
+                        $btnPaymentRecord = '<button class="btn btn-success btn-sm btnPaymentRecord" 
+                        onclick="FctBtnPaymentRecord(1,'.$dni.','.$nombres.','.$arrayData[$i]['id_accounting'].','.$fecha_UP.')" 
+                        title="Registrar pago mensual">
+                            <i class="far fa-calendar-check fa-lg"> Registrar pago</i>
+                        </button>';
                         //$btnPaymentRecordTotal = '<button class="btn btn-info btn-sm btnPaymentRecord" onclick="FctBtnPaymentRecord(2,'.$dni.','.$nombres.','.$arrayData[$i]['id_accounting'].','.$fecha_UP.')" title="Registrar todos los pagos"><i class="fas fa-calendar-check fa-lg"></i></button>';
-                        $btnPaymentNotAccounting = '<button class="btn btn-danger btn-sm btnPaymentRecord" onclick="FctBtnPaymentRecord(2,'.$dni.','.$nombres.','.$arrayData[$i]['id_accounting'].','.$fecha_UP.')" title="Registrar pago no contable"><i class="fas fa-calendar-times fa-lg"></i></button>';
+                        //$btnPaymentNotAccounting = '<button class="btn btn-danger btn-sm btnPaymentRecord" onclick="FctBtnPaymentRecord(2,'.$dni.','.$nombres.','.$arrayData[$i]['id_accounting'].','.$fecha_UP.')" title="Registrar pago no contable"><i class="fas fa-calendar-times fa-lg"></i></button>';
                     }
                     //Formato de fecha
                     setlocale(LC_ALL,"es-ES");
@@ -40,7 +44,7 @@
                     $arrayData[$i]['Proximo_pago'] = strftime("%d de %B de %Y", strtotime($arrayData[$i]['fecha_PP']));
 
                     $arrayData[$i]['V_cuota'] = '<spam class="badge badge-success">$ '.$arrayData[$i]['valor'].'</spam>';
-                    $acciones = '<div class="text-center">'.$btnPaymentRecord.' '.$btnPaymentNotAccounting.'</div>';
+                    $acciones = '<div class="text-center">'.$btnPaymentRecord.'</div>';
                     $arrayData[$i]['Acciones'] = $acciones;  
                 }
                 echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
