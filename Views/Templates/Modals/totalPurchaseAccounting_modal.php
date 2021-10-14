@@ -25,13 +25,24 @@
                     </select>
                   </div>
                   <div class="col-md-6">
-                    <label id="labelValor-TP" class="labelForm">Valor <span class="required">*</span></label>
-                    <input class="form-control inputForm" name="InputValorTP" id="InputValorTP" type="text" placeholder="Ingresar valor de la compra" required>
+                    <label id="labelValor-TP" class="labelForm">Valor del curso <span class="required">*</span></label>
+                    <input class="form-control inputForm" name="InputValorTP" id="InputValorTP" type="text" placeholder="Ingresar valor del curso" required>
                     <p class="leyenda none-block text-danger" id="leyenda-Valor-TP">
                       <small> 
                         Ingresar un valor numerico valido.
                       </small>
                     </p>
+                  </div>
+                </div><br>
+
+                <div class="row mb-1">
+                  <div class="col-md-6">
+                    <label id="labelNewPass" class="">Fecha Inicio <span class="required">*</span></label>
+                    <input class="form-control" type="date" name="InputFechaInicio" id="InputFechaInicio" required>
+                    </div>
+                  <div class="col-md-6">
+                    <label id="labelConfirmPass" class="">Fecha final <span class="required">*</span></label>
+                    <input class="form-control" type="date" name="InputFechaFinal" id="InputFechaFinal" required>
                   </div>
                 </div><br>
 
@@ -65,17 +76,6 @@
                       <option value="90">90%</option>
                       <option value="95">95%</option>
                     </select>
-                  </div>
-                </div><br>
-
-                <div class="row mb-1">
-                  <div class="col-md-6">
-                    <label id="labelNewPass" class="">Fecha Inicio <span class="required">*</span></label>
-                    <input class="form-control" type="date" name="InputFechaInicio" id="InputFechaInicio" required>
-                    </div>
-                  <div class="col-md-6">
-                    <label id="labelConfirmPass" class="">Fecha final <span class="required">*</span></label>
-                    <input class="form-control" type="date" name="InputFechaFinal" id="InputFechaFinal" required>
                   </div>
                 </div><br>
 
