@@ -76,7 +76,7 @@
                         $arrayData[$i]['total_pago'] = "$".$arrayData[$i]['total_pago'];
                         if ($arrayData[$i]['cantidad'] == 1 && $arrayData[$i]['estado'] == 5) {
                             $vu = $arrayData[$i]['valor'] / $meses_contables;
-                            $arrayData[$i]['valor_unitario'] = "$".$vu;
+                            $arrayData[$i]['valor_unitario'] = "$".$arrayData[$i]['valor'];
                             //total a pagar
                             $arrayData[$i]['total_pagar'] = "$".doubleval(doubleval($vu)*intval($meses_contables));
                         } else {
@@ -107,7 +107,7 @@
                             $btnSeePayments = '<button class="btn btn-primary btn-sm btnSeePayments" 
                             onclick="FctBtnIndividualPayments('.$pf.','.$p.','.$e.','.$o.')" 
                             title="Ver pagos individuales">
-                                <i class="fas fa-eye"></i>
+                                <i class="fas fa-folder-open"></i>
                             </button>'; 
                         }
                         $acciones = '<div class="text-center">'.$btnSeePayments.'</div>';
