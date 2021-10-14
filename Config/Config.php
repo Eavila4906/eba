@@ -27,7 +27,7 @@
     const DB_HOST = "localhost";
     const DB_USER = "root";
     const DB_PASSWORD = "";
-    const DB_NAME = "cursosingles_db";
+    const DB_NAME = "eba_db";
     const DB_CHARSET = "utf8";
 
     //Datos envio de correo
