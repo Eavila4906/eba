@@ -58,13 +58,34 @@
                     $this->InputValor = $_POST['InputValor'];
                     $this->InputFechaIC = $_POST['InputFechaIC'];
                     $this->InputFechaFC = $_POST['InputFechaFC'];
+                    $this->InputDescuentoIC = $_POST['InputDescuentoIC'];
+                    $this->InputDescripcionIC = $_POST['InputDescripcionIC'];
+                    $descuento = 0;
+                    $valor_descuento = 0;
+                    $valor_total_descuento = 0;
+                    $cm = intval(calculateRangeDate($this->InputFechaIC, $this->InputFechaFC));
+
+                    if (isset($_POST['InputADIC']) && $_POST['InputADIC'] == 1 && $this->InputDescuentoIC != 0) {
+                        $descuento = $this->InputDescuentoIC;
+                        $valor_descuento = ($this->InputDescuentoIC * $this->InputValor) / 100;
+                        $valor_total_descuento = $this->InputValor - $valor_descuento;
+                        $valor = $valor_total_descuento / $cm;
+                    } else {
+                        $valor = $this->InputValor / $cm;
+                    }
+
                     if ($_SESSION['permisosModulo']['w']) {
                         $arrayData = $this->model->InsertAccounting($this->id_student,
                                                                     $this->InputTypePayment_sa, 
                                                                     $this->InputCuota, 
-                                                                    $this->InputValor, 
+                                                                    $valor, 
+                                                                    $this->InputValor,
                                                                     $this->InputFechaIC, 
-                                                                    $this->InputFechaFC);
+                                                                    $this->InputFechaFC,
+                                                                    $descuento,
+                                                                    $valor_descuento,
+                                                                    $valor_total_descuento,
+                                                                    $this->InputDescripcionIC);
                     }
                     if ($arrayData > 0) {
                         setlocale(LC_ALL,"es-ES");
@@ -108,16 +129,30 @@
                     $this->InputFechaInicio = $_POST['InputFechaInicio'];
                     $this->InputFechaFinal = $_POST['InputFechaFinal'];
                     $this->InputDescripcion = $_POST['InputDescripcion'];
+                    $this->InputDescuento = $_POST['InputDescuento'];
+                    $descuento = 0;
+                    $valor_descuento = 0;
+                    $valor_total_descuento = 0;
+                    
+                    if (isset($_POST['InputAD']) && $_POST['InputAD'] == 1 && $this->InputDescuento != 0) {
+                        $descuento = $this->InputDescuento;
+                        $valor_descuento = ($this->InputDescuento * $this->InputValorTP) / 100;
+                        $valor_total_descuento = $this->InputValorTP - $valor_descuento;
+                        $valor = $valor_total_descuento;
+                    } else {
+                        $valor = $this->InputValorTP;
+                    }
 
-                    $cm = intval(calculateRangeDate($this->InputFechaInicio, $this->InputFechaFinal));
-                    $valor = $this->InputValorTP * $cm;
                     if ($_SESSION['permisosModulo']['w']) {
                         $arrayData = $this->model->InsertTotalPurchaseAccounting($this->id_studentTP, 
                                                                                  $this->InputTypePayment,
-                                                                                 $this->InputValorTP,
                                                                                  $valor, 
+                                                                                 $this->InputValorTP,
                                                                                  $this->InputFechaInicio, 
                                                                                  $this->InputFechaFinal,
+                                                                                 $descuento,
+                                                                                 $valor_descuento,
+                                                                                 $valor_total_descuento,
                                                                                  $this->InputDescripcion);
                     }
                     if ($arrayData > 0) {
@@ -158,11 +193,30 @@
                     $btnStopAccounting = "";
                     $btnPauseAccounting = "";
                     $btnPlayAccounting = "";
+                    $btnSeeDetailAccounting = "";
                     $periodo = "'".$arrayData[$i]['fecha_IC']." - ".$arrayData[$i]['fecha_FC']."'";
+                    $student = "'".$arrayData[$i]['estudiante']."'";
                     if ($_SESSION['permisosModulo']['w'] && $_SESSION['permisosModulo']['u']){
-                        $btnStopAccounting = '<button class="btn btn-danger btn-sm btnStopAccounting" onclick="FctBtnStopAccounting('.$arrayData[$i]['DNI'].','.$periodo.')" title="Detener contabilidad"><i class="fas fa-stop-circle fa-lg"></i></button>';
-                        $btnPauseAccounting = '<button class="btn btn-info btn-sm btnPauseAccounting" onclick="FctBtnPauseAccounting('.$arrayData[$i]['DNI'].','.$periodo.')" title="Pausar contabilidad"><i class="fas fa-pause-circle fa-lg"></i></button>';
-                        $btnPlayAccounting = '<button class="btn btn-info btn-sm btnPlayAccounting" onclick="FctBtnPlayAccounting('.$arrayData[$i]['DNI'].','.$periodo.')" title="Continuar contabilidad"><i class="fas fa-play-circle fa-lg"></i></button>';   
+                        $btnStopAccounting = '<button class="btn btn-danger btn-sm btnStopAccounting" 
+                        onclick="FctBtnStopAccounting('.$arrayData[$i]['DNI'].','.$periodo.')" 
+                        title="Detener contabilidad">
+                            <i class="fas fa-stop-circle"></i>
+                        </button>';
+                        /*$btnPauseAccounting = '<button class="btn btn-info btn-sm btnPauseAccounting" 
+                        onclick="FctBtnPauseAccounting('.$arrayData[$i]['DNI'].','.$periodo.')" 
+                        title="Pausar contabilidad">
+                            <i class="fas fa-pause-circle fa-lg"></i>
+                        </button>';
+                        $btnPlayAccounting = '<button class="btn btn-info btn-sm btnPlayAccounting" 
+                        onclick="FctBtnPlayAccounting('.$arrayData[$i]['DNI'].','.$periodo.')" 
+                        title="Continuar contabilidad">
+                            <i class="fas fa-play-circle fa-lg">
+                        </i></button>';*/ 
+                        $btnSeeDetailAccounting = '<button class="btn btn-info btn-sm btnPlayAccounting" 
+                        onclick="FctBtnSeeDetailAccounting('.$arrayData[$i]['DNI'].','.$periodo.','.$student.')" 
+                        title="Ver detalles de la contabilidad">
+                            <i class="fas fa-eye">
+                        </i></button>'; 
                     }
                     //Formato de fecha
                     setlocale(LC_ALL,"es-ES");
@@ -174,7 +228,7 @@
                     $arrayData[$i]['V_cuota'] = '<spam class="badge badge-success">$ '.$arrayData[$i]['valor'].'</spam>';
                     
                     if ($arrayData[$i]['estado'] == '1') {
-                        $acciones = '<div class="text-center">'.$btnPauseAccounting.''.$btnStopAccounting.'</div>';     
+                        $acciones = '<div class="text-center">'.$btnSeeDetailAccounting.' '.$btnPauseAccounting.''.$btnStopAccounting.'</div>';     
                     } else {
                         $acciones = '<div class="text-center">'.$btnPlayAccounting.''.$btnStopAccounting.'</div>';
                     }
@@ -254,6 +308,41 @@
                     }
                 }
                 echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
+            }
+            die();
+        }
+
+        public function getSeeDetailsAccounting($parameters) {
+            if ($_GET) {
+                if ($_SESSION['permisosModulo']['r']){
+                    $arrayparameters = explode(',',$parameters);
+                    $dni = $arrayparameters[0];
+                    $periodo = $arrayparameters[1];
+                    $arrayData = $this->model->SelectDetailsAccounting($dni, $periodo);
+                    setlocale(LC_ALL,"es-ES");
+                    $arrayData['periodo'] = ucwords(strftime("%B %Y", strtotime($arrayData['fecha_IC'])))." - ".ucwords(strftime("%B %Y", strtotime($arrayData['fecha_FC'])));
+                    $arrayData['fecha_UP'] = strftime("%d de %B de %Y", strtotime($arrayData['fecha_UP']));
+                    $arrayData['fecha_PP'] = strftime("%d de %B de %Y", strtotime($arrayData['fecha_PP']));
+                    $arrayData['valor'] = "$".$arrayData['valor'];
+                    $arrayData['valor_total'] = "$".$arrayData['valor_total'];
+                    $arrayData['descuento'] = $arrayData['descuento']."%";
+                    $arrayData['valor_descuento'] = "$".$arrayData['valor_descuento'];
+                    $arrayData['valor_total_descuento'] = "$".$arrayData['valor_total_descuento'];
+                    if ($arrayData['descripcion'] == "") {
+                        $arrayData['descripcion'] = "-";
+                    }
+                    if ($arrayData['estado'] == 1) {
+                        $arrayData['estado'] = '<span class="badge badge-info" style="font-size:.9em;">En proceso de pago</span>';
+                    }
+                    echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
+                } else {
+                    echo '<div class="alert alert-danger" role="alert" 
+                            style="position: relative;padding: 0.75rem 1.25rem;margin-bottom: 1rem;border: 
+                            1px solid transparent;border-radius: 0.25rem;color: #721c24;background-color: #f8d7da;
+                            border-color: #f5c6cb;border-top-color: #f1b0b7;">
+                            <b>¡Restricted access!</b> you do not have permission to manipulate this module.
+                        </div>';
+                }
             }
             die();
         }
