@@ -24,6 +24,7 @@
                   <thead>
                     <tr>
                         <th>ID</th>
+                        <th>Cedula</th>
                         <th>Estudiante</th>
                         <th>Ultimo pago</th>
                         <th>Proximo pago</th>
