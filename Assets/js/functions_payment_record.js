@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		},
 		"columns": [/* Campos de la base de datos*/
 			{ "data": "id_accounting" },
+			{ "data": "DNI" },
 			{ "data": "estudiante" },
 			{ "data": "Ultimo_pago" },
             { "data": "Proximo_pago" },
