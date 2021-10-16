@@ -126,7 +126,7 @@ function ftnSeeNotifications(id_notification, tipo, fecha, leida, mes, descripci
             if (request.readyState == 4 && request.status == 200) {
                 var objData = JSON.parse(request.responseText);
                 if (objData.status) {
-                    setTimeout(notifications, 10);
+                    setTimeout(notifications(), 11);
                 } else {
                     swal("ERROR!", objData.msg, "error");
                 }
@@ -154,6 +154,7 @@ function ftnSeeNotifications(id_notification, tipo, fecha, leida, mes, descripci
                     document.querySelector('#periodo').innerHTML = objData.data.periodo;
                     document.querySelector('#fechapago').innerHTML = objData.data.fecha_pago;
                     document.querySelector('#cantidad').innerHTML = "$"+objData.data.valor;
+                    document.querySelector('#tipo-pago').innerHTML = objData.data.tipo_pago;
                     //info payment next
                     if (tipo == "Pago Final" || tipo == "Pago Final (No contable)") {
                         document.querySelector('#periodo-pp').innerHTML = "--------------------------------------";
