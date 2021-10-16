@@ -32,6 +32,11 @@
                   <td style="width: 100px" class="font-weight-bold">Cantidad:</td>
                   <td id="cantidad"></td>
                 </tr>
+
+                <tr>
+                  <td style="width: 100px" class="font-weight-bold">Tipo de pago:</td>
+                  <td id="tipo-pago"></td>
+                </tr>
               </tbody>
             </table>
             <br><br>
