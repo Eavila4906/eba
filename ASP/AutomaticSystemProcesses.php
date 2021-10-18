@@ -5,7 +5,7 @@
     const DB_HOST = "localhost";
     const DB_USER = "root";
     const DB_PASSWORD = "";
-    const DB_NAME = "cursosingles_db";
+    const DB_NAME = "eba_db";
     const DB_CHARSET = "utf8";
     
     //data of seend email
@@ -95,9 +95,13 @@
             $this->type = $type;
             $this->description = $description;
             $this->date = $date;
-            $Query_Insert = "INSERT INTO notifications (usuario, tipo, descripcion, fecha, leida) VALUES (?, ?, ?, ?, ?)";
-            $Array_Query = array($this->user, $this->type, $this->description, $this->date, 0);
-            $this->InsertMySQL($Query_Insert, $Array_Query);
+            $Query_Insert = "INSERT INTO notifications (tipo, descripcion, fecha, leida) VALUES (?, ?, ?, ?)";
+            $Array_Query = array($this->type, $this->description, $this->date, 0);
+            $resul_insert = $this->InsertMySQL($Query_Insert, $Array_Query);
+
+            $Query_Insert_DN = "INSERT INTO detail_notifications (usuario, notifications) VALUES (?, ?)";
+            $Array_Query_DN = array($this->user, $resul_insert);
+            $this->InsertMySQL($Query_Insert_DN, $Array_Query_DN);
         }
 
         public function SelectAllNotifications(String $current_date) {
@@ -143,7 +147,7 @@
         public function paymentReminder() {
             setlocale(LC_ALL,"es-ES");
             $this->current_date = date("Y-m-d");
-            //$this->current_date = date("2021-12-04");
+            //$this->current_date = date("2021-12-08");
             $arrayData = $this->SelectAllAccountingUsers($this->current_date);
             //echo json_encode($arrayData, JSON_UNESCAPED_UNICODE)."<br>";
             for ($i=0; $i < count($arrayData); $i++) { 
@@ -167,11 +171,11 @@
                     );
                     $this->sendEmail($dataUser, 'email_payment_reminder');
                 }
-                if ($arrayData[$i]['plazo'] <= 0) {
+                if ($arrayData[$i]['plazo'] == 0) {
                     #Insert Notifications late payment
                     $user = $arrayData[$i]['DNI'];
                     $type = "Pago atrasado";
-                    $description = "Hola ".$arrayData[$i]['nombres'].", con número de cedula ".$arrayData[$i]['DNI'].". te informamos que el plazo para realizar el pago de tu mensualidad correspondiente al mes de ".ucwords(strftime("%B", strtotime($arrayData[$i]['fecha_pp'])))." a caducado. Por favor hacer el pago de tu mensualidad";
+                    $description = "Hola ".$arrayData[$i]['nombres'].", con número de cedula ".$arrayData[$i]['DNI'].". te informamos que el plazo para realizar el pago de tu mensualidad correspondiente al mes de ".ucwords(strftime("%B", strtotime($arrayData[$i]['fecha_pp'])))." a caducado.  Por favor, debera de hacer el pago en un plazo menos de 3 días, caso contrario el sistema lo retirara del curso.";
                     $date = $arrayData[$i]['fecha_pp'];
                     $this->InsertNotifications($user, $type, $description, $date);
                     #Seend email late payment
