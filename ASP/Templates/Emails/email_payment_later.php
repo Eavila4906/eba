@@ -96,7 +96,7 @@
 					</div>
 					<p>Con número de cedula: <strong><?=$data['DNI'];?></strong></p>
 					<p>Te informamos que el plazo para realizar el pago de tu mensualidad correspondiente al mes de <?=$data['mes'];?> a caducado. <br> 
-                        Por favor hacer el pago de tu mensualidad en menos de 3 dias, caso contrario se inhabilitara tu acceso a las clases. <br><br>
+                        Por favor hacer el pago de tu mensualidad en menos de 3 dias, caso contrario el sistema procedera a retirarte del curso. <br><br>
                         <small>Para mas información, ingrese a la plataforma con sus credenciales y verifique en sus notificaciones los detalles del pago.</small>
                     </p>
 					<p class="x_text_white">
