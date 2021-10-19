@@ -254,6 +254,38 @@ function ftnSeeNotifications(id_notification, tipo, fecha, leida, mes, descripci
     }  
 }
 
+const MINUTE = 60,
+  HOUR = MINUTE * 60,
+  DAY = HOUR * 24,
+  WEEK = DAY * 7,
+  MONTH = DAY * 30,
+  YEAR = DAY * 365
+
+function getTimeAgo(date) {
+  const secondsAgo = Math.round((+new Date() - date) / 1000)
+  let divisor = null
+  let unit = null
+
+  if (secondsAgo < MINUTE) {
+    return "hace " + secondsAgo + " segundos"
+  } else if (secondsAgo < HOUR) {
+    [divisor, unit] = [MINUTE, 'minuto']
+  } else if (secondsAgo < DAY) {
+    [divisor, unit] = [HOUR, 'hora']
+  } else if (secondsAgo < WEEK) {
+    [divisor, unit] = [DAY, 'día']
+  } else if (secondsAgo < MONTH) {
+    [divisor, unit] = [WEEK, 'semana']
+  } else if (secondsAgo < YEAR) {
+    [divisor, unit] = [MONTH, 'mes']
+  } else if (secondsAgo > YEAR) {
+    [divisor, unit] = [YEAR, 'año']
+  }
+
+  count = Math.floor(secondsAgo / divisor)
+  return  `hace ${count} ${unit}${(count > 1)?'s':''}`
+}
+
 //notifications
 function notifications() {
     var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
@@ -289,6 +321,7 @@ function notifications() {
                     var fecha = "'"+item.fecha+"'";
                     var mes = "'"+item.Mes+"'";
                     var descripcion ="'"+item.descripcion+"'";
+                    var dateFormat = getTimeAgo(new Date(item.date)); 
                     if (item.tipo == "Pago" || item.tipo == "Pago Inicial" || item.tipo == "Pago Final" 
                         || item.tipo == "Pago (No contable)" || item.tipo == "Pago Final (No contable)") {
                         if (item.leida == 0) {
@@ -305,7 +338,7 @@ function notifications() {
                                         </span>
                                         <div>
                                             <p class="app-notification__message">${item.tipo} - ${item.Mes}</p>
-                                            <p class="app-notification__meta">${item.fecha}</p>
+                                            <p class="app-notification__meta">${dateFormat}</p>
                                         </div>  
                                     </a>
                                 </li>
@@ -324,7 +357,7 @@ function notifications() {
                                     </span>
                                     <div>
                                         <p class="app-notification__message">${item.tipo} - ${item.Mes}</p>
-                                        <p class="app-notification__meta">${item.fecha}</p>
+                                        <p class="app-notification__meta">${dateFormat}</p>
                                     </div>  
                                 </a>
                             </li>
@@ -345,7 +378,7 @@ function notifications() {
                                         </span>
                                         <div>
                                             <p class="app-notification__message">${item.tipo} - Recibo</p>
-                                            <p class="app-notification__meta">${item.fecha}</p>
+                                            <p class="app-notification__meta">${dateFormat}</p>
                                         </div>  
                                     </a>
                                 </li>
@@ -364,7 +397,7 @@ function notifications() {
                                     </span>
                                     <div>
                                         <p class="app-notification__message">${item.tipo} - Recibo</p>
-                                        <p class="app-notification__meta">${item.fecha}</p>
+                                        <p class="app-notification__meta">${dateFormat}</p>
                                     </div>  
                                 </a>
                             </li>
@@ -385,7 +418,7 @@ function notifications() {
                                         </span>
                                         <div>
                                             <p class="app-notification__message">${item.tipo}</p>
-                                            <p class="app-notification__meta">${item.fecha}</p>
+                                            <p class="app-notification__meta">${dateFormat}</p>
                                         </div>  
                                     </a>
                                 </li>
@@ -404,7 +437,7 @@ function notifications() {
                                         </span>
                                         <div>
                                             <p class="app-notification__message">${item.tipo}</p>
-                                            <p class="app-notification__meta">${item.fecha}</p>
+                                            <p class="app-notification__meta">${dateFormat}</p>
                                         </div>  
                                     </a>
                                 </li>
@@ -425,7 +458,7 @@ function notifications() {
                                         </span>
                                         <div>
                                             <p class="app-notification__message">${item.tipo}</p>
-                                            <p class="app-notification__meta">${item.fecha}</p>
+                                            <p class="app-notification__meta">${dateFormat}</p>
                                         </div>  
                                     </a>
                                 </li>
@@ -444,7 +477,7 @@ function notifications() {
                                         </span>
                                         <div>
                                             <p class="app-notification__message">${item.tipo}</p>
-                                            <p class="app-notification__meta">${item.fecha}</p>
+                                            <p class="app-notification__meta">${dateFormat}</p>
                                         </div>  
                                     </a>
                                 </li>
@@ -465,7 +498,7 @@ function notifications() {
                                         </span>
                                         <div>
                                             <p class="app-notification__message">${item.tipo}</p>
-                                            <p class="app-notification__meta">${item.fecha}</p>
+                                            <p class="app-notification__meta">${dateFormat}</p>
                                         </div>  
                                     </a>
                                 </li>
@@ -484,7 +517,7 @@ function notifications() {
                                         </span>
                                         <div>
                                             <p class="app-notification__message">${item.tipo}</p>
-                                            <p class="app-notification__meta">${item.fecha}</p>
+                                            <p class="app-notification__meta">${dateFormat}</p>
                                         </div>  
                                     </a>
                                 </li>
@@ -505,7 +538,7 @@ function notifications() {
                                         </span>
                                         <div>
                                             <p class="app-notification__message">${item.tipo}</p>
-                                            <p class="app-notification__meta">${item.fecha}</p>
+                                            <p class="app-notification__meta">${dateFormat}</p>
                                         </div>  
                                     </a>
                                 </li>
@@ -524,7 +557,7 @@ function notifications() {
                                         </span>
                                         <div>
                                             <p class="app-notification__message">${item.tipo}</p>
-                                            <p class="app-notification__meta">${item.fecha}</p>
+                                            <p class="app-notification__meta">${dateFormat}</p>
                                         </div>  
                                     </a>
                                 </li>
@@ -545,7 +578,7 @@ function notifications() {
                                         </span>
                                         <div>
                                             <p class="app-notification__message">${item.tipo}</p>
-                                            <p class="app-notification__meta">${item.fecha}</p>
+                                            <p class="app-notification__meta">${dateFormat}</p>
                                         </div>  
                                     </a>
                                 </li>
@@ -564,7 +597,7 @@ function notifications() {
                                         </span>
                                         <div>
                                             <p class="app-notification__message">${item.tipo}</p>
-                                            <p class="app-notification__meta">${item.fecha}</p>
+                                            <p class="app-notification__meta">${dateFormat}</p>
                                         </div>  
                                     </a>
                                 </li>
