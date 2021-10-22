@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	//Cargar los datos del la base de datos al la tabla detener contabilidad
 
-	DataTableAccounting = $('#DataTableCI').DataTable({ /*ID de la tabla*/
+	DataTableAccounting = $('#DataTableCA').DataTable({ /*ID de la tabla*/
 		"aProcessing": true,
 		"aServerside": true,
 		"language": {
@@ -134,6 +134,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		},
 		"columns": [/* Campos de la base de datos*/
 			{ "data": "id_accounting" },
+			{ "data": "DNI" },
 			{ "data": "estudiante" },
 			{ "data": "Fecha_inicio-final" },
 			{ "data": "Ultimo_pago" },
@@ -144,6 +145,29 @@ document.addEventListener('DOMContentLoaded', function () {
 		"bDestroy": true,
 		"iDisplayLength": 10, /*Mostrará los primero 10 registros*/
 		"order": [[0, "desc"]] /*Ordenar de forma Desendente*/
+	});
+
+	DataTableInactiveAccounting = $('#DataTableCI').DataTable({ /*ID de la tabla*/
+		"aProcessing": true,
+		"aServerside": true,
+		"language": {
+			"url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json" /*Idioma de visualizacion*/
+		},
+		"ajax": {
+			"url": BASE_URL + "accounting/getAllInactiveAccounting",/* Ruta a la funcion getRoles que esta en el controlador roles.php*/
+			"dataSrc": ""
+		},
+		"columns": [/* Campos de la base de datos*/
+			{ "data": "id_accounting" },
+			{ "data": "DNI" },
+			{ "data": "estudiante" },
+			{ "data": "periodos" },
+			{ "data": "Acciones" },
+		],
+		"responsieve": "true",
+		"bDestroy": true,
+		"iDisplayLength": 10, /*Mostrará los primero 10 registros*/
+		"order": [[3, "desc"]] /*Ordenar de forma Desendente*/
 	});
 
 
@@ -232,7 +256,7 @@ document.addEventListener('DOMContentLoaded', function () {
 					formTotalPurchaseAccounting.reset();
 					swal("¡Compra total!", objData.msg, "success");
 					DataTableStartsAccounting.ajax.reload();
-					DataTableAccounting.ajax.reload();
+					DataTableInactiveAccounting.ajax.reload();
 				} else {
 					swal("¡Atención!", objData.msg, "warning");
 				}
@@ -355,6 +379,7 @@ function FctBtnStopAccounting(id_student, periodo) {
 						swal("¡Contabilidad!", objData.msg, "success");
 						DataTableStartsAccounting.ajax.reload();
 						DataTableAccounting.ajax.reload();
+						DataTableInactiveAccounting.ajax.reload();
 					} else {
 						swal("ERROR!", objData.msg, "error");
 					}
@@ -454,12 +479,12 @@ function FctBtnSeeDetailAccounting(id_student, periodo, student) {
 				document.querySelector('#fup-sda').innerHTML = objData.fecha_UP;
 				document.querySelector('#fpp-sda').innerHTML = objData.fecha_PP;
 				document.querySelector('#cuota-sda').innerHTML = objData.cuota;
-				document.querySelector('#mensualidad-sda').innerHTML = objData.valor;
+				document.querySelector('#mensualidad-sda').innerHTML = objData.valor_m;
 				document.querySelector('#vtp-sda').innerHTML = objData.valor_total;
 				document.querySelector('#dp-sda').innerHTML = objData.descuento;
 				document.querySelector('#vd-sda').innerHTML = objData.valor_descuento;
 				document.querySelector('#vtd-sda').innerHTML = objData.valor_total_descuento;
-				document.querySelector('#md-sda').innerHTML = objData.valor;
+				document.querySelector('#md-sda').innerHTML = objData.valor_mcd;
 				document.querySelector('#descripcion-sda').innerHTML = objData.descripcion;
 				document.querySelector('#estado-sda').innerHTML = objData.estado;
 			} else {
@@ -472,7 +497,7 @@ function FctBtnSeeDetailAccounting(id_student, periodo, student) {
 				document.querySelector('#fup-sda').innerHTML = objData.fecha_UP;
 				document.querySelector('#fpp-sda').innerHTML = objData.fecha_PP;
 				document.querySelector('#cuota-sda').innerHTML = objData.cuota;
-				document.querySelector('#mensualidad-sda').innerHTML = objData.valor;
+				document.querySelector('#mensualidad-sda').innerHTML = objData.valor_m;
 				document.querySelector('#vtp-sda').innerHTML = objData.valor_total;
 				document.querySelector('#descripcion-sda').innerHTML = objData.descripcion;
 				document.querySelector('#estado-sda').innerHTML = objData.estado;
@@ -483,4 +508,87 @@ function FctBtnSeeDetailAccounting(id_student, periodo, student) {
         return false;
 	}
 	$('#modalSeeDetailsAccounting').modal('show');
+}
+
+
+function FctBtnSeeIIA(dni, name) {
+    var dni = dni;
+    var name = name;
+    var DataTableSeeIIA;
+    DataTableSeeIIA = $('#DataTableSeeIIA').DataTable({ /*ID de la tabla*/
+        "aProcessing": true,
+        "aServerside": true,
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json" /*Idioma de visualizacion*/
+        },
+        "ajax": {
+            "url": BASE_URL + "accounting/getSeeIIA/"+ dni,/* Ruta a la funcion getRoles que esta en el controlador roles.php*/
+            "dataSrc": ""
+        },
+        "columns": [/* Campos de la base de datos*/
+            { "data": "periodo_format" },
+            { "data": "fecha_UP_format" },
+			{"data": "fecha_PP_format" },
+            { "data": "Acciones" },
+        ],
+        "bAutoWidth": false,
+        "responsieve": "true",
+        "bDestroy": true,
+        "iDisplayLength": 10, /*Mostrará los primero 10 registros*/
+        "order": [[0, "desc"]] /*Ordenar de forma Desendente*/
+    });
+    document.querySelector('#titleName').innerHTML = name;
+    $('#ModalSeeIIA').modal('show');
+}
+
+function FctBtnSeeDIIA(periodo, dni, periodo_format) {
+	document.querySelector('#periodo-diia').innerHTML = periodo_format;
+	divLoading.style.display = "flex";
+	var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+	var ajaxUrl = BASE_URL + 'accounting/getSeeDIIA/' + dni + "/" + periodo;
+	request.open("GET", ajaxUrl, true);
+	request.send();
+
+	request.onreadystatechange = function () {
+		if (request.readyState == 4 && request.status == 200) {
+			var objData = JSON.parse(request.responseText);
+			if (objData.descuento != "0%") {
+				document.querySelector('#dp-tr-sda-diia').classList.remove('notBlock');
+				document.querySelector('#vd-tr-sda-diia').classList.remove('notBlock');
+				document.querySelector('#vtd-tr-sda-diia').classList.remove('notBlock');
+				document.querySelector('#md-tr-sda-diia').classList.remove('notBlock');
+
+				document.querySelector('#periodo-sda-diia').innerHTML = objData.periodo;
+				document.querySelector('#fup-sda-diia').innerHTML = objData.fecha_UP;
+				document.querySelector('#fpp-sda-diia').innerHTML = objData.fecha_PP;
+				document.querySelector('#cuota-sda-diia').innerHTML = objData.cuota;
+				document.querySelector('#mensualidad-sda-diia').innerHTML = objData.valor;
+				document.querySelector('#vtp-sda-diia').innerHTML = objData.valor_total;
+				document.querySelector('#dp-sda-diia').innerHTML = objData.descuento;
+				document.querySelector('#vd-sda-diia').innerHTML = objData.valor_descuento;
+				document.querySelector('#vtd-sda-diia').innerHTML = objData.valor_total_descuento;
+				document.querySelector('#md-sda-diia').innerHTML = objData.valor;
+				document.querySelector('#descripcion-sda-diia').innerHTML = objData.descripcion;
+				document.querySelector('#estado-sda-diia').innerHTML = objData.estado;
+			} else {
+				document.querySelector('#dp-tr-sda-diia').classList.add('notBlock');
+				document.querySelector('#vd-tr-sda-diia').classList.add('notBlock');
+				document.querySelector('#vtd-tr-sda-diia').classList.add('notBlock');
+				document.querySelector('#md-tr-sda-diia').classList.add('notBlock');
+
+				document.querySelector('#periodo-sda-diia').innerHTML = objData.periodo;
+				document.querySelector('#fup-sda-diia').innerHTML = objData.fecha_UP;
+				document.querySelector('#fpp-sda-diia').innerHTML = objData.fecha_PP;
+				document.querySelector('#cuota-sda-diia').innerHTML = objData.cuota;
+				document.querySelector('#mensualidad-sda-diia').innerHTML = objData.valor;
+				document.querySelector('#vtp-sda-diia').innerHTML = objData.valor_total;
+				document.querySelector('#descripcion-sda-diia').innerHTML = objData.descripcion;
+				document.querySelector('#estado-sda-diia').innerHTML = objData.estado;
+			}
+			
+		}
+		divLoading.style.display = "none";
+        return false;
+	}
+	$('#modalSeeDIIA').modal('show');
 }
