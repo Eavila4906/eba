@@ -152,13 +152,28 @@ INSERT INTO `usuario` (`id_usuario`, `DNI`, `username`, `password`, `nombres`, `
 DROP TABLE IF EXISTS `notifications`;
 CREATE TABLE IF NOT EXISTS `notifications` (
   `id_notifications` int(11) NOT NULL AUTO_INCREMENT,
-  `usuario` varchar(10) NOT NULL,
   `tipo` varchar(30) NOT NULL,
   `descripcion` varchar(300) DEFAULT NULL,
   `fecha` date DEFAULT NULL,
   `leida` int(11) NOT NULL,
-  PRIMARY KEY (`id_notifications`),
-  FOREIGN KEY (`usuario`) REFERENCES `usuario` (`DNI`)
+  PRIMARY KEY (`id_notifications`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `detail_notifications`
+--
+
+DROP TABLE IF EXISTS `detail_notifications`;
+CREATE TABLE IF NOT EXISTS `detail_notifications` (
+  `id_detail_notifications` int(11) NOT NULL AUTO_INCREMENT,
+  `usuario` varchar(10) NOT NULL,
+  `notifications` int NOT NULL,
+  `date` timestamp NOT NULL,
+  PRIMARY KEY (`id_detail_notifications`),
+  FOREIGN KEY (`usuario`) REFERENCES `usuario` (`DNI`),
+  FOREIGN KEY (`notifications`) REFERENCES `notifications` (`id_notifications`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -337,13 +352,16 @@ CREATE TABLE IF NOT EXISTS `accounting` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `notifications`
+--
+
+--
 -- Estructura de tabla para la tabla `payment`
 --
 
 DROP TABLE IF EXISTS `payment`;
 CREATE TABLE IF NOT EXISTS `payment` (
   `id_payment` int(11) NOT NULL AUTO_INCREMENT,
-  `estudiante` varchar(10) NOT NULL,
   `tipo_pago` varchar(45) DEFAULT NULL,
   `fecha_pago` date DEFAULT NULL,
   `valor` double(9,2) NOT NULL,
@@ -351,6 +369,24 @@ CREATE TABLE IF NOT EXISTS `payment` (
   `estado` int(11) NOT NULL,
   `observacion` int(11) NOT NULL DEFAULT 0,
   `descripcion` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id_payment`),
-  FOREIGN KEY (`estudiante`) REFERENCES `student` (`estudiante`)
+  PRIMARY KEY (`id_payment`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `detail_payment`
+--
+
+DROP TABLE IF EXISTS `detail_payment`;
+CREATE TABLE IF NOT EXISTS `detail_payment` (
+  `id_detail_payment` int(11) NOT NULL AUTO_INCREMENT,
+  `estudiante` varchar(10) NOT NULL,
+  `payment` int NOT NULL,
+  `date` timestamp NOT NULL,
+  PRIMARY KEY (`id_detail_payment`),
+  FOREIGN KEY (`estudiante`) REFERENCES `student` (`estudiante`),
+  FOREIGN KEY (`payment`) REFERENCES `payment` (`id_payment`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
