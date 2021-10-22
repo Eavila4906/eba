@@ -246,6 +246,37 @@
             die();
         }
 
+        public function getAllInactiveAccounting() {
+            if ($_SESSION['permisosModulo']['r']) {
+                $arrayData = $this->model->SelectAllInactiveAccounting();
+                for ($i=0; $i < count($arrayData); $i++) { 
+                    $btnSeeDetailAccounting = "";
+                    $dni = "'".$arrayData[$i]['DNI']."'";
+                    $student = "'".$arrayData[$i]['estudiante']."'";
+                    if ($_SESSION['permisosModulo']['r']){
+                        $btnSeeDetailAccounting = '<button class="btn btn-info btn-sm btnPlayAccounting" 
+                        onclick="FctBtnSeeIIA('.$dni.','.$student.')" 
+                        title="Ver contabilidades individuales">
+                            <i class="fas fa-eye">
+                        </i></button>'; 
+                    }
+                    
+                    $acciones = '<div class="text-center">'.$btnSeeDetailAccounting.'</div>';
+                
+                    $arrayData[$i]['Acciones'] = $acciones;  
+                }
+                echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
+            } else {
+                echo '<div class="alert alert-danger" role="alert" 
+                        style="position: relative;padding: 0.75rem 1.25rem;margin-bottom: 1rem;border: 
+                        1px solid transparent;border-radius: 0.25rem;color: #721c24;background-color: #f8d7da;
+                        border-color: #f5c6cb;border-top-color: #f1b0b7;">
+                        <b>¡Restricted access!</b> you do not have permission to manipulate this module.
+                    </div>';
+            }
+            die();
+        }
+
         public function stopAccounting() {
             if ($_POST) {
                 if ($_POST['id_student'] == '' || $_POST['periodo'] == '') {
@@ -323,7 +354,10 @@
                     $arrayData['periodo'] = ucwords(strftime("%B %Y", strtotime($arrayData['fecha_IC'])))." - ".ucwords(strftime("%B %Y", strtotime($arrayData['fecha_FC'])));
                     $arrayData['fecha_UP'] = strftime("%d de %B de %Y", strtotime($arrayData['fecha_UP']));
                     $arrayData['fecha_PP'] = strftime("%d de %B de %Y", strtotime($arrayData['fecha_PP']));
-                    $arrayData['valor'] = "$".$arrayData['valor'];
+                    $porc = $arrayData['valor'] * $arrayData['descuento'] / 100;
+                    $valor = round($arrayData['valor'] + $porc);
+                    $arrayData['valor_m'] = "$".$valor;
+                    $arrayData['valor_mcd'] = "$".$arrayData['valor'];
                     $arrayData['valor_total'] = "$".$arrayData['valor_total'];
                     $arrayData['descuento'] = $arrayData['descuento']."%";
                     $arrayData['valor_descuento'] = "$".$arrayData['valor_descuento'];
@@ -333,6 +367,109 @@
                     }
                     if ($arrayData['estado'] == 1) {
                         $arrayData['estado'] = '<span class="badge badge-info" style="font-size:.9em;">En proceso de pago</span>';
+                    }
+                    echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
+                } else {
+                    echo '<div class="alert alert-danger" role="alert" 
+                            style="position: relative;padding: 0.75rem 1.25rem;margin-bottom: 1rem;border: 
+                            1px solid transparent;border-radius: 0.25rem;color: #721c24;background-color: #f8d7da;
+                            border-color: #f5c6cb;border-top-color: #f1b0b7;">
+                            <b>¡Restricted access!</b> you do not have permission to manipulate this module.
+                        </div>';
+                }
+            }
+            die();
+        }
+
+        public function getSeeIIA($dni) {
+            if ($_GET) {
+                if ($_SESSION['permisosModulo']['r']){
+                    $this->dni = $dni;
+                    $arrayData = $this->model->SelectSeeIIA($this->dni);
+                    for ($i=0; $i < count($arrayData); $i++) {
+                        //Formato de fecha
+                        setlocale(LC_ALL,"es-ES");  
+                        $Inicio_periodo = ucwords(strftime("%B %Y", strtotime($arrayData[$i]['fecha_IC'])));
+                        $Fin_periodo = ucwords(strftime("%B %Y", strtotime($arrayData[$i]['fecha_FC'])));
+                        $arrayData[$i]['periodo_format'] = $Inicio_periodo." - ".$Fin_periodo; 
+                        $arrayData[$i]['fecha_UP_format'] = strftime("%d de %B de %Y", strtotime($arrayData[$i]['fecha_UP']));
+                        if ($arrayData[$i]['fecha_PP'] == "0000-00-00") {
+                            $arrayData[$i]['fecha_PP_format'] = "-";
+                        } else {
+                            $arrayData[$i]['fecha_PP_format'] = strftime("%d de %B de %Y", strtotime($arrayData[$i]['fecha_PP']));
+                        }
+                        
+                        $btnSeeIIA = ""; 
+                        $btnDeleteIIA = ""; 
+                        if ($_SESSION['permisosModulo']['r']){
+                            $p = "'".$arrayData[$i]['fecha_IC']." - ".$arrayData[$i]['fecha_FC']."'";
+                            $e = "'".$arrayData[$i]['DNI']."'";
+                            $pf = "'".$arrayData[$i]['periodo_format']."'";
+                            $btnSeeIIA = '<button class="btn btn-primary btn-sm btnSeePayments" 
+                            onclick="FctBtnSeeDIIA('.$p.','.$e.','.$pf.')" 
+                            title="Ver detalles">
+                                <i class="fas fa-folder-open"></i>
+                            </button>'; 
+                        }
+                        if ($_SESSION['permisosModulo']['d']){
+                            $p = "'".$arrayData[$i]['fecha_IC']." - ".$arrayData[$i]['fecha_FC']."'";
+                            $e = "'".$arrayData[$i]['DNI']."'";
+                            $pf = "'".$arrayData[$i]['periodo_format']."'";
+                            $btnDeleteIIA = '<button class="btn btn-danger btn-sm btnSeePayments" 
+                            onclick="FctBtnDeleteRDIIA('.$p.','.$e.','.$pf.')" 
+                            title="Eliminar registro">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>'; 
+                        }
+                        $acciones = '<div class="text-center">'.$btnSeeIIA." ".$btnDeleteIIA.'</div>';
+
+                        $arrayData[$i]['Acciones'] = $acciones;  
+                    }
+                    echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
+                } else {
+                    echo '<div class="alert alert-danger" role="alert" 
+                            style="position: relative;padding: 0.75rem 1.25rem;margin-bottom: 1rem;border: 
+                            1px solid transparent;border-radius: 0.25rem;color: #721c24;background-color: #f8d7da;
+                            border-color: #f5c6cb;border-top-color: #f1b0b7;">
+                            <b>¡Restricted access!</b> you do not have permission to manipulate this module.
+                        </div>';
+                }
+            }
+            die();
+        }
+
+        public function getSeeDIIA($parameters) {
+            if ($_GET) {
+                if ($_SESSION['permisosModulo']['r']){
+                    $arrayparameters = explode(',',$parameters);
+                    $dni = $arrayparameters[0];
+                    $periodo = $arrayparameters[1];
+                    $arrayData = $this->model->SelectDIIA($dni, $periodo);
+                    setlocale(LC_ALL,"es-ES");
+                    $arrayData['periodo'] = ucwords(strftime("%B %Y", strtotime($arrayData['fecha_IC'])))." - ".ucwords(strftime("%B %Y", strtotime($arrayData['fecha_FC'])));
+                    $arrayData['fecha_UP'] = strftime("%d de %B de %Y", strtotime($arrayData['fecha_UP']));
+                    if ($arrayData['fecha_PP'] == "0000-00-00") {
+                        $arrayData['fecha_PP'] = "-";
+                    } else {
+                        $arrayData['fecha_PP'] = strftime("%d de %B de %Y", strtotime($arrayData['fecha_PP']));;
+                    }
+                    $arrayData['valor'] = "$".$arrayData['valor'];
+                    $arrayData['valor_total'] = "$".$arrayData['valor_total'];
+                    $arrayData['descuento'] = $arrayData['descuento']."%";
+                    $arrayData['valor_descuento'] = "$".$arrayData['valor_descuento'];
+                    $arrayData['valor_total_descuento'] = "$".$arrayData['valor_total_descuento'];
+                    if ($arrayData['descripcion'] == "") {
+                        $arrayData['descripcion'] = "-";
+                    }
+
+                    if ($arrayData['estado'] == 0 && $arrayData['fecha_PP'] == "-") {
+                        $arrayData['estado'] = '<span class="badge badge-info" style="font-size:.9em;">
+                            Proceso de pago completo
+                        </span>';
+                    } else {
+                        $arrayData['estado'] = '<span class="badge badge-danger" style="font-size:.9em;">
+                            Proceso de pago cancelado
+                        </span>';
                     }
                     echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
                 } else {
