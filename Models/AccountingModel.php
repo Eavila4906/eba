@@ -169,6 +169,17 @@
             return $result;
         }
 
+        public function SelectAllInactiveAccounting() {
+            $Query_Select_All = "SELECT ac.id_accounting, CONCAT(us.nombres, ' ', us.apellidoP, ' ', us.apellidoM) AS estudiante,
+                                    CONCAT(ac.fecha_IC, ' - ', ac.fecha_FC) AS periodo, COUNT(ac.id_accounting) AS periodos, 
+                                    ac.estudiante AS DNI, ac.estado
+                                    FROM accounting ac INNER JOIN student st ON (ac.estudiante=st.estudiante)
+                                    INNER JOIN usuario us ON(st.estudiante=us.DNI)
+                                    WHERE ac.estado = 0 GROUP BY ac.estudiante ORDER BY periodos DESC";
+            $result = $this->SelectAllMySQL($Query_Select_All);
+            return $result;
+        }
+
         public function stopAccounting(String $id_student, String $periodo) {
             $this->id_student = $id_student;
             $this->periodo = $periodo;
@@ -286,6 +297,33 @@
                                     INNER JOIN usuario us ON(st.estudiante=us.DNI)
                                     WHERE ac.estudiante = '$this->dni' AND CONCAT(ac.fecha_IC, ' - ', ac.fecha_FC) = '$this->periodo' AND
                                     ac.estado = 1 AND st.proceso_contable = 1";
+            $result = $this->SelectMySQL($Query_Select);
+            return $result;
+        }
+
+        public function SelectSeeIIA(String $dni) {
+            $this->dni = $dni;
+            $Query_Select = "SELECT us.DNI, ac.fecha_IC, ac.fecha_FC, ac.fecha_UP, ac.fecha_PP
+                                    FROM accounting ac INNER JOIN student st ON (ac.estudiante=st.estudiante)
+                                    INNER JOIN usuario us ON(st.estudiante=us.DNI)
+                                    WHERE ac.estudiante = '$this->dni' AND ac.estado = 0";
+            $result = $this->SelectAllMySQL($Query_Select);
+            return $result;
+        }
+
+        public function SelectDIIA(String $dni, String $periodo) {
+            $this->dni = $dni;
+            $this->periodo = $periodo;
+
+            $Query_Select = "SELECT ac.id_accounting, CONCAT(us.nombres, ' ', us.apellidoP, ' ', us.apellidoM) AS estudiante,
+                                    ac.fecha_IC, ac.fecha_FC, ac.fecha_UP, ac.fecha_PP, ac.cuota, ac.valor, ac.valor_total, 
+                                    ac.descuento, ac.valor_descuento, ac.valor_total_descuento, descripcion,
+                                    ac.estudiante AS DNI, ac.estado
+                                    
+                                    FROM accounting ac INNER JOIN student st ON (ac.estudiante=st.estudiante)
+                                    INNER JOIN usuario us ON(st.estudiante=us.DNI)
+                                    WHERE ac.estudiante = '$this->dni' AND CONCAT(ac.fecha_IC, ' - ', ac.fecha_FC) = '$this->periodo' AND
+                                    ac.estado = 0";
             $result = $this->SelectMySQL($Query_Select);
             return $result;
         }
