@@ -75,7 +75,7 @@
         }
     }
 
-    class Model extends Mysql {
+    class Model extends MySQL {
         public function __construct(){
             parent::__construct();
         }
