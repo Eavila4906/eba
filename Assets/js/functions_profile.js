@@ -185,7 +185,8 @@ document.addEventListener('DOMContentLoaded', function(){
 		var formData = new FormData(formActualizarFoto);
 		request.open("POST", ajaxUrl, true);
 		request.send(formData);
-
+		
+		divLoading.style.display = "flex";
 		request.onreadystatechange = function () {
 			if (request.readyState == 4 && request.status == 200) {
 				var objData = JSON.parse(request.responseText);
@@ -197,8 +198,8 @@ document.addEventListener('DOMContentLoaded', function(){
 					swal("¡Atención!", objData.msg, "warning");
 				}
 			}
-            //divLoading.style.display = "none";
-            //return false;
+            divLoading.style.display = "none";
+            return false;
 		}
 	}
 
