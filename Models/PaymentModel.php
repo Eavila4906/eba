@@ -1,5 +1,5 @@
 <?php
-    class PaymentModel extends Mysql {
+    class PaymentModel extends MySQL {
         public function __construct(){
             parent::__construct();
         }

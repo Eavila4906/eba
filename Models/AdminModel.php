@@ -1,5 +1,5 @@
 <?php
-    class AdminModel extends Mysql {
+    class AdminModel extends MySQL {
         public function __construct(){
             parent::__construct();
         }

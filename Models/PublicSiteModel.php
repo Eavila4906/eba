@@ -1,5 +1,5 @@
 <?php
-    class PublicSiteModel extends Mysql {
+    class PublicSiteModel extends MySQL {
         public function __construct(){
             parent::__construct();
         }

@@ -1,5 +1,5 @@
 <?php
-    class ProfileModel extends Mysql {
+    class ProfileModel extends MySQL {
         public function __construct(){
             parent::__construct();
         }       

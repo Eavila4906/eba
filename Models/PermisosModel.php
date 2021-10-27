@@ -1,5 +1,5 @@
 <?php
-    class PermisosModel extends Mysql {
+    class PermisosModel extends MySQL {
 
         public function __construct(){
             parent::__construct();

@@ -1,5 +1,5 @@
 <?php
-    class LoginModel extends Mysql {
+    class LoginModel extends MySQL {
         public function __construct(){
             parent::__construct();
         }

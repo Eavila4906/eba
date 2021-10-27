@@ -1,7 +1,7 @@
 <?php
     require_once("Config/Config.php");
     require_once("Helpers/Helpers.php");
-    class RegistrarseModel extends Mysql {
+    class RegistrarseModel extends MySQL {
         public function __construct(){
             parent::__construct();
         }

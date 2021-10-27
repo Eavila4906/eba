@@ -1,5 +1,5 @@
 <?php
-    class AccountingModel extends Mysql {
+    class AccountingModel extends MySQL {
         public function __construct(){
             parent::__construct();
         }

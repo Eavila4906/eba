@@ -1,5 +1,5 @@
 <?php
-    class SiteModel extends Mysql {
+    class SiteModel extends MySQL {
         public function __construct(){
             parent::__construct();
         }

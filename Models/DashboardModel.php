@@ -1,5 +1,5 @@
 <?php
-    class DashboardModel extends Mysql {
+    class DashboardModel extends MySQL {
         public function __construct(){
             parent::__construct();
         }
