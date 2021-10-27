@@ -26,7 +26,7 @@
         <?php } ?>
 
         <?php if (!empty($_SESSION['permisos'][3]['r'])) { ?>
-        <li><a class="app-menu__item" href="<?= BASE_URL(); ?>publicsite"><i class="app-menu__icon fas fa-globe"></i><span class="app-menu__label">Sitio publico</span></a></li>
+        <li><a class="app-menu__item" href="<?= BASE_URL(); ?>publicSite"><i class="app-menu__icon fas fa-globe"></i><span class="app-menu__label">Sitio publico</span></a></li>
         <?php } ?>
 
         <?php if (!empty($_SESSION['permisos'][4]['r']) || !empty($_SESSION['permisos'][5]['r'])) { ?>
