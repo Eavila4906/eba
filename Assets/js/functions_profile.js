@@ -110,6 +110,7 @@ function editPhotoProfile(id_session) {
 	request.open("GET", ajaxUrl, true);
 	request.send();
 
+	divLoading.style.display = "flex";
     request.onreadystatechange = function () {
 		if (request.readyState == 4 && request.status == 200) {
 			var objData = JSON.parse(request.responseText);
@@ -122,6 +123,8 @@ function editPhotoProfile(id_session) {
 				swal("ERROR!", objData.msg, "error");
 			}
 		}
+		divLoading.style.display = "none";
+        return false;
     }
     $('#ModalSubirFoto').modal('show');
     document.querySelector('#form_alert').innerHTML = "";
