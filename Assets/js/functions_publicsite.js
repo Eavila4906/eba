@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
         divLoading.style.display = "flex";
 		var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-		var ajaxUrl = BASE_URL + 'publicsite/setContentGaleryHome';
+		var ajaxUrl = BASE_URL + 'publicSite/setContentGaleryHome';
 		var formData = new FormData(formHomeGalery);
 		request.open("POST", ajaxUrl, true);
 		request.send(formData);
@@ -185,7 +185,7 @@ function FctBtnEditarConteHome(id_cont) {
 
     var id_cont = id_cont;
 	var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-	var ajaxUrl = BASE_URL + 'publicsite/getContents/' + id_cont;
+	var ajaxUrl = BASE_URL + 'publicSite/getContents/' + id_cont;
 	request.open("GET", ajaxUrl, true);
 	request.send();
 
@@ -238,7 +238,7 @@ function FctBtnEliminarConteHome(id_cont, img) {
 	}, function (isConfirm) {
 		if (isConfirm) {
 			var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-			var ajaxUrl = BASE_URL + 'publicsite/deleteContents/';
+			var ajaxUrl = BASE_URL + 'publicSite/deleteContents/';
 			var data = 'id_cont=' + id_cont + '&' + 'img=' + img;
 			request.open("POST", ajaxUrl, true);
 			request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -366,7 +366,7 @@ window.addEventListener('load', function() {
 
 function getIconsAbout(){
 	if(document.querySelector('#InputIconoAbout')){
-		var ajaxUrl = BASE_URL + 'publicsite/getAllIconsAbout';
+		var ajaxUrl = BASE_URL + 'publicSite/getAllIconsAbout';
 		var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
 		request.open("GET",ajaxUrl,true);
 		request.send();
@@ -384,7 +384,7 @@ function getIconsAbout(){
 
 function getIconsSocialMedia() {
 	if(document.querySelector('#InputIconoRS')){
-		var ajaxUrl = BASE_URL + 'publicsite/getAllIconsSocialMedia';
+		var ajaxUrl = BASE_URL + 'publicSite/getAllIconsSocialMedia';
 		var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
 		request.open("GET",ajaxUrl,true);
 		request.send();
@@ -472,7 +472,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
         divLoading.style.display = "flex";
 		var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-		var ajaxUrl = BASE_URL + 'publicsite/setContentAbout';
+		var ajaxUrl = BASE_URL + 'publicSite/setContentAbout';
 		var formData = new FormData(formAbout);
 		request.open("POST", ajaxUrl, true);
 		request.send(formData);
@@ -508,7 +508,7 @@ function FctBtnEditarConteAbout(id_contAbout) {
 
     var id_contAbout = id_contAbout;
 	var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-	var ajaxUrl = BASE_URL + 'publicsite/getContentsAbout/' + id_contAbout;
+	var ajaxUrl = BASE_URL + 'publicSite/getContentsAbout/' + id_contAbout;
 	request.open("GET", ajaxUrl, true);
 	request.send();
 
@@ -557,7 +557,7 @@ function FctBtnEliminarConteAbout(id_contAbout) {
 	}, function (isConfirm) {
 		if (isConfirm) {
 			var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-			var ajaxUrl = BASE_URL + 'publicsite/deleteContentsAbout/';
+			var ajaxUrl = BASE_URL + 'publicSite/deleteContentsAbout/';
 			var data = 'id_contAbout=' + id_contAbout;
 			request.open("POST", ajaxUrl, true);
 			request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -672,7 +672,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
         divLoading.style.display = "flex";
 		var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-		var ajaxUrl = BASE_URL + 'publicsite/setHeadquarter';
+		var ajaxUrl = BASE_URL + 'publicSite/setHeadquarter';
 		var formData = new FormData(formHeadquarter);
 		request.open("POST", ajaxUrl, true);
 		request.send(formData);
@@ -709,7 +709,7 @@ function FctBtnEditarHeadquarter(id_Headquarter) {
 
     var id_Headquarter = id_Headquarter;
 	var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-	var ajaxUrl = BASE_URL + 'publicsite/getHeadquarter/' + id_Headquarter;
+	var ajaxUrl = BASE_URL + 'publicSite/getHeadquarter/' + id_Headquarter;
 	request.open("GET", ajaxUrl, true);
 	request.send();
 
@@ -758,7 +758,7 @@ function FctBtnEliminarHeadquarter(id_headquarter) {
 	}, function (isConfirm) {
 		if (isConfirm) {
 			var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-			var ajaxUrl = BASE_URL + 'publicsite/deleteHeadquarter/';
+			var ajaxUrl = BASE_URL + 'publicSite/deleteHeadquarter/';
 			var data = 'id_headquarter=' + id_headquarter;
 			request.open("POST", ajaxUrl, true);
 			request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -851,7 +851,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
         divLoading.style.display = "flex";
 		var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-		var ajaxUrl = BASE_URL + 'publicsite/setContacts';
+		var ajaxUrl = BASE_URL + 'publicSite/setContacts';
 		var formData = new FormData(formContacts);
 		request.open("POST", ajaxUrl, true);
 		request.send(formData);
@@ -887,7 +887,7 @@ function FctBtnEditarContacts(id_Contacts) {
 
     var id_Contacts = id_Contacts;
 	var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-	var ajaxUrl = BASE_URL + 'publicsite/getContacts/' + id_Contacts;
+	var ajaxUrl = BASE_URL + 'publicSite/getContacts/' + id_Contacts;
 	request.open("GET", ajaxUrl, true);
 	request.send();
 
@@ -935,7 +935,7 @@ function FctBtnEliminarContacts(id_contacts) {
 	}, function (isConfirm) {
 		if (isConfirm) {
 			var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-			var ajaxUrl = BASE_URL + 'publicsite/deleteContacts/';
+			var ajaxUrl = BASE_URL + 'publicSite/deleteContacts/';
 			var data = 'id_contacts=' + id_contacts;
 			request.open("POST", ajaxUrl, true);
 			request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -1027,7 +1027,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
         divLoading.style.display = "flex";
 		var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-		var ajaxUrl = BASE_URL + 'publicsite/setSocialMedia';
+		var ajaxUrl = BASE_URL + 'publicSite/setSocialMedia';
 		var formData = new FormData(formSocialMedia);
 		request.open("POST", ajaxUrl, true);
 		request.send(formData);
@@ -1063,7 +1063,7 @@ function FctBtnEditarSocialMedia(id_socialMedia) {
 
     var id_socialMedia = id_socialMedia;
 	var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-	var ajaxUrl = BASE_URL + 'publicsite/getSocialMedia/' + id_socialMedia;
+	var ajaxUrl = BASE_URL + 'publicSite/getSocialMedia/' + id_socialMedia;
 	request.open("GET", ajaxUrl, true);
 	request.send();
 
@@ -1112,7 +1112,7 @@ function FctBtnEliminarSocialMedia(id_socialMedia) {
 	}, function (isConfirm) {
 		if (isConfirm) {
 			var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-			var ajaxUrl = BASE_URL + 'publicsite/deleteSocialMedia/';
+			var ajaxUrl = BASE_URL + 'publicSite/deleteSocialMedia/';
 			var data = 'id_socialMedia=' + id_socialMedia;
 			request.open("POST", ajaxUrl, true);
 			request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -1165,7 +1165,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
         divLoading.style.display = "flex";
 		var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-		var ajaxUrl = BASE_URL + 'publicsite/setSocialMedia';
+		var ajaxUrl = BASE_URL + 'publicSite/setSocialMedia';
 		var formData = new FormData(formSocialMedia);
 		request.open("POST", ajaxUrl, true);
 		request.send(formData);
@@ -1210,7 +1210,7 @@ function FctBtnOnOrOffTeacher(id_teacher, option) {
 	}, function (isConfirm) {
 		if (isConfirm) {
 			var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-			var ajaxUrl = BASE_URL + 'publicsite/setTeacherContent/';
+			var ajaxUrl = BASE_URL + 'publicSite/setTeacherContent/';
 			var data = 'id_teacher=' + id_teacher + "&option=" +option;
 			request.open("POST", ajaxUrl, true);
 			request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
