@@ -1240,7 +1240,7 @@ function OpenModalAddContentsTeachers() {
             "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json" /*Idioma de visualizacion*/
         },
         "ajax": {
-            "url": BASE_URL + "publicsite/getAllTeachersSelect/",/* Ruta a la funcion getRoles que esta en el controlador roles.php*/
+            "url": BASE_URL + "publicSite/getAllTeachersSelect/",/* Ruta a la funcion getRoles que esta en el controlador roles.php*/
             "dataSrc": ""
         },
         "columns": [/* Campos de la base de datos*/
