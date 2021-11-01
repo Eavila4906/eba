@@ -60,6 +60,10 @@
                     <td style="width: 200px"><b>Estado</b></td>
                     <td id="estado-sda-diia"></td>
                 </tr>
+                <tr id="justificacion-tr-sda-diia" class="notBlock">
+                    <td style="width: 200px"><b>Justificación</b></td>
+                    <td id="justificacion-sda-diia"></td>
+                </tr>
             </table>
       </div>
     </div>
