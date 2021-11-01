@@ -2,6 +2,7 @@
   header_view($data);
   getModal('startsAccounting_modal', $data);
   getModal('totalPurchaseAccounting_modal', $data);
+  getModal('stopAccounting_modal', $data);
   getModal('seeDetailsAccounting_modal', $data);
   getModal('seeIIA_modal', $data);
   getModal('seeDIIA_modal', $data);
