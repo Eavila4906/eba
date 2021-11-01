@@ -266,6 +266,55 @@ document.addEventListener('DOMContentLoaded', function () {
 		}
 	}
 
+	var formStopAccounting = document.querySelector("#formStopAccounting");
+	formStopAccounting.onsubmit = function (e) {
+		e.preventDefault();
+		var InputJustificacion = document.querySelector('#InputJustificacion').value;
+
+		if (InputJustificacion == '') {
+			swal("¡Atención!", "El campo es obligatorio.", "warning");
+			return false;
+		}
+
+		swal({
+			title: "¡Detener Contabilidad!",
+			text: "¿Estas seguro que deceas detener la contabilidad?",
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonText: "Si, Detener",
+			cancelButtonText: "No, cancelar",
+			closeOnConfirm: false,
+			closeOnCancel: true,
+		}, function (isConfirm) {
+			if (isConfirm) {
+				swal.close();
+				divLoading.style.display = "flex";
+				var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+				var ajaxUrl = BASE_URL + 'accounting/stopAccounting/';
+				var data = new FormData(formStopAccounting);
+				request.open("POST", ajaxUrl, true);
+				request.send(data);
+	
+				request.onreadystatechange = function () {
+					if (request.readyState == 4 && request.status == 200) {
+						var objData = JSON.parse(request.responseText);
+						if (objData.status) {
+							$('#ModalFormStopAccounting').modal('hide');
+							swal("¡Contabilidad!", objData.msg, "success");
+							DataTableStartsAccounting.ajax.reload();
+							DataTableAccounting.ajax.reload();
+							DataTableInactiveAccounting.ajax.reload();
+						} else {
+							swal("ERROR!", objData.msg, "error");
+						}
+					}
+					divLoading.style.display = "none";
+					return false;
+				}
+			}
+		});
+	}
+
 });
 
 //functio date
@@ -349,46 +398,12 @@ $(document).ready(function () {
 });
 
 
-function FctBtnStopAccounting(id_student, periodo) {
-	var id_student = id_student;
-	var periodo = periodo;
-	swal({
-		title: "¡Detener Contabilidad!",
-		text: "¿Estas seguro que deceas detener la contabilidad?",
-		type: "warning",
-		showCancelButton: true,
-		confirmButtonText: "Si, Detener",
-		cancelButtonText: "No, cancelar",
-		closeOnConfirm: false,
-		closeOnCancel: true,
-	}, function (isConfirm) {
-		if (isConfirm) {
-			swal.close();
-			divLoading.style.display = "flex";
-			var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-			var ajaxUrl = BASE_URL + 'accounting/stopAccounting/';
-			var data = 'id_student=' + id_student + '&' + 'periodo=' + periodo;
-			request.open("POST", ajaxUrl, true);
-			request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-			request.send(data);
-
-			request.onreadystatechange = function () {
-				if (request.readyState == 4 && request.status == 200) {
-					var objData = JSON.parse(request.responseText);
-					if (objData.status) {
-						swal("¡Contabilidad!", objData.msg, "success");
-						DataTableStartsAccounting.ajax.reload();
-						DataTableAccounting.ajax.reload();
-						DataTableInactiveAccounting.ajax.reload();
-					} else {
-						swal("ERROR!", objData.msg, "error");
-					}
-				}
-				divLoading.style.display = "none";
-            	return false;
-			}
-		}
-	});
+function FctBtnStopAccounting(id_accounting, id_student, periodo) {
+	document.querySelector('#formStopAccounting').reset();
+	document.querySelector('#id_accounting-sa').value = id_accounting;
+	document.querySelector('#id_student-sa').value = id_student;
+	document.querySelector('#periodo-sa').value = periodo;
+	$('#ModalFormStopAccounting').modal('show');
 } 
 
 function FctBtnPauseAccounting(id_student, periodo) {
@@ -458,11 +473,11 @@ function FctBtnPlayAccounting(id_student, periodo) {
 	}
 }
 
-function FctBtnSeeDetailAccounting(id_student, periodo, student) {
+function FctBtnSeeDetailAccounting(id_accounting, id_student, periodo, student) {
 	document.querySelector('#name-student').innerHTML = student;
 	divLoading.style.display = "flex";
 	var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-	var ajaxUrl = BASE_URL + 'accounting/getSeeDetailsAccounting/' + id_student + "/" + periodo;
+	var ajaxUrl = BASE_URL + 'accounting/getSeeDetailsAccounting/'+id_accounting+"/"+id_student+"/"+periodo;
 	request.open("GET", ajaxUrl, true);
 	request.send();
 
@@ -510,7 +525,6 @@ function FctBtnSeeDetailAccounting(id_student, periodo, student) {
 	$('#modalSeeDetailsAccounting').modal('show');
 }
 
-
 function FctBtnSeeIIA(dni, name) {
     var dni = dni;
     var name = name;
@@ -552,6 +566,11 @@ function FctBtnSeeDIIA(periodo, dni, periodo_format) {
 	request.onreadystatechange = function () {
 		if (request.readyState == 4 && request.status == 200) {
 			var objData = JSON.parse(request.responseText);
+			if (objData.obs == 0) {
+				document.querySelector('#justificacion-tr-sda-diia').classList.add('notBlock');
+			} else {
+				document.querySelector('#justificacion-tr-sda-diia').classList.remove('notBlock');
+			}
 			if (objData.descuento != "0%") {
 				document.querySelector('#dp-tr-sda-diia').classList.remove('notBlock');
 				document.querySelector('#vd-tr-sda-diia').classList.remove('notBlock');
@@ -562,14 +581,15 @@ function FctBtnSeeDIIA(periodo, dni, periodo_format) {
 				document.querySelector('#fup-sda-diia').innerHTML = objData.fecha_UP;
 				document.querySelector('#fpp-sda-diia').innerHTML = objData.fecha_PP;
 				document.querySelector('#cuota-sda-diia').innerHTML = objData.cuota;
-				document.querySelector('#mensualidad-sda-diia').innerHTML = objData.valor;
+				document.querySelector('#mensualidad-sda-diia').innerHTML = objData.valor_m_DIIA;
 				document.querySelector('#vtp-sda-diia').innerHTML = objData.valor_total;
 				document.querySelector('#dp-sda-diia').innerHTML = objData.descuento;
 				document.querySelector('#vd-sda-diia').innerHTML = objData.valor_descuento;
 				document.querySelector('#vtd-sda-diia').innerHTML = objData.valor_total_descuento;
-				document.querySelector('#md-sda-diia').innerHTML = objData.valor;
+				document.querySelector('#md-sda-diia').innerHTML = objData.valor_mcd_DIIA;
 				document.querySelector('#descripcion-sda-diia').innerHTML = objData.descripcion;
-				document.querySelector('#estado-sda-diia').innerHTML = objData.estado;
+				document.querySelector('#estado-sda-diia').innerHTML = objData.estado_format;
+				document.querySelector('#justificacion-sda-diia').innerHTML = objData.observacion;
 			} else {
 				document.querySelector('#dp-tr-sda-diia').classList.add('notBlock');
 				document.querySelector('#vd-tr-sda-diia').classList.add('notBlock');
@@ -580,10 +600,11 @@ function FctBtnSeeDIIA(periodo, dni, periodo_format) {
 				document.querySelector('#fup-sda-diia').innerHTML = objData.fecha_UP;
 				document.querySelector('#fpp-sda-diia').innerHTML = objData.fecha_PP;
 				document.querySelector('#cuota-sda-diia').innerHTML = objData.cuota;
-				document.querySelector('#mensualidad-sda-diia').innerHTML = objData.valor;
+				document.querySelector('#mensualidad-sda-diia').innerHTML = objData.valor_m_DIIA;
 				document.querySelector('#vtp-sda-diia').innerHTML = objData.valor_total;
 				document.querySelector('#descripcion-sda-diia').innerHTML = objData.descripcion;
-				document.querySelector('#estado-sda-diia').innerHTML = objData.estado;
+				document.querySelector('#estado-sda-diia').innerHTML = objData.estado_format;
+				document.querySelector('#justificacion-sda-diia').innerHTML = objData.observacion;
 			}
 			
 		}
