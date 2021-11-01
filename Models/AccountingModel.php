@@ -33,6 +33,24 @@
             return $result;
         }
 
+        public function periodValidation(String $id_student, String $InputFechaIC, String $InputFechaFC) {
+            $this->id_student = $id_student;
+            $this->InputFechaIC = $InputFechaIC;
+            $this->InputFechaFC = $InputFechaFC;
+            $period = $this->InputFechaIC." - ".$this->InputFechaFC;
+
+            $Query_Select_All = "SELECT *
+                                 FROM detail_payment dp INNER JOIN payment pt ON(dp.payment=pt.id_payment)
+                                 WHERE dp.estudiante = '$this->id_student' AND pt.periodo = '$period'";
+            $result = $this->SelectAllMySQL($Query_Select_All);
+            if ($result) {
+                $result = true;
+            } else {
+                $result = false;
+            }
+            return $result;
+        }
+
         public function InsertAccounting(String $id_student, String $InputTypePayment_sa, String $InputCuota, $InputValor, $valor_ordinario, String $InputFechaIC, String $InputFechaFC, $descuento, $valor_descuento, $valor_total_descuento, $descripcion) {
             $this->id_student = $id_student;
             $this->InputTypePayment_sa = $InputTypePayment_sa;
@@ -180,15 +198,18 @@
             return $result;
         }
 
-        public function stopAccounting(String $id_student, String $periodo) {
+        public function stopAccounting(int $id_accounting, String $id_student, String $periodo, String $InputJustificacion) {
+            $this->id_accounting = $id_accounting;
             $this->id_student = $id_student;
             $this->periodo = $periodo;
+            $this->InputJustificacion = $InputJustificacion;
             $Query_Update_TS = "UPDATE student SET proceso_contable=? WHERE estudiante = '$this->id_student'";
             $Array_Query_TS = array(0);
             $result_update_TS = $this->UpdateMySQL($Query_Update_TS, $Array_Query_TS);
 
-            $Query_Update_TA = "UPDATE accounting SET estado=? WHERE estudiante = '$this->id_student'";
-            $Array_Query_TA = array(0);
+            $Query_Update_TA = "UPDATE accounting SET observacion=?, estado=? 
+                                WHERE id_accounting = $this->id_accounting AND estudiante = '$this->id_student'";
+            $Array_Query_TA = array($this->InputJustificacion, 0);
             $result_update_TA = $this->UpdateMySQL($Query_Update_TA, $Array_Query_TA);
 
             $Query_Update_TP = "UPDATE payment pa INNER JOIN detail_payment dp ON (pa.id_payment=dp.payment)
@@ -284,7 +305,8 @@
             return $result;
         }
 
-        public function SelectDetailsAccounting(String $dni, String $periodo) {
+        public function SelectDetailsAccounting(int $id_accounting, String $dni, String $periodo) {
+            $this->id_accounting = $id_accounting;
             $this->dni = $dni;
             $this->periodo = $periodo;
 
@@ -296,7 +318,7 @@
                                     FROM accounting ac INNER JOIN student st ON (ac.estudiante=st.estudiante)
                                     INNER JOIN usuario us ON(st.estudiante=us.DNI)
                                     WHERE ac.estudiante = '$this->dni' AND CONCAT(ac.fecha_IC, ' - ', ac.fecha_FC) = '$this->periodo' AND
-                                    ac.estado = 1 AND st.proceso_contable = 1";
+                                    ac.estado = 1 AND st.proceso_contable = 1 AND ac.id_accounting = $this->id_accounting";
             $result = $this->SelectMySQL($Query_Select);
             return $result;
         }
@@ -317,7 +339,7 @@
 
             $Query_Select = "SELECT ac.id_accounting, CONCAT(us.nombres, ' ', us.apellidoP, ' ', us.apellidoM) AS estudiante,
                                     ac.fecha_IC, ac.fecha_FC, ac.fecha_UP, ac.fecha_PP, ac.cuota, ac.valor, ac.valor_total, 
-                                    ac.descuento, ac.valor_descuento, ac.valor_total_descuento, descripcion,
+                                    ac.descuento, ac.valor_descuento, ac.valor_total_descuento, descripcion, observacion,
                                     ac.estudiante AS DNI, ac.estado
                                     
                                     FROM accounting ac INNER JOIN student st ON (ac.estudiante=st.estudiante)
