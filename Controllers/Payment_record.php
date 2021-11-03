@@ -214,5 +214,46 @@
             }
             die();
         }
+
+        public function getPaymentDay() {
+            if ($_GET) {
+                if ($_SESSION['permisosModulo']['r']) {
+                    $arrayData = $this->model->SelectPaymentDay();
+                    echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
+                } else {
+                echo '<div class="alert alert-danger" role="alert" 
+                        style="position: relative;padding: 0.75rem 1.25rem;margin-bottom: 1rem;border: 
+                        1px solid transparent;border-radius: 0.25rem;color: #721c24;background-color: #f8d7da;
+                        border-color: #f5c6cb;border-top-color: #f1b0b7;">
+                        <b>¡Restricted access!</b> you do not have permission to manipulate this module.
+                    </div>';
+                }
+                die();    
+            }
+        }
+
+        public function setPaymentDay() {
+            if ($_POST) {
+                if (intval($_POST['InputPaymentDay']) == 0) {
+                    $arrayData = array('status' => false, 'msg' => 'No se pudo ejecutar este proceso 1.');
+                } else {
+                    if (intval($_POST['InputPaymentDay']) <= 0 || intval($_POST['InputPaymentDay']) > 28) {
+                        $arrayData = array('status' => false, 'msg' => 'El valor ingresado esta fuera del rango de los requisitos.');
+                    } else {
+                        $this->day = intval($_POST['InputPaymentDay']);
+                        if ($_SESSION['permisosModulo']['w']) {
+                            $arrayData = $this->model->UpdatePaymentDay($this->day);
+                        }
+                        if ($arrayData > 0) {
+                            $arrayData = array('status' => true, 'msg' => 'Se actualizo el nuevo día de pago.');
+                        } else {
+                            $arrayData = array('status' => false, 'msg' => 'No se pudo ejecutar este proceso 2.');
+                        }
+                    }
+                }
+                echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
+            }
+            die();
+        }
     }
 ?>
