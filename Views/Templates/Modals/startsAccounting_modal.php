@@ -45,11 +45,11 @@
 
                 <div class="row mb-1">
                   <div class="col-md-6">
-                    <label for="exampleSelect1">Fecha inicial contabilidad <span class="required">*</span></label>
+                    <label for="exampleSelect1">Fecha inicio curso <span class="required">*</span></label>
                     <input type="date" class="form-control inputForm" id="InputFechaIC" name="InputFechaIC" required>
                   </div>
                   <div class="col-md-6">
-                    <label for="exampleSelect1">Fecha final contabilidad <span class="required">*</span></label>
+                    <label for="exampleSelect1">Fecha final curso <span class="required">*</span></label>
                     <input type="date" class="form-control inputForm" id="InputFechaFC" name="InputFechaFC" required>
                   </div>
                 </div><br>
