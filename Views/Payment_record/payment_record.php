@@ -1,6 +1,7 @@
 <?php 
   header_view($data);
   getModal('payment_modal', $data);
+  getModal('paymentDay_modal', $data);
 ?>    
 <main class="app-content">
     <div class="app-title">
@@ -14,6 +15,13 @@
         <li class="breadcrumb-item active"><a href="<?=BASE_URL();?>payment_record">Registrar pago</a></li>
     </ul>
     </div>
+
+    <?php if ($_SESSION['permisosModulo']['w']) { ?>
+    <div>
+      <button class="btn btn-success mb-3" type="button" onclick="openModalPaymentDay()"><i class="fa fa-calendar fa-lg"></i> Día de pago</button><br>
+    </div>
+    <?php } ?>
+
     <div class="row">
         <div class="col-md-12">
           <div class="tile">
