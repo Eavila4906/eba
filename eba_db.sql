@@ -323,6 +323,23 @@ CREATE TABLE IF NOT EXISTS `socialmedia` (
   FOREIGN KEY (`icono`) REFERENCES `icons` (`id_icon`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Estructura de tabla para la tabla `paymentday`
+--
+
+DROP TABLE IF EXISTS `paymentday`;
+CREATE TABLE IF NOT EXISTS `paymentday` (
+  `id_paymentday` int(11) NOT NULL AUTO_INCREMENT,
+  `day` int NOT NULL,
+  PRIMARY KEY (`id_paymentday`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `icons`
+--
+
+INSERT INTO `paymentday` (`id_paymentday`, `day`) VALUES (1, 5);
+
 -- --------------------------------------------------------
 
 --
