@@ -12,6 +12,12 @@
             return $result;
         }
 
+        public function SelectPaymentDay() {
+            $Query_Select = "SELECT * FROM paymentday WHERE id_paymentday = 1";                   
+            $result = $this->SelectMySQL($Query_Select);
+            return $result;
+        }
+
         public function SelectInfoNotificationsPayment(String $user, String $date) {
             $this->user = $user;
             $this->date = $date;
