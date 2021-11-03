@@ -54,8 +54,14 @@
                 $this->user = $_SESSION['dataUser']['DNI'];
                 $this->date = $_POST['date'];
                 $arrayData = $this->model->SelectInfoNotificationsPayment($this->user, $this->date);
-                $arrayData['fecha_pp'] = $this->model->SelectNextDate($this->date);
-
+                $paymentDay = $this->model->SelectPaymentDay();
+                if ($paymentDay['day'] <= 9) {
+                    $paymentDay['day'] = '0'.$paymentDay['day'];
+                }
+                $day = $paymentDay['day'];
+                $date_format = paymentDay($this->date).$day;
+                $arrayData['fecha_pp'] = $this->model->SelectNextDate($date_format);
+                
                 //rago de pagos
                 $periodo = $arrayData['periodo'];
                 $periodo = explode(" - ", $periodo);
@@ -86,8 +92,15 @@
         public function infoNotificationPaymentReminder() {
             
             $this->user = $_SESSION['dataUser']['DNI'];
+            $this->date = $_POST['date'];
             $arrayData = $this->model->SelectNotification($this->user);
-            $arrayData['fecha_pp'] = $this->model->SelectNextDate($arrayData['fecha_pago']);
+            $paymentDay = $this->model->SelectPaymentDay();
+            if ($paymentDay['day'] <= 9) {
+                $paymentDay['day'] = '0'.$paymentDay['day'];
+            }
+            $day = $paymentDay['day'];
+            $date_format = paymentDay($this->date).$day;
+            $arrayData['fecha_pp'] = $this->model->SelectNextDate($date_format);
 
             //Formato de fecha
             setlocale(LC_ALL,"es-ES");
