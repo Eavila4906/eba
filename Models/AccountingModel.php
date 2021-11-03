@@ -51,7 +51,13 @@
             return $result;
         }
 
-        public function InsertAccounting(String $id_student, String $InputTypePayment_sa, String $InputCuota, $InputValor, $valor_ordinario, String $InputFechaIC, String $InputFechaFC, $descuento, $valor_descuento, $valor_total_descuento, $descripcion) {
+        public function SelectPaymentDay() {
+            $Query_Select = "SELECT * FROM paymentday WHERE id_paymentday = 1";                   
+            $result = $this->SelectMySQL($Query_Select);
+            return $result;
+        }
+
+        public function InsertAccounting(String $id_student, String $InputTypePayment_sa, String $InputCuota, $InputValor, $valor_ordinario, String $InputFechaIC, String $InputFechaFC, String $fecha_UP, $descuento, $valor_descuento, $valor_total_descuento, $descripcion) {
             $this->id_student = $id_student;
             $this->InputTypePayment_sa = $InputTypePayment_sa;
             $this->InputCuota = $InputCuota;
@@ -59,6 +65,7 @@
             $this->valor_ordinario = $valor_ordinario;
             $this->InputFechaIC = $InputFechaIC;
             $this->InputFechaFC = $InputFechaFC;
+            $this->fecha_UP = $fecha_UP;
             $this->descuento = $descuento;
             $this->valor_descuento = $valor_descuento;
             $this->valor_total_descuento = $valor_total_descuento;
@@ -69,14 +76,14 @@
                 die();
             }
             //Student Starts accounting process
-            $Query_Select = "SELECT DATE_ADD('$this->InputFechaIC', INTERVAL 1 MONTH ) AS fecha_pp";
+            $Query_Select = "SELECT DATE_ADD('$this->fecha_UP', INTERVAL 1 MONTH ) AS fecha_pp";
             $result_select = $this->SelectMySQL($Query_Select);
             $fecha_pp = $result_select['fecha_pp'];
 
             $Query_Insert = "INSERT INTO accounting (estudiante, fecha_IC, fecha_FC, fecha_UP, fecha_PP, cuota, valor, valor_total, descuento, valor_descuento, valor_total_descuento, descripcion, estado) 
                             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             $Array_Query = array($this->id_student, $this->InputFechaIC, 
-                                 $this->InputFechaFC, $this->InputFechaIC, 
+                                 $this->InputFechaFC, $this->fecha_UP, 
                                  $fecha_pp, $this->InputCuota, 
                                  $this->InputValor, $this->valor_ordinario,
                                  $this->descuento, $this->valor_descuento, 
@@ -86,7 +93,7 @@
             //Insert payment
             $Query_Insert_payment = "INSERT INTO payment (tipo_pago, fecha_pago, valor, periodo, estado) 
                                      VALUES (?, ?, ?, CONCAT('$this->InputFechaIC',' - ', '$this->InputFechaFC'), ?)";
-            $Array_Query_payment = array($this->InputTypePayment_sa, $this->InputFechaIC, $this->InputValor, 1);
+            $Array_Query_payment = array($this->InputTypePayment_sa, $this->fecha_UP, $this->InputValor, 1);
             $result_insert_payment = $this->InsertMySQL($Query_Insert_payment, $Array_Query_payment);
 
             $Query_Insert_d_payment = "INSERT INTO detail_payment (estudiante, payment) VALUES (?, ?)";
@@ -97,7 +104,7 @@
             //Insert notifications
             $tipo = "Pago Inicial";
             $Query_Insert_notifications = "INSERT INTO notifications (tipo, fecha, leida) VALUES (?, ?, ?)";
-            $Array_Query_notifications = array($tipo, $this->InputFechaIC, 0);
+            $Array_Query_notifications = array($tipo, $this->fecha_UP, 0);
             $result_insert_notifications = $this->InsertMySQL($Query_Insert_notifications, $Array_Query_notifications);
             
             $Query_Insert_d_notifications = "INSERT INTO detail_notifications (usuario, notifications) VALUES (?, ?)";
