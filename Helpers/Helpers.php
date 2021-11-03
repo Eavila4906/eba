@@ -180,4 +180,13 @@
         $calculation = $difference->format($differenceFormat);
         return $calculation+1;
     }   
+
+    //dia de pago
+    function paymentDay($d) {
+        $date = strtotime($d);
+        $year = date("Y", $date);
+        $month = date("m", $date);
+        $result = $year.'-'.$month.'-';
+        return $result;
+    }
 ?>
