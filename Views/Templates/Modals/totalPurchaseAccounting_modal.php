@@ -37,11 +37,11 @@
 
                 <div class="row mb-1">
                   <div class="col-md-6">
-                    <label id="labelNewPass" class="">Fecha Inicio <span class="required">*</span></label>
+                    <label id="labelNewPass" class="">Fecha Inicio curso <span class="required">*</span></label>
                     <input class="form-control" type="date" name="InputFechaInicio" id="InputFechaInicio" required>
                     </div>
                   <div class="col-md-6">
-                    <label id="labelConfirmPass" class="">Fecha final <span class="required">*</span></label>
+                    <label id="labelConfirmPass" class="">Fecha final curso <span class="required">*</span></label>
                     <input class="form-control" type="date" name="InputFechaFinal" id="InputFechaFinal" required>
                   </div>
                 </div><br>
