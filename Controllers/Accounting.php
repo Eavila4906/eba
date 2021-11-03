@@ -56,6 +56,14 @@
                     $this->InputTypePayment_sa = $_POST['InputTypePayment-sa'];
                     $this->InputCuota = $_POST['InputCuota'];
                     $this->InputValor = $_POST['InputValor'];
+
+                    $paymentDay = $this->model->SelectPaymentDay();
+                    if ($paymentDay['day'] <= 9) {
+                        $paymentDay['day'] = '0'.$paymentDay['day'];
+                    }
+                    $day = $paymentDay['day'];
+                    $this->fecha_UP = paymentDay($_POST['InputFechaIC']).$day;
+
                     $this->InputFechaIC = $_POST['InputFechaIC'];
                     $this->InputFechaFC = $_POST['InputFechaFC'];
                     $this->InputDescuentoIC = $_POST['InputDescuentoIC'];
@@ -89,6 +97,7 @@
                                                                         $this->InputValor,
                                                                         $this->InputFechaIC, 
                                                                         $this->InputFechaFC,
+                                                                        $this->fecha_UP,
                                                                         $descuento,
                                                                         $valor_descuento,
                                                                         $valor_total_descuento,
