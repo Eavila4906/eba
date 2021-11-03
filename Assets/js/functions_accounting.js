@@ -323,8 +323,8 @@ function initialDate(id) {
 	var M = date.getMonth()+1;
 	var D = date.getDate();
 	var Y = date.getFullYear();
-	if (D != '05' || D != '5') {
-		D = '05';
+	if (D < 9) {
+		D = '0'+D;
 	} 
 	if (M < 10) {
 		M = "0"+M;
@@ -337,8 +337,8 @@ function finishDate(id) {
 	var M = date.getMonth()+2;
 	var D = date.getDate();
 	var Y = date.getFullYear();
-	if (D != '05' || D != '5') {
-		D = '05';
+	if (D < 9) {
+		D = '0'+D;
 	} 
 	if (M < 10) {
 		M = "0"+M;
