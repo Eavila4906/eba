@@ -52,7 +52,17 @@
             $periodo = $result_select['fecha_IC']." - ".$fecha_FC;
             $valor = $result_select['valor'];
 
-            if ($fecha_FC > $this->fecha_UP) {
+            $Query_Select_PD = "SELECT * FROM paymentday WHERE id_paymentday = 1";                   
+            $PD = $this->SelectMySQL($Query_Select_PD);
+
+            $paymentDay = $PD['day'];
+            if ($paymentDay <= 9) {
+                $paymentDay = '0'.$paymentDay;
+            }
+            $day = $paymentDay;
+            $fecha_FC_format = paymentDay($fecha_FC).$day;
+
+            if ($fecha_FC_format > $this->fecha_UP) {
                 //Insert payment
                 $Query_Insert_payment = "INSERT INTO payment (tipo_pago, fecha_pago, valor, periodo, estado, descripcion) 
                                          VALUES (?, ?, ?, ?, ?, ?)";
@@ -145,6 +155,46 @@
                 } else {
                     $result = 0; 
                 }
+            }
+            return $result;
+        }
+
+        public function SelectPaymentDay() {
+            $Query_Select = "SELECT * FROM paymentday WHERE id_paymentday = 1";                   
+            $result = $this->SelectMySQL($Query_Select);
+            return $result;
+        }
+
+        public function UpdatePaymentDay(int $day) {
+            $this->day = $day;
+
+            $Query_Update_PD = "UPDATE paymentday SET day=? WHERE id_paymentday = 1";
+            $Array_Query_PD = array($this->day);
+            $result_PD = $this->UpdateMySQL($Query_Update_PD, $Array_Query_PD);
+
+            $Query_Select_All_AC = "SELECT id_accounting, fecha_PP FROM accounting WHERE estado = 1";
+            $result_AC = $this->SelectAllMySQL($Query_Select_All_AC);
+
+            $Query_Select_PD = "SELECT * FROM paymentday WHERE id_paymentday = 1";                   
+            $PD = $this->SelectMySQL($Query_Select_PD);
+
+            $paymentDay = $PD['day'];
+            if ($paymentDay <= 9) {
+                $paymentDay = '0'.$paymentDay;
+            }
+
+            for ($i=0; $i < count($result_AC); $i++) { 
+                $date = paymentDay($result_AC[$i]['fecha_PP']).$day;
+                $id_accounting = $result_AC[$i]['id_accounting'];
+                $Query_Update_AC = "UPDATE accounting SET fecha_PP=? WHERE id_accounting = $id_accounting AND estado = 1";
+                $Array_Query_AC = array($date);
+                $result_U_AC = $this->UpdateMySQL($Query_Update_AC, $Array_Query_AC);
+            }
+
+            if ($result_PD > 0 || $result_AC > 0 || $PD > 0 || $result_U_AC > 0) {
+                $result = 1;
+            } else {
+                $result = 0;
             }
             return $result;
         }
