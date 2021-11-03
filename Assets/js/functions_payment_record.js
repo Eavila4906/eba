@@ -104,6 +104,46 @@ document.addEventListener('DOMContentLoaded', function () {
 			}
 		});
 	}
+
+	var formPaymentDay = document.querySelector("#formPaymentDay");
+	formPaymentDay.onsubmit = function (e) {
+		e.preventDefault();
+		var InputPaymentDay = document.querySelector('#InputPaymentDay').value;
+
+		if (InputPaymentDay == '') {
+			swal("¡Atención!", "El campo es obligatorio.", "warning");
+			return false;
+		} else if (!campos.InputPaymentDay) {
+			swal("¡Atención!", "Verifica el campo en rojo.", "warning");
+			return false;
+		} else if (InputPaymentDay <= 0 || InputPaymentDay > 28) {
+			swal("¡Atención!", "El valor ingresado esta fuera del rango de los requisitos.", "warning");
+			return false;
+		}
+
+		divLoading.style.display = "flex";
+		var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+		var ajaxUrl = BASE_URL + 'payment_record/setPaymentDay';
+		var data = new FormData(formPaymentDay);
+		request.open("POST", ajaxUrl, true);
+		request.send(data);
+
+		request.onreadystatechange = function () {
+			if (request.readyState == 4 && request.status == 200) {
+				var objData = JSON.parse(request.responseText);
+				if (objData.status) {
+					swal("¡Hecho!", objData.msg, "success");
+					$('#ModalFormPaymentDay').modal('hide');
+					formPaymentDay.reset();
+					DataTablePaymentRecord.ajax.reload();
+				} else {
+					swal("ERROR!", objData.msg, "error");
+				}
+			}
+			divLoading.style.display = "none";
+			return false;
+		}	
+	}
 });
 
 function FctBtnPaymentRecord(accion, DNI, nombres, id_accounting, fecha_UP) {
@@ -181,4 +221,75 @@ function FctBtnPaymentRecord(accion, DNI, nombres, id_accounting, fecha_UP) {
 		}
 	});
 	*/
+}
+
+const inputs = document.querySelectorAll('#formPaymentDay input');
+const expresiones = {
+	range: /^\d{1,2}$/
+}
+
+const campos = {
+	InputPaymentDay: false
+}
+
+const validarFormulario = (e) => {
+	switch (e.target.name) {
+		case "InputPaymentDay":
+			validarCamposForm(expresiones.range, e.target, 'labelPaymentDay', 'InputPaymentDay', 'leyenda-PaymentDay');
+		break;
+	}
+}
+
+const validarCamposForm = (expresion, input, label, id_input, leyenda) => {
+	if(expresion.test(input.value)){
+        document.getElementById(`${id_input}`).classList.remove('invalid');
+        document.getElementById(`${leyenda}`).classList.add('none-block');
+		document.getElementById(`${label}`).classList.remove('text-danger');
+		campos[id_input] = true;
+	} else {
+		document.getElementById(`${id_input}`).classList.add('invalid');
+		document.getElementById(`${leyenda}`).classList.remove('none-block');
+		document.getElementById(`${label}`).classList.add('text-danger');
+		campos[id_input] = false;
+	}
+}
+
+inputs.forEach((input) => {
+	input.addEventListener('keyup', validarFormulario);
+	input.addEventListener('blur', validarFormulario);
+});
+
+function cleanResiduoVali() {
+	var ocuLeyenda = document.querySelectorAll('.labelForm');	
+	ocuLeyenda.forEach.call(ocuLeyenda, c => {
+		c.classList.remove('text-danger');
+	});
+	var ocuLeyenda = document.querySelectorAll('.inputForm');	
+	ocuLeyenda.forEach.call(ocuLeyenda, c => {
+		c.classList.remove('invalid');
+	});
+	var ocuLeyenda = document.querySelectorAll('.leyenda');	
+	ocuLeyenda.forEach.call(ocuLeyenda, c => {
+		c.classList.add('none-block');
+	});
+}
+
+function openModalPaymentDay() {
+	document.querySelector('#formPaymentDay').reset();
+	cleanResiduoVali();
+	$('#ModalFormPaymentDay').modal('show');
+
+	var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+	var ajaxUrl = BASE_URL + 'payment_record/getPaymentDay';
+	request.open("GET", ajaxUrl, true);
+	request.send();
+
+	request.onreadystatechange = function () {
+		if (request.readyState == 4 && request.status == 200) {
+			var objData = JSON.parse(request.responseText);
+			document.querySelector('#current-day').innerHTML = objData.day;
+			document.querySelector('#InputPaymentDay').value = objData.day;
+		}
+	}
+
 }
