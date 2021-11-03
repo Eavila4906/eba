@@ -147,9 +147,9 @@
         public function paymentReminder() {
             setlocale(LC_ALL,"es-ES");
             $this->current_date = date("Y-m-d");
-            //$this->current_date = date("2021-12-08");
+            //$this->current_date = date("2022-01-05");
             $arrayData = $this->SelectAllAccountingUsers($this->current_date);
-            //echo json_encode($arrayData, JSON_UNESCAPED_UNICODE)."<br>";
+            echo json_encode($arrayData, JSON_UNESCAPED_UNICODE)."<br>";
             for ($i=0; $i < count($arrayData); $i++) { 
                 if ($arrayData[$i]['plazo'] < 4 && $arrayData[$i]['plazo'] > 0) {
                     #Insert Notifications payment reminder
@@ -175,7 +175,7 @@
                     #Insert Notifications late payment
                     $user = $arrayData[$i]['DNI'];
                     $type = "Pago atrasado";
-                    $description = "Hola ".$arrayData[$i]['nombres'].", con número de cedula ".$arrayData[$i]['DNI'].". te informamos que el plazo para realizar el pago de tu mensualidad correspondiente al mes de ".ucwords(strftime("%B", strtotime($arrayData[$i]['fecha_pp'])))." a caducado.  Por favor, debera de hacer el pago en un plazo menos de 3 días, caso contrario el sistema lo retirara del curso.";
+                    $description = "Hola ".$arrayData[$i]['nombres'].", con número de cedula ".$arrayData[$i]['DNI'].". te informamos que el plazo para realizar el pago de tu mensualidad correspondiente al mes de ".ucwords(strftime("%B", strtotime($arrayData[$i]['fecha_pp'])))." a caducado.  Por favor, debera de hacer el pago en un plazo menos de 3 días.";
                     $date = $arrayData[$i]['fecha_pp'];
                     $this->InsertNotifications($user, $type, $description, $date);
                     #Seend email late payment
