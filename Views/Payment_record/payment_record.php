@@ -16,7 +16,7 @@
     </ul>
     </div>
 
-    <?php if ($_SESSION['permisosModulo']['w']) { ?>
+    <?php if ($_SESSION['permisosModulo']['u']) { ?>
     <div>
       <button class="btn btn-success mb-3" type="button" onclick="openModalPaymentDay()"><i class="fa fa-calendar fa-lg"></i> Día de pago</button><br>
     </div>
