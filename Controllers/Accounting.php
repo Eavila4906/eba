@@ -336,7 +336,7 @@
         public function pauseAccounting() {
             if ($_POST) {
                 if ($_POST['id_student'] == '' || $_POST['periodo'] == '') {
-                    $arrayData = array('status' => false, 'msg' => 'the process failed, try again later!');
+                    $arrayData = array('status' => false, 'msg' => 'No se pudo ejecutar este proceso.');
                 } else {
                     $this->id_student = $_POST['id_student'];
                     $this->periodo = $_POST['periodo'];
@@ -447,14 +447,12 @@
                             </button>'; 
                         }
                         if ($_SESSION['permisosModulo']['d']){
-                            $p = "'".$arrayData[$i]['fecha_IC']." - ".$arrayData[$i]['fecha_FC']."'";
-                            $e = "'".$arrayData[$i]['DNI']."'";
-                            $pf = "'".$arrayData[$i]['periodo_format']."'";
-                            /*$btnDeleteIIA = '<button class="btn btn-danger btn-sm btnSeePayments" 
-                            onclick="FctBtnDeleteRDIIA('.$p.','.$e.','.$pf.')" 
+                            $id_accounting = $arrayData[$i]['id_accounting'];
+                            $btnDeleteIIA = '<button class="btn btn-danger btn-sm btnSeePayments" 
+                            onclick="FctBtnDeleteRDIIA('.$id_accounting.')" 
                             title="Eliminar registro">
                                 <i class="fas fa-trash-alt"></i>
-                            </button>'; */
+                            </button>';
                         }
                         $acciones = '<div class="text-center">'.$btnSeeIIA." ".$btnDeleteIIA.'</div>';
 
@@ -525,6 +523,27 @@
                             <b>¡Restricted access!</b> you do not have permission to manipulate this module.
                         </div>';
                 }
+            }
+            die();
+        }
+
+        public function deleteAccountingInactive() {
+            if ($_POST) {
+                if (intval($_POST['id_accounting']) == 0) {
+                    $arrayData = array('status' => false, 'msg' => 'No se pudo ejecutar este proceso.');
+                } else {
+                    $this->id_accounting = $_POST['id_accounting'];
+                    if ($_SESSION['permisosModulo']['d']){
+                        $arrayData = $this->model->DeleteAccountingInactive($this->id_accounting);
+                    }
+
+                    if ($arrayData > 0) {
+                        $arrayData = array('status' => true, 'msg' => 'Eliminado exitosamente.');
+                    } else {
+                        $arrayData = array('status' => false, 'msg' => 'No se pudo ejecutar este proceso.');
+                    }
+                }
+                echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
             }
             die();
         }
