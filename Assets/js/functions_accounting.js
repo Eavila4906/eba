@@ -96,6 +96,7 @@ function cleanResiduoVali() {
 //Cargar los datos del la base de datos al la tabla iniciar contabilidad
 var DataTableStartsAccounting;
 var DataTableAccounting;
+var DataTableInactiveAccounting;
 document.addEventListener('DOMContentLoaded', function () {
 
 	DataTableStartsAccounting = $('#DataTableIC').DataTable({ /*ID de la tabla*/
@@ -525,10 +526,10 @@ function FctBtnSeeDetailAccounting(id_accounting, id_student, periodo, student) 
 	$('#modalSeeDetailsAccounting').modal('show');
 }
 
+var DataTableSeeIIA;
 function FctBtnSeeIIA(dni, name) {
     var dni = dni;
     var name = name;
-    var DataTableSeeIIA;
     DataTableSeeIIA = $('#DataTableSeeIIA').DataTable({ /*ID de la tabla*/
         "aProcessing": true,
         "aServerside": true,
@@ -612,4 +613,39 @@ function FctBtnSeeDIIA(periodo, dni, periodo_format) {
         return false;
 	}
 	$('#modalSeeDIIA').modal('show');
+}
+
+function FctBtnDeleteRDIIA(id_accounting) {
+	swal({
+		title: "¡Eliminar registro!",
+		text: "¿Estas seguro que deceas eliminar este registro permanentemente?",
+		type: "warning",
+		showCancelButton: true,
+		confirmButtonText: "Si, Eliminar",
+		cancelButtonText: "No, cancelar",
+		closeOnConfirm: false,
+		closeOnCancel: true,
+	}, function (isConfirm) {
+		if (isConfirm) {
+			var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+			var ajaxUrl = BASE_URL + 'accounting/deleteAccountingInactive/';
+			var data = 'id_accounting='+id_accounting;
+			request.open("POST", ajaxUrl, true);
+			request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			request.send(data);
+
+			request.onreadystatechange = function () {
+				if (request.readyState == 4 && request.status == 200) {
+					var objData = JSON.parse(request.responseText);
+					if (objData.status) {
+						swal("¡Registro!", objData.msg, "success");
+						DataTableSeeIIA.ajax.reload();
+						DataTableInactiveAccounting.ajax.reload();
+					} else {
+						swal("ERROR!", objData.msg, "error");
+					}
+				}
+			}
+		}
+	});
 }
