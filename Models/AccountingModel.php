@@ -332,7 +332,7 @@
 
         public function SelectSeeIIA(String $dni) {
             $this->dni = $dni;
-            $Query_Select = "SELECT us.DNI, ac.fecha_IC, ac.fecha_FC, ac.fecha_UP, ac.fecha_PP
+            $Query_Select = "SELECT ac.id_accounting, us.DNI, ac.fecha_IC, ac.fecha_FC, ac.fecha_UP, ac.fecha_PP
                                     FROM accounting ac INNER JOIN student st ON (ac.estudiante=st.estudiante)
                                     INNER JOIN usuario us ON(st.estudiante=us.DNI)
                                     WHERE ac.estudiante = '$this->dni' AND ac.estado = 0";
@@ -354,6 +354,19 @@
                                     WHERE ac.estudiante = '$this->dni' AND CONCAT(ac.fecha_IC, ' - ', ac.fecha_FC) = '$this->periodo' AND
                                     ac.estado = 0";
             $result = $this->SelectMySQL($Query_Select);
+            return $result;
+        }
+
+        public function DeleteAccountingInactive(int $id_accounting) {
+            $this->id_accounting = $id_accounting;
+            $Query_Delete = "DELETE FROM accounting WHERE id_accounting = $this->id_accounting";
+            $result = $this->DeleteMySQL($Query_Delete);
+
+            if ($result) {
+                $result = 1;
+            } else {
+                $result = 0;
+            }
             return $result;
         }
     }
