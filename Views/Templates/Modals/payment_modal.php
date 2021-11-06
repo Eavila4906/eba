@@ -26,6 +26,7 @@
                     <option value="Deposito">Deposito</option>
                     <option value="Efectivo">Efectivo</option>
                     <option value="Transferencia">Transferencia</option>
+                    <option value="Tarjeta de credito">Tarjeta de credito</option>
                   </select>
                 </div>
 
