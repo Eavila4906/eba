@@ -495,7 +495,7 @@ function FctBtnSeeDetailAccounting(id_accounting, id_student, periodo, student) 
 				document.querySelector('#fup-sda').innerHTML = objData.fecha_UP;
 				document.querySelector('#fpp-sda').innerHTML = objData.fecha_PP;
 				document.querySelector('#cuota-sda').innerHTML = objData.cuota;
-				document.querySelector('#mensualidad-sda').innerHTML = objData.valor_m;
+				//document.querySelector('#mensualidad-sda').innerHTML = objData.valor_m;
 				document.querySelector('#vtp-sda').innerHTML = objData.valor_total;
 				document.querySelector('#dp-sda').innerHTML = objData.descuento;
 				document.querySelector('#vd-sda').innerHTML = objData.valor_descuento;
@@ -513,8 +513,9 @@ function FctBtnSeeDetailAccounting(id_accounting, id_student, periodo, student) 
 				document.querySelector('#fup-sda').innerHTML = objData.fecha_UP;
 				document.querySelector('#fpp-sda').innerHTML = objData.fecha_PP;
 				document.querySelector('#cuota-sda').innerHTML = objData.cuota;
-				document.querySelector('#mensualidad-sda').innerHTML = objData.valor_m;
+				//document.querySelector('#mensualidad-sda').innerHTML = objData.valor_m;
 				document.querySelector('#vtp-sda').innerHTML = objData.valor_total;
+				document.querySelector('#md-sda').innerHTML = objData.valor_mcd;
 				document.querySelector('#descripcion-sda').innerHTML = objData.descripcion;
 				document.querySelector('#estado-sda').innerHTML = objData.estado;
 			}
@@ -582,7 +583,7 @@ function FctBtnSeeDIIA(periodo, dni, periodo_format) {
 				document.querySelector('#fup-sda-diia').innerHTML = objData.fecha_UP;
 				document.querySelector('#fpp-sda-diia').innerHTML = objData.fecha_PP;
 				document.querySelector('#cuota-sda-diia').innerHTML = objData.cuota;
-				document.querySelector('#mensualidad-sda-diia').innerHTML = objData.valor_m_DIIA;
+				//document.querySelector('#mensualidad-sda-diia').innerHTML = objData.valor_m_DIIA;
 				document.querySelector('#vtp-sda-diia').innerHTML = objData.valor_total;
 				document.querySelector('#dp-sda-diia').innerHTML = objData.descuento;
 				document.querySelector('#vd-sda-diia').innerHTML = objData.valor_descuento;
@@ -601,8 +602,9 @@ function FctBtnSeeDIIA(periodo, dni, periodo_format) {
 				document.querySelector('#fup-sda-diia').innerHTML = objData.fecha_UP;
 				document.querySelector('#fpp-sda-diia').innerHTML = objData.fecha_PP;
 				document.querySelector('#cuota-sda-diia').innerHTML = objData.cuota;
-				document.querySelector('#mensualidad-sda-diia').innerHTML = objData.valor_m_DIIA;
+				//document.querySelector('#mensualidad-sda-diia').innerHTML = objData.valor_m_DIIA;
 				document.querySelector('#vtp-sda-diia').innerHTML = objData.valor_total;
+				document.querySelector('#md-sda-diia').innerHTML = objData.valor_mcd_DIIA;
 				document.querySelector('#descripcion-sda-diia').innerHTML = objData.descripcion;
 				document.querySelector('#estado-sda-diia').innerHTML = objData.estado_format;
 				document.querySelector('#justificacion-sda-diia').innerHTML = objData.observacion;
