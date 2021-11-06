@@ -28,10 +28,10 @@
                     <td style="width: 200px"><b>Cuota</b></td>
                     <td id="cuota-sda-diia"></td>
                 </tr>
-                <tr>
+                <!--<tr>
                     <td style="width: 200px"><b>Mensualidad</b></td>
                     <td id="mensualidad-sda-diia"></td>
-                </tr>
+                </tr>-->
                 <tr>
                     <td style="width: 200px"><b>Valor total a pagar</b></td>
                     <td id="vtp-sda-diia"></td>
@@ -49,7 +49,7 @@
                     <td id="vtd-sda-diia"></td>
                 </tr>
                 <tr id="md-tr-sda-diia">
-                    <td style="width: 200px"><b>Mensualidad con descuento</b></td>
+                    <td style="width: 200px"><b>Mensualidad</b></td>
                     <td id="md-sda-diia"></td>
                 </tr>
                 <tr>
