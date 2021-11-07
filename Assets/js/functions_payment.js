@@ -32,6 +32,28 @@ document.addEventListener('DOMContentLoaded', function () {
 		"iDisplayLength": 10, /*Mostrará los primero 10 registros*/
 		"order": [[0, "desc"]] /*Ordenar de forma Desendente*/
 	});
+
+    DataTableFinancialReport = $('#DataTableFinancialReport').DataTable({ /*ID de la tabla*/
+		"aProcessing": true,
+		"aServerside": true,
+		"language": {
+			"url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json" /*Idioma de visualizacion*/
+		},
+		"ajax": {
+			"url": BASE_URL + "payment/getFinancialReport",/* Ruta a la funcion getRoles que esta en el controlador roles.php*/
+			"dataSrc": ""
+		},
+		"columns": [/* Campos de la base de datos*/
+			{ "data": "ingresos_format" },
+			{ "data": "egresos_format" },
+			{ "data": "saldo_neto_format" },
+            /*{ "data": "Accion" },*/
+		],
+		"responsieve": "true",
+		"bDestroy": true,
+		"iDisplayLength": 10, /*Mostrará los primero 10 registros*/
+		"order": [[0, "desc"]] /*Ordenar de forma Desendente*/
+	});
 });
 
 function FctBtnSeePayments(dni, name) {
@@ -100,3 +122,7 @@ function FctBtnIndividualPayments(periodo_format, periodo, dni, opcion) {
 function FctBtnCMSP() {
     document.querySelector('#dtsip').classList.add('notBlock');
 }
+
+/*function FctBtnExpenses() { funcionalidad para actualizacion
+    $('#ModalFormExpenses').modal('show');
+}*/

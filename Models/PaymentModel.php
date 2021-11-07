@@ -47,5 +47,12 @@
             $result = $this->SelectAllMySQL($Query_Select_All);
             return $result;
         }
+
+        public function SelectAllFinancialReport() {
+            $Query_Select_All = "SELECT SUM(pa.valor) AS saldo 
+                                    FROM detail_payment dp INNER JOIN payment pa ON (dp.id_detail_payment=pa.id_payment)";
+            $result = $this->SelectALLMySQL($Query_Select_All);
+            return $result;
+        }
     }
 ?>

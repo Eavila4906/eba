@@ -240,5 +240,39 @@
             }
             die();
         }
+
+        public function getFinancialReport() {
+            if ($_SESSION['permisosModulo']['r']){
+                $arrayData = $this->model->SelectAllFinancialReport();
+                for ($i=0; $i < count($arrayData); $i++) { 
+                    $arrayData[$i]['ingresos_format'] = "$".$arrayData[$i]['saldo'];
+                    $arrayData[$i]['egresos'] = 0;
+                    $arrayData[$i]['egresos_format'] = "$".$arrayData[$i]['egresos'];
+                    $arrayData[$i]['saldo_neto'] = $arrayData[$i]['saldo'] - $arrayData[$i]['egresos'];
+                    $arrayData[$i]['saldo_neto_format'] = "$".$arrayData[$i]['saldo_neto'];
+                    /* funcionalida para actualizacion 
+                    $btnExpenses = "";
+                    if ($_SESSION['permisosModulo']['w']) {
+                        $btnExpenses = '<button class="btn btn-danger btn-sm btnSeePayments" 
+                            onclick="FctBtnExpenses()" 
+                            title="Registrar egreso">
+                                <i class="fas fa-hand-holding-usd"></i>
+                            </button>';
+                    }
+
+                    $acciones = '<div class="text-center">'.$btnExpenses.'</div>';
+                    $arrayData[$i]['Accion'] = $acciones;*/
+                }
+                echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
+            } else {
+                echo '<div class="alert alert-danger" role="alert" 
+                        style="position: relative;padding: 0.75rem 1.25rem;margin-bottom: 1rem;border: 
+                        1px solid transparent;border-radius: 0.25rem;color: #721c24;background-color: #f8d7da;
+                        border-color: #f5c6cb;border-top-color: #f1b0b7;">
+                        <b>¡Restricted access!</b> you do not have permission to manipulate this module.
+                    </div>';
+            }
+            die();
+        }
     }
 ?>
