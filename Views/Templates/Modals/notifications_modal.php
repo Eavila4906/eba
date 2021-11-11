@@ -73,15 +73,7 @@
             </table>     
           </div>  
         </div>
-        <br>
-        <div class="tile-footer">
-            <div class="text-center">
-              <a class="btn btn-primary" href="#" data-dismiss="modal">
-                <i class="fa fa-fw fa-lg fa-check-circle"></i>
-                Listo
-              </a>
-            </div>
-        </div>
+        
       </div>
       <!--Payment reminder-->
       <div class="modal-body" id="Notifications-payment-reminder">
@@ -116,39 +108,23 @@
                   <td style="width: 100px" class="font-weight text-center">
                     <a href="https://www.pichincha.com/portal/inicio" target="_blank" title="Banco Pichincha">
                       <img src="<?= MEDIA();?>images/image-notifications/Banco-Pichincha.jpg" 
-                      width="50px" height="50px" style="border-radius:100%;">
+                      width="65px" height="65px" style="border-radius:100%;">
                     </a>
                   </td>
                   <td style="width: 100px" class="font-weight text-center">
-                    <a href="javascripts:;" title="MasterCard">
-                      <img src="<?= MEDIA();?>images/image-notifications/MasterCard.jpg" 
-                      width="50px" height="50px" style="border-radius:100%;">
-                    </a>
+                    <i class="icon fab fa-cc-visa fa-3x text-warning"></i>
                   </td>
                   <td style="width: 100px" class="font-weight text-center">
-                    <a href="javascripts:;" title="Visa">
-                      <img src="<?= MEDIA();?>images/image-notifications/Visa.png" 
-                      width="50px" height="50px" style="border-radius:100%;">
-                    </a>
+                    <i class="icon fab fa-cc-mastercard fa-3x text-warning"></i>
                   </td>
-                </tr>
-                <tr>
-                  <td id="" title="Número de cuenta" class="font-weight text-center"><B>N.</B>2100232502</td>
-                  <td id="" title="Número de cuenta" class="font-weight text-center"><B>N.</B>0021086542</td>
-                  <td id="" title="Número de cuenta" class="font-weight text-center"><B>N.</B>0000408545</td>
                 </tr>
               </tbody>
             </table> 
+            <p class="text-justify">
+              Realizar el pago al número de cuenta <b>2100232502</b>, puedes realizar los pagos 
+              por medio de depositos, transferencias, tarjetas de credito visa o mastercard.  
+            </p> 
           </div>  
-        </div>
-        <br>
-        <div class="tile-footer">
-            <div class="text-center">
-              <a class="btn btn-warning" href="#" data-dismiss="modal">
-                <i class="fa fa-fw fa-lg fa-check-circle"></i>
-                Listo
-              </a>
-            </div>
         </div>
       </div>
       <!--Payment Late Payment-->
@@ -159,7 +135,7 @@
           </div>
           <div class="col-md-5">
             <h4 class="font-weight-bold">Nota:</h4>
-            <p id="descripcion-pa"></p> 
+            <p class="text-justify" id="descripcion-pa"></p> 
             <h4 class="font-weight-bold">Detalle del pago</h4><br>
             <table class="default">
               <tbody>
@@ -182,44 +158,27 @@
               <tbody>
                 <tr>
                   <td style="width: 100px" class="font-weight text-center">
-                    <a href="javascripts:;" title="Banco Pichincha">
+                    <a href="https://www.pichincha.com/portal/inicio" target="_blank" title="Banco Pichincha">
                       <img src="<?= MEDIA();?>images/image-notifications/Banco-Pichincha.jpg" 
-                      width="50px" height="50px" style="border-radius:100%;">
+                      width="65px" height="65px" style="border-radius:100%;">
                     </a>
                   </td>
                   <td style="width: 100px" class="font-weight text-center">
-                    <a href="javascripts:;" title="Banco del Pacifico">
-                      <img src="<?= MEDIA();?>images/image-notifications/Banco-del-pacifico.png" 
-                      width="50px" height="50px" style="border-radius:100%;">
-                    </a>
+                    <i class="icon fab fa-cc-visa fa-3x text-warning"></i>
                   </td>
                   <td style="width: 100px" class="font-weight text-center">
-                    <a href="javascripts:;" title="Banco Guayaquil">
-                      <img src="<?= MEDIA();?>images/image-notifications/Banco-Guayaquil.png" 
-                      width="50px" height="50px" style="border-radius:100%;">
-                    </a>
+                    <i class="icon fab fa-cc-mastercard fa-3x text-warning"></i>
                   </td>
-                </tr>
-                <tr>
-                  <td id="" title="Número de cuenta" class="font-weight text-center"><B>N.</B>0054886897</td>
-                  <td id="" title="Número de cuenta" class="font-weight text-center"><B>N.</B>0021086542</td>
-                  <td id="" title="Número de cuenta" class="font-weight text-center"><B>N.</B>0000408545</td>
                 </tr>
               </tbody>
             </table> 
+            <p class="text-justify">
+              Realizar el pago al número de cuenta <b>2100232502</b>, puedes realizar los pagos 
+              por medio de depositos, transferencias, tarjetas de credito visa o mastercard.  
+            </p>
           </div>  
         </div>
-        <br>
-        <div class="tile-footer">
-            <div class="text-center">
-              <a class="btn btn-danger" href="#" data-dismiss="modal">
-                <i class="fa fa-fw fa-lg fa-check-circle"></i>
-                Listo
-              </a>
-            </div>
-        </div>
       </div>
-        
     </div>
   </div>
 </div>
