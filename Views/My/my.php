@@ -44,43 +44,51 @@
     <div class="col-md-5">
       <img src="<?= MEDIA();?>images/metodos-pago.jpg" width="400px" height="300px">
     </div>
+    
     <div class="col-md-6 col-lg-3">
-      <div class="widget-small info coloured-icon"><i class="icon fas fa-landmark fa-3x"></i>
+      <div class="widget-small warning coloured-icon"><i class="icon fas fa-landmark fa-3x"></i>
         <div class="info">
           <h4>B. Pichincha</h4>
           <b>
             <p>2100232502</p>
           </b>
-          <a href="#" class="small-box-footer">Ir</a>
+          <a href="https://inicio.pichincha.com/portal/inicio" class="small-box-footer" target="_blank">Ir</a>
         </div>
       </div>
-      <div class="widget-small info coloured-icon"><i class="icon fab fa-cc-visa fa-3x"></i>
-        <div class="info">
-          <h4>Visa</h4>
-          <b> 
-            <p></p>
-          </b>
-          <a href="" class="small-box-footer">Ir</a>
-        </div>
-      </div>
-      <div class="widget-small info coloured-icon"><i class="icon fab fa-cc-mastercard fa-3x"></i>
-        <div class="info">
-          <h4>MasterCard</h4>
-          <b>
-            <p></p><i class="">
-          </b>
-          <a href="" class="small-box-footer">Ir</i></a>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6 col-lg-3">
+
       <div class="widget-small green coloured-icon"><i class="icon fab fa-whatsapp fa-3x"></i>
         <div class="info">
           <h4>WhatsApp</h4>
           <b> 
             <p>0992541127</p>
           </b>
-          <a href="" class="small-box-footer">Mas información</i></a>
+        </div>
+      </div>
+      
+      <div class="col-md-0 col-lg-12 text-center">
+        <i class="icon fas fa-university fa-2x"></i>  
+        <i class="icon fas fa-coins fa-2x"></i> 
+        <i class="icon fab fa-cc-visa fa-2x"></i>
+        <i class="icon fab fa-cc-mastercard fa-2x"></i>
+      </div><br>
+
+
+    </div>
+    <div class="col-md-6 col-lg-4">
+      <div class="">
+        <div class="widget-small green coloured-icon">
+          <div class="info">
+            <p>
+              <b>Nota:</b>
+              <br>
+              <ul class="text-justify">
+                <li>Realizar el pago el día que el sistema le notifique.</li>
+                <li>Realizar el pago al número de cuenta que aparece a tu izquierda.</li>
+                <li>Puedes realizar los pagos por medio de depositos, transferencias, tarjetas de credito visa o mastercard.</li>
+                <li>Cada vez que se realice un pago, deberas enviar un sms al número de WhatsApp con el comprobante de pago.</li>
+              </ul>
+            </p>
+          </div>
         </div>
       </div>
     </div>
