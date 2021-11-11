@@ -100,7 +100,7 @@
             }
             $day = $paymentDay['day'];
             $date_format = paymentDay($this->date).$day;
-            $arrayData['fecha_pp'] = $this->model->SelectNextDate($date_format);
+            $arrayData['fecha_pp'] = $date_format;
 
             //Formato de fecha
             setlocale(LC_ALL,"es-ES");
