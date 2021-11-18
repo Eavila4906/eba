@@ -23,7 +23,7 @@ INSERT INTO `modulo` (`id_modulo`, `nombreModulo`, `descripcion`, `estadoModulo`
 (5, 'Roles y Permisos', 'Roles y permisos para los usuarios', 1),
 (7, 'Registrar Pagos', 'Llevar el control de pagos de los estudiantes', 1),
 (6, 'Contabilidad', 'Contabilidad de los pagos del estudiante', 1),
-(8, 'Pagos', 'Describe y proporciona información de todos los pagos realizados', 1);
+(8, 'Reportes', 'Describe y proporciona información de todos los procesos contables', 1);
 
 -- --------------------------------------------------------
 
