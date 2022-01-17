@@ -70,10 +70,29 @@ function loadCountTeachers() {
     }
 }
 
+function loadCountAccounting() {
+    var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+    var ajaxUrl = BASE_URL+'dashboard/getCountAccounting';
+    
+    request.open("POST", ajaxUrl, true);
+    request.send();
+
+    request.onreadystatechange = function() {
+        if (request.readyState == 4 && request.status == 200) {
+            var objData = JSON.parse(request.responseText);
+            document.querySelector('#CountAccounting').innerHTML = objData.data.countAccounting;
+        } else {
+            document.querySelector('#CountAccounting').innerHTML = "ERROR!";
+        }
+        return false;
+    }
+}
+
 setTimeout(loadCoutUsers, 1000);
 //setTimeout(loadCountCourses, 1000);
 setTimeout(loadCountStudens, 1000);
 setTimeout(loadCountTeachers, 1000);
+setTimeout(loadCountAccounting, 1000);
 /*setInterval(loadCoutUsers, 2000);
 setInterval(loadCountCourses, 2000);
 setInterval(loadCountStudens, 2000);
