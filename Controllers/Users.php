@@ -135,8 +135,8 @@
                 $this->id_usuario = intval($_POST['id_usuario']);
                 $this->InputCedulaPasaporte = $_POST['InputCedulaPasaporte'];
                 $this->InputNombres = $_POST['InputNombres'];
-                $this->InputApellidoP = $_POST['InputApellidoP'];
-                $this->InputApellidoM = $_POST['InputApellidoM'];
+                $this->InputApellidoP = strClean2($_POST['InputApellidoP']);
+                $this->InputApellidoM = strClean2($_POST['InputApellidoM']);
                 $this->InputEmail = $_POST['InputEmail'];
                 $this->InputTelefono = $_POST['InputTelefono'];
                 $this->InputfechaNaci = $_POST['InputfechaNaci'];
