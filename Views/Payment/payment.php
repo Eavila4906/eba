@@ -39,6 +39,11 @@
         <div class="col-md-12">
           <div class="tile">
             <h3 class="text-primary"><i class="fas fa-coins"></i> Reporte financiero</h3> 
+            <div class="alert alert-warning alert-dismissable">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <strong>¡Antención!</strong> En esta tabla solo se apreciaran los ingresos de las contabilidades 
+                      registradas en el sistema.
+            </div>
             <div class="tile-body">
               <div class="table-responsive">
                 <table class="table table-hover table-bordered" id="DataTableFinancialReport"
@@ -47,9 +52,9 @@
                   <thead>
                     <tr>
                       <th>Ingresos</th>
-                      <th>Egresos</th>
+                      <!-- <th>Egresos</th>
                       <th>Saldo neto</th>
-                      <!-- <th>Acción</th> funcionalidad para actualizacion -->
+                      <th>Acción</th> funcionalidad para actualizacion -->
                     </tr>
                   </thead>
                 </table>
