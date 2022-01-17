@@ -45,6 +45,15 @@
             $result = $this->SelectMySQL($Query_Select);
             return $result;
         }
+
+        public function selectCountAccounting() {
+            $Query_Select = "SELECT COUNT(id_accounting) AS countAccounting
+                            FROM accounting WHERE estado != 0
+                            ";
+            
+            $result = $this->SelectMySQL($Query_Select);
+            return $result;
+        }
         
     }
 ?>
