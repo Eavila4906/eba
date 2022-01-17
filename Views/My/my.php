@@ -32,7 +32,7 @@
   
   <div class="row">
     <div class="col-md-7">
-      <img src="<?= MEDIA();?>images/thumbnail.jpg" width="1059px" height="500px">
+      <img src="<?= MEDIA();?>images/thumbnail.jpg" width="1059px" height="470px">
     </div>
   </div>
   
