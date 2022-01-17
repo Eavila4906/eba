@@ -45,9 +45,9 @@ document.addEventListener('DOMContentLoaded', function () {
 		},
 		"columns": [/* Campos de la base de datos*/
 			{ "data": "ingresos_format" },
-			{ "data": "egresos_format" },
+			/*{ "data": "egresos_format" },
 			{ "data": "saldo_neto_format" },
-            /*{ "data": "Accion" },*/
+            { "data": "Accion" },*/
 		],
 		"responsieve": "true",
 		"bDestroy": true,
