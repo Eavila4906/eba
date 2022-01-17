@@ -59,6 +59,17 @@
             </div>
           </div>
         </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="widget-small green coloured-icon"><i class="icon fas fa-calculator fa-3x"></i>
+            <div class="info">
+              <h4>Contabilidad</h4>
+              <b> 
+                <p id="CountAccounting"></p>
+              </b>
+              <a href="<?= BASE_URL(); ?>accounting" class="small-box-footer">Mas información</i></a>
+            </div>
+          </div>
+        </div>
       </div>
     </main>
 <?php
