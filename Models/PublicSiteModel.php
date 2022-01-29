@@ -5,7 +5,7 @@
         }
         /* Start home */
         public function SelectAllContentGaleryHome() {
-            $Query_Select_All = "SELECT * FROM galeryHome WHERE estado != 0 ORDER BY id_cont DESC";
+            $Query_Select_All = "SELECT * FROM galeryhome WHERE estado != 0 ORDER BY id_cont DESC";
             $result = $this->SelectAllMySQL($Query_Select_All);
             return $result;
         }
