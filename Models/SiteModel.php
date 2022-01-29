@@ -41,7 +41,7 @@
         /* Start get social media */
         public function SelectAllContentsSocialMedia() {
             $Query_Select_All = "SELECT sm.nombre,sm.link, ic.nombre AS icono
-                                 FROM socialMedia sm INNER JOIN icons ic ON (sm.icono=ic.id_icon) 
+                                 FROM socialmedia sm INNER JOIN icons ic ON (sm.icono=ic.id_icon) 
                                  WHERE sm.estado = 1 ORDER BY sm.id_socialMedia ASC";
             $result = $this->SelectAllMySQL($Query_Select_All);
             return $result;
