@@ -63,11 +63,9 @@
                          <!--<li><a href="#courses" class="smoothScroll">Courses</a></li>-->   
                          <li><a href="#contact" class="smoothScroll">Contact</a></li>
                     </ul>
-                    <!-- Btn disable
                     <ul class="nav navbar-nav navbar-right">
                          <li><a href="javascript:;" type="Button" onclick="OpenSolicitarRegistroForm();"><i class="fa fa-user-plus"></i>Registrarse</a></li>
                     </ul>
-                    -->
                     <ul class="nav navbar-nav navbar-right">
                          <li>
                               <a href="javascript:;" type="Button" onclick="OpenLoginForm();">

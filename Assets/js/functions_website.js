@@ -155,7 +155,23 @@ document.addEventListener('DOMContentLoaded', function(){
 //Formulario de solicitar registro
 function OpenSolicitarRegistroForm(){
     document.querySelector('#formSolicitarRegistro').reset();
+    cleanResiduoVali();
     $('#ModalFormSolicitarRegistro').modal('show');
+}
+
+function cleanResiduoVali() {
+	var ocuLeyenda = document.querySelectorAll('.labelForm');	
+	ocuLeyenda.forEach.call(ocuLeyenda, c => {
+		c.classList.remove('text-danger');
+	});
+	var ocuLeyenda = document.querySelectorAll('.inputForm');	
+	ocuLeyenda.forEach.call(ocuLeyenda, c => {
+		c.classList.remove('invalid');
+	});
+	var ocuLeyenda = document.querySelectorAll('.leyenda');	
+	ocuLeyenda.forEach.call(ocuLeyenda, c => {
+		c.classList.add('none-block');
+	});
 }
 
 document.addEventListener('DOMContentLoaded', function(){
@@ -181,8 +197,58 @@ document.addEventListener('DOMContentLoaded', function(){
                     });
                 }, 5000);
                 return false;
-            } else {
-               
+            }
+            if (!camposRE.InputCedulaPasaporte || !camposRE.InputNombres || !camposRE.InputApellidoP || !camposRE.InputApellidoM || !camposRE.InputEmail || !camposRE.InputTelefono) {
+                var msg = '<div class="alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>¡Atención!</strong> Verifica los campos en rojo.</div>'; 
+                document.querySelector('#notificationSolicitarRegistro').innerHTML = msg;
+                window.setTimeout(() =>{
+                    $('.alert').fadeTo(1500, 0).slideDown(1000, function(){
+                        $(this).remove();
+                    });
+                }, 5000);
+                return false;
+            }
+
+            divLoading.style.display = "flex";
+            var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+            var ajaxUrl = BASE_URL + 'login/requestRegistration';
+            var formSoliRegistro = new FormData(formSolicitarRegistro);
+            request.open("POST", ajaxUrl, true);
+            request.send(formSoliRegistro);
+
+            request.onreadystatechange = function () {
+                if (request.readyState == 4 && request.status == 200) {
+                    var objData = JSON.parse(request.responseText);
+                    if (objData.status) {
+                        formSolicitarRegistro.reset();
+                        var msg = `<div class="alert alert-success alert-dismissable">
+                                    <button type="button" class="close" data-dismiss="alert">&times;
+                                    </button><strong>¡Hecho!</strong> ${objData.msg}.
+                                </div>`; 
+                        document.querySelector('#notificationSolicitarRegistro').innerHTML = msg;
+                        window.setTimeout(() =>{
+                            $('.alert').fadeTo(1500, 0).slideDown(1000, function(){
+                                $(this).remove();
+                                $('#ModalFormSolicitarRegistro').modal('hide');
+                            });
+                        }, 9000);
+                        return false;
+                    } else {
+                        var msg = `<div class="alert alert-warning alert-dismissable">
+                                    <button type="button" class="close" data-dismiss="alert">&times;
+                                    </button><strong>¡Atención!</strong> ${objData.msg}.
+                                </div>`; 
+                        document.querySelector('#notificationSolicitarRegistro').innerHTML = msg;
+                        window.setTimeout(() =>{
+                            $('.alert').fadeTo(1500, 0).slideDown(1000, function(){
+                                $(this).remove();
+                            });
+                        }, 5000);
+                        return false;
+                    }
+                }
+                divLoading.style.display = "none";
+                return false;
             }
         }
     }
@@ -242,6 +308,69 @@ inputs.forEach((input) => {
 	input.addEventListener('keyup', validarFormulario);
 	input.addEventListener('blur', validarFormulario);
 });
+
+/* Starts validacion de formulario registro */
+const inputsRE = document.querySelectorAll('#formSolicitarRegistro input');
+const expresionesRE = {
+	cedula: /^\d{9,10}$/,
+	nombres: /^[a-zA-ZÀ-ÿ\s]{1,45}$/,
+	apellido: /^[a-zA-ZÀ-ÿ\s]{1,35}$/,
+	email: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+	telefono: /^\d{7,10}$/
+}
+
+const camposRE = {
+	InputCedulaPasaporte: false,
+	InputNombres: false,
+	InputApellidoP: false,
+	InputApellidoM: false,
+	InputEmail: false,
+	InputTelefono: false
+}
+
+const validarFormularioRE = (e) => {
+	switch (e.target.name) {
+		case "InputCedulaPasaporte":
+			validarCamposFormRE(expresionesRE.cedula, e.target, 'labelCedula', 'InputCedulaPasaporte', 'leyenda-cedula');
+		break;
+		case "InputNombres":
+			validarCamposFormRE(expresionesRE.nombres, e.target, 'labelNombres', 'InputNombres', 'leyenda-nombres');
+		break;
+		case "InputApellidoP":
+			validarCamposFormRE(expresionesRE.apellido, e.target, 'labelApellidoP', 'InputApellidoP', 'leyenda-apellidoP');
+		break;
+		case "InputApellidoM":
+			validarCamposFormRE(expresionesRE.apellido, e.target, 'labelApellidoM', 'InputApellidoM', 'leyenda-apellidoM');
+		break;
+		case "InputEmail":
+			validarCamposFormRE(expresionesRE.email, e.target, 'labelEmail', 'InputEmail', 'leyenda-email');
+		break;
+		case "InputTelefono":
+			validarCamposFormRE(expresionesRE.telefono, e.target, 'labelTelefono', 'InputTelefono', 'leyenda-telefono');
+		break;
+	}
+}
+
+const validarCamposFormRE = (expresion, input, label, id_input, leyenda) => {
+	if(expresion.test(input.value)){
+        document.getElementById(`${id_input}`).classList.remove('invalid');
+        document.getElementById(`${leyenda}`).classList.add('none-block');
+		document.getElementById(`${label}`).classList.remove('text-danger');
+		camposRE[id_input] = true;
+	} else {
+		document.getElementById(`${id_input}`).classList.add('invalid');
+		document.getElementById(`${leyenda}`).classList.remove('none-block');
+		document.getElementById(`${label}`).classList.add('text-danger');
+		camposRE[id_input] = false;
+	}
+}
+
+inputsRE.forEach((input) => {
+	input.addEventListener('keyup', validarFormularioRE);
+	input.addEventListener('blur', validarFormularioRE);
+});
+
+/* Finish validacion de formulario registro */
 
 
 

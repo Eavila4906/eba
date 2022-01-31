@@ -65,5 +65,25 @@
             $result = $this->UpdateMySQL($Query_Update, $Array_Query);
             return $result;
         }
+
+        public function ValidarRegistro($InputCedula, $InputEmail) {
+            $this->InputCedula = $InputCedula;
+            $this->InputEmail = $InputEmail;
+
+            $Query_Select_All_Ced = "SELECT * FROM usuario WHERE DNI = '$this->InputCedula' AND estado != 0 ";
+            $result_Select_All_Ced = $this->SelectAllMySQL($Query_Select_All_Ced);
+
+            $Query_Select_All_Email = "SELECT * FROM usuario WHERE email = '$this->InputEmail' AND estado != 0 ";
+            $result_Select_All_Email = $this->SelectAllMySQL($Query_Select_All_Email);
+
+            if (!empty($result_Select_All_Ced)) {
+                $result = 1;
+            } elseif (!empty($result_Select_All_Email)) {
+                $result = 2;
+            } else {
+                $result = 0;
+            }
+            return $result;
+        }
     }
 ?>

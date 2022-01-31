@@ -129,5 +129,55 @@
             echo json_encode($arrayResponse,JSON_UNESCAPED_UNICODE);
             die();
         }
+
+        public function requestRegistration() {
+            //if ($_POST) {
+                if (empty($_POST['InputCedulaPasaporte']) || empty($_POST['InputNombres']) || empty($_POST['InputApellidoP'])
+                    || empty($_POST['InputApellidoM']) || empty($_POST['InputEmail']) || empty($_POST['InputTelefono'])
+                    || empty($_POST['InputfechaNaci']) || empty($_POST['InputSexo'])) 
+                {
+                    $arrayData = array('status' => false, 'msg' => 'Todos los campos son obligatorios');
+                } else {
+                    $this->InputCedula = $_POST['InputCedulaPasaporte'];
+                    $this->InputNombres = $_POST['InputNombres'];
+                    $this->InputApellidoP = strClean2($_POST['InputApellidoP']);
+                    $this->InputApellidoM = strClean2($_POST['InputApellidoM']);
+                    $this->InputEmail = $_POST['InputEmail'];
+                    $this->InputTelefono = $_POST['InputTelefono'];
+                    $this->InputfechaNaci = $_POST['InputfechaNaci'];
+                    $this->InputSexo = $_POST['InputSexo'];
+
+                    $arrayData = $this->model->ValidarRegistro($this->InputCedula, $this->InputEmail);
+
+                    if ($arrayData == 1) {
+                        $arrayData = array('status' => false, 'msg' => 'La cedula ya existe en nuestros registros');
+                    } elseif ($arrayData == 2) {
+                        $arrayData = array('status' => false, 'msg' => 'El email ya existe en nuestros registros');
+                    } else {
+                        $dataSolRegistro = array(
+                            'cedula' => $this->InputCedula,
+                            'nombres' => $this->InputNombres,
+                            'apellidoP' => $this->InputApellidoP,
+                            'apellidoM' => $this->InputApellidoM,
+                            'emailInfo' => $this->InputEmail,
+                            'email' => SENDER_EMAIL,
+                            'telefono' => $this->InputTelefono,
+                            'fechNaci' => $this->InputfechaNaci,
+                            'sexo' => $this->InputSexo,
+                            'asunto' => 'Solicitud de registro - '.SENDER_NAME,
+                            'url' => BASE_URL()
+                        );
+                        $sendEmail = sendEmail($dataSolRegistro,'email_SolicitarRegistro');
+                        if ($sendEmail) {
+                            $arrayData = array('status' => true, 'msg' => 'Su solicitud a sido enviada, por favor estar pendiente a su correo electronico');
+                        } else {
+                            $arrayData = array('status' => false, 'msg' => 'Error al solicitar registro, por favor intentalo mas tarde'); 
+                        }
+                    }
+                }
+                echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
+            //}
+            die();
+        }
     }  
 ?>
