@@ -87,9 +87,9 @@
     <table align="center" cellpadding="0" cellspacing="0" bgcolor="#ffffff" style="text-align:center;">
         <tbody>
             <tr>
-                <td>
+				<td>
                     <div class="x_sgwrap x_title_primary">
-                        <h1><?=COMPANY_NAME;?></h1>
+						<img src="<?=BASE_URL;?>Views/Templates/Emails/imgEmail/icon.ico" width="90" height="100">
                     </div>
                 </td>
             </tr>
@@ -98,17 +98,12 @@
                     <div class="x_sgwrap">
                         <p>Hola <?=$data['usuario'];?></p>
                     </div>
-                    <p>Te damos la bienvenida a nuestra escuela.</p>
-                    <p>Ahora puedes aprender ingles sin salir de casa.</p>
-                    <p>Accede a la plataforma con tus credenciales:</p>
+                    <p>¡<?=COMPANY_NAME;?> te da la bienvenida!</p>
+                    <p>A continuación, podras visualizar tus credenciales de acceso <br>
+                     a nuestra plataforma virtual:</p>
                     <p>Usuario: <strong><?=$data['username'];?></strong></p>
                     <p>Contraseña: <strong><?=$data['password'];?></strong></p>
-                    <a href="<?=$data['url'];?>" target="_blank" class="x_button_link x_link_blue">Iniciar sessión</a>
-                    <small>
-                        <strong class="text-secondary">
-                            <i class="fa fa-info-circle fa-lg text-info" title="Leer"></i> Importante: Debes ingresar a la plataforma para cambiar una nueva contraseña.
-                        </strong>
-                    </small>
+                    <a href="<?=$data['url'];?>" target="_blank" class="x_button_link x_link_blue">Iniciar sesión</a>
                     <p class="x_title_gray"><a href="<?=WEB_COMPANY;?>" target="_blanck"><?=WEB_COMPANY;?></a></p>
                 </td>
             </tr>
