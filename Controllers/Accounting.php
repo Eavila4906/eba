@@ -183,7 +183,7 @@
                         }
                     }
                     if ($arrayData > 0) {
-                        setlocale(LC_ALL,"es-ES");
+                        FormatDateLeguage();
                         $arrDataUser = $this->model->SelectDataUserPT($this->id_studentTP);
                         $Inicio_periodo = ucwords(strftime("%B %Y", strtotime($this->InputFechaInicio)));
                         $Fin_periodo = ucwords(strftime("%B %Y", strtotime($this->InputFechaFinal)));
@@ -248,7 +248,7 @@
                         </i></button>'; 
                     }
                     //Formato de fecha
-                    setlocale(LC_ALL,"es-ES");
+                    FormatDateLeguage();
                     $arrayData[$i]['Inicio_contable'] = strftime("%B %Y", strtotime($arrayData[$i]['fecha_IC']));
                     $arrayData[$i]['Final_contable'] = strftime("%B %Y", strtotime($arrayData[$i]['fecha_FC']));
                     $arrayData[$i]['Ultimo_pago'] = strftime("%d de %B de %Y", strtotime($arrayData[$i]['fecha_UP']));
@@ -385,7 +385,7 @@
                     $dni = $arrayparameters[1];
                     $periodo = $arrayparameters[2];
                     $arrayData = $this->model->SelectDetailsAccounting($id_accounting, $dni, $periodo);
-                    setlocale(LC_ALL,"es-ES");
+                    FormatDateLeguage();
                     $arrayData['periodo'] = ucwords(strftime("%B %Y", strtotime($arrayData['fecha_IC'])))." - ".ucwords(strftime("%B %Y", strtotime($arrayData['fecha_FC'])));
                     $arrayData['fecha_UP'] = strftime("%d de %B de %Y", strtotime($arrayData['fecha_UP']));
                     $arrayData['fecha_PP'] = strftime("%d de %B de %Y", strtotime($arrayData['fecha_PP']));
@@ -423,7 +423,7 @@
                     $arrayData = $this->model->SelectSeeIIA($this->dni);
                     for ($i=0; $i < count($arrayData); $i++) {
                         //Formato de fecha
-                        setlocale(LC_ALL,"es-ES");  
+                        FormatDateLeguage(); 
                         $Inicio_periodo = ucwords(strftime("%B %Y", strtotime($arrayData[$i]['fecha_IC'])));
                         $Fin_periodo = ucwords(strftime("%B %Y", strtotime($arrayData[$i]['fecha_FC'])));
                         $arrayData[$i]['periodo_format'] = $Inicio_periodo." - ".$Fin_periodo; 
@@ -478,7 +478,7 @@
                     $dni = $arrayparameters[0];
                     $periodo = $arrayparameters[1];
                     $arrayData = $this->model->SelectDIIA($dni, $periodo);
-                    setlocale(LC_ALL,"es-ES");
+                    FormatDateLeguage();
                     $arrayData['periodo'] = ucwords(strftime("%B %Y", strtotime($arrayData['fecha_IC'])))." - ".ucwords(strftime("%B %Y", strtotime($arrayData['fecha_FC'])));
                     $arrayData['fecha_UP'] = strftime("%d de %B de %Y", strtotime($arrayData['fecha_UP']));
                     if ($arrayData['fecha_PP'] == "0000-00-00") {

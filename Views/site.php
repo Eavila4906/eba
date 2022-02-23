@@ -63,13 +63,15 @@
                          <!--<li><a href="#courses" class="smoothScroll">Courses</a></li>-->   
                          <li><a href="#contact" class="smoothScroll">Contact</a></li>
                     </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                         <li><a href="javascript:;" type="Button" onclick="OpenSolicitarRegistroForm();"><i class="fa fa-user-plus"></i>Registrarse</a></li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
+                    <ul class="nav navbar-nav navbar-nav-first navbar-right">
                          <li>
                               <a href="javascript:;" type="Button" onclick="OpenLoginForm();">
                                    <i class="fa fa-sign-in-alt"></i>Log in
+                              </a>
+                         </li>
+                         <li>
+                              <a href="javascript:;" type="Button" onclick="OpenSolicitarRegistroForm();">
+                                   <i class="fa fa-user-plus"></i>Registrarse
                               </a>
                          </li>
                     </ul>
@@ -532,7 +534,6 @@
      <script src="<?= ASSETS_KN(); ?>js/smoothscroll.js"></script>
      <script src="<?= ASSETS_KN(); ?>js/custom.js"></script>
      <script src="<?= MEDIA(); ?>js/functions_website.js"></script>
-
      <script src="<?= MEDIA();?>js/fontawesome/fontawesome.js"></script>
      
 </body>

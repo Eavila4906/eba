@@ -58,7 +58,6 @@ document.addEventListener('DOMContentLoaded', function(){
                                 $(this).remove();
                             });
                         }, 5000);
-                        swal("¡ERROR!", "Proceso fallido.", "error");
                     }
                     divLoading.style.display = "none";
                     return false;

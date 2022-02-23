@@ -67,7 +67,7 @@
                         }
 
                         //Formato de fecha
-                        setlocale(LC_ALL,"es-ES");
+                        FormatDateLeguage();
                         $Inicio_periodo = ucwords(strftime("%B %Y", strtotime($periodo[0])));
                         $Fin_periodo = ucwords(strftime("%B %Y", strtotime($periodo[1])));
                         $arrayData[$i]['periodo_format'] = $Inicio_periodo." - ".$Fin_periodo; 
@@ -148,7 +148,7 @@
                                 $arrayData[$i]['tipo_pago_format'] = $arrayData[$i]['tipo_pago'];
                             }
                             //Formato de fecha
-                            setlocale(LC_ALL,"es-ES"); 
+                            FormatDateLeguage();
                             $arrayData[$i]['fecha_pago_format'] = strftime("%d de %B de %Y", strtotime($arrayData[$i]['fecha_pago']));
                             //formato de valor
                             $arrayData[$i]['valor_format'] = "$".$arrayData[$i]['valor'];

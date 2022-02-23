@@ -39,7 +39,7 @@
                         //$btnPaymentNotAccounting = '<button class="btn btn-danger btn-sm btnPaymentRecord" onclick="FctBtnPaymentRecord(2,'.$dni.','.$nombres.','.$arrayData[$i]['id_accounting'].','.$fecha_UP.')" title="Registrar pago no contable"><i class="fas fa-calendar-times fa-lg"></i></button>';
                     }
                     //Formato de fecha
-                    setlocale(LC_ALL,"es-ES");
+                    FormatDateLeguage();
                     $arrayData[$i]['Ultimo_pago'] = strftime("%d de %B de %Y", strtotime($arrayData[$i]['fecha_UP']));
                     $arrayData[$i]['Proximo_pago'] = strftime("%d de %B de %Y", strtotime($arrayData[$i]['fecha_PP']));
 
@@ -118,7 +118,7 @@
 
                     if ($arrayData > 0) {
                         if ($request == 1) {
-                            setlocale(LC_ALL,"es-ES");
+                            FormatDateLeguage();
                             $arrDataUser = $this->model->SelectDataUserAccounting($this->DNI, $this->id_accounting);
                             $mes = ucwords(strftime("%B", strtotime($arrDataUser['fecha_UP'])));
                             $dataUser = array(
@@ -136,7 +136,7 @@
                                 $arrayData = array('status' => true, 'msg' => 'El pago se ha realizado exitosamente, pero hubo un error al enviar el email.');
                             }
                         } else if ($request == 2) {
-                            setlocale(LC_ALL,"es-ES");
+                            FormatDateLeguage();
                             $arrDataUser = $this->model->SelectDataUserAccounting($this->DNI, $this->id_accounting);
                             $mes = ucwords(strftime("%B", strtotime($arrDataUser['fecha_UP'])));
                             $dataUser = array(
@@ -156,7 +156,7 @@
                         } else if ($request == 3) {
                             $arrayData = array('status' => true, 'msg' => 'Se ha registrado el pago total de su contabilidad.');
                             /*
-                            setlocale(LC_ALL,"es-ES");
+                            FormatDateLeguage();
                             $arrDataUser = $this->model->SelectDataUserAccounting($this->DNI, $this->id_accounting);
                             $mes = ucwords(strftime("%B", strtotime($arrDataUser['fecha_UP'])));
                             $dataUser = array(
@@ -171,7 +171,7 @@
                             */
                         }
                     } else if ($arrayData == "rango completo") {
-                        setlocale(LC_ALL,"es-ES");
+                        FormatDateLeguage();
                         $arrDataUser = $this->model->SelectDataUserAccounting($this->DNI, $this->id_accounting);
                         $mes = ucwords(strftime("%B", strtotime($arrDataUser['fecha_UP'])));
                         $dataUser = array(
@@ -189,7 +189,7 @@
                             $arrayData = array('status' => true, 'msg' => 'Se ha realizado el ultimo pago en su contabilidad, pero hubo un error al enviar el email.');
                         }
                     } else if ($arrayData == "rango completo - no contable") {
-                        setlocale(LC_ALL,"es-ES");
+                        FormatDateLeguage();
                         $arrDataUser = $this->model->SelectDataUserAccounting($this->DNI, $this->id_accounting);
                         $mes = ucwords(strftime("%B", strtotime($arrDataUser['fecha_UP'])));
                         $dataUser = array(

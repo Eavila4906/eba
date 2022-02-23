@@ -16,7 +16,7 @@
             $this->user = $_SESSION['dataUser']['DNI'];
             $arrayData = $this->model->SelectAllNotifications($this->user);
             //Formato de fecha
-            setlocale(LC_ALL,"es-ES");
+            FormatDateLeguage();
             for ($i=0; $i < count($arrayData); $i++) { 
                 $arrayData[$i]['Mes'] = ucwords(strftime("%B", strtotime($arrayData[$i]['fecha'])));
             }
@@ -72,7 +72,7 @@
                 $arrayData['meses_por_pagar'] = $meses_contables - $meses_pagados;
 
                 //Formato de fecha
-                setlocale(LC_ALL,"es-ES");
+                FormatDateLeguage();
                 $arrayData['fecha_pago'] = strftime("%d de %B de %Y", strtotime($arrayData['fecha_pago']));
                 $arrayData['fecha_pp'] = strftime("%d de %B de %Y", strtotime($arrayData['fecha_pp']));
                 $Inicio_periodo = ucwords(strftime("%B %Y", strtotime($periodo[0])));
@@ -90,7 +90,6 @@
         }
 
         public function infoNotificationPaymentReminder() {
-            
             $this->user = $_SESSION['dataUser']['DNI'];
             $this->date = $_POST['date'];
             $arrayData = $this->model->SelectNotification($this->user);
@@ -103,7 +102,7 @@
             $arrayData['fecha_pp'] = $date_format;
 
             //Formato de fecha
-            setlocale(LC_ALL,"es-ES");
+            FormatDateLeguage();
             $periodo = $arrayData['periodo'];
             $periodo = explode(" - ", $periodo);
             $meses_contables = calculateRangeDate($periodo[0], $periodo[1]);

@@ -145,7 +145,7 @@
         }
 
         public function paymentReminder() {
-            setlocale(LC_ALL,"es-ES");
+            FormatDateLeguage();
             $this->current_date = date("Y-m-d");
             //$this->current_date = date("2022-01-05");
             $arrayData = $this->SelectAllAccountingUsers($this->current_date);
