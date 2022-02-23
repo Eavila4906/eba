@@ -25,6 +25,9 @@
         }
     }
 
+    //Access-Control-Allow-Origin
+    Cors();
+
     require_once(LIBS."Core/Autoload.php");
     require_once(LIBS."Core/Load.php");
     
