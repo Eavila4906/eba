@@ -52,7 +52,9 @@
                     </button>
 
                     <!-- lOGO TEXT HERE -->
-                    <a href="" class="navbar-brand"><img src="<?= MEDIA(); ?>images/icons/icon-complet.ico"></a>
+                    <a href="" class="navbar-brand">
+                         <img src="<?= MEDIA(); ?>images/icons/icon-complet.ico">
+                    </a>
                </div>
                <!-- MENU LINKS -->
                <div class="collapse navbar-collapse">
@@ -113,7 +115,7 @@
                               }
                          } else {
                          ?>
-                              <h3 class="text-muted" style="margin-left: 370px;">No existen datos para mostrar!</h3>
+                              <h3 class="col-md-6 col-sm-12 csms text-muted">¡No existen datos para mostrar!</h3>
                          <?php
                          }
                          ?> 
@@ -154,7 +156,7 @@
                                    }
                               } else {
                               ?>
-                                   <h3 class="text-muted" style="margin-left: 370px;">No existen datos para mostrar!</h3>
+                                   <h3 class="col-md-6 col-sm-12 csms text-muted">¡No existen datos para mostrar!</h3>
                               <?php
                               }
                               ?>
@@ -203,7 +205,7 @@
                          }
                     } else {
                     ?>
-                    <h3 class="text-muted" style="margin-left: 370px;">No existen datos para mostrar!</h3>
+                         <h3 class="col-md-6 col-sm-12 csms text-muted">¡No existen datos para mostrar!</h3>
                     <?php   
                     }
                     ?>
