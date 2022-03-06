@@ -378,7 +378,7 @@
         public function SelectAllTeachers() {
             $Query_Select_All = "SELECT te.id_teacher, CONCAT(us.nombres, ' ', apellidoP) AS nombres, us.photo
                                  FROM teacher te INNER JOIN usuario us ON (te.teacher=us.DNI) 
-                                 WHERE te.estado != 0";
+                                 WHERE us.estado != 0 AND te.estado != 0";
             $result = $this->SelectAllMySQL($Query_Select_All);
             return $result;
         }
@@ -386,7 +386,7 @@
         public function SelectAllTeachers_2() {
             $Query_Select_All = "SELECT te.id_teacher, te.teacher AS DNI, CONCAT(us.nombres, ' ', apellidoP) AS nombres
                                  FROM teacher te INNER JOIN usuario us ON (te.teacher=us.DNI) 
-                                 WHERE te.estado = 0";
+                                 WHERE us.estado != 0 AND te.estado = 0";
             $result = $this->SelectAllMySQL($Query_Select_All);
             return $result;
         }
