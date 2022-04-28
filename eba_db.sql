@@ -407,3 +407,54 @@ CREATE TABLE IF NOT EXISTS `detail_payment` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `my_content`
+--
+
+DROP TABLE IF EXISTS `my_content`;
+
+CREATE TABLE IF NOT EXISTS `my_content` (
+  `id_my_content` int(11) NOT NULL AUTO_INCREMENT,
+  `name_content` varchar(45) NOT NULL,
+  `description` varchar(100) NOT NULL,
+  `link` varchar(255) NOT NULL,
+  `status` int NOT NULL,
+  PRIMARY KEY (`id_my_content`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `detail_my_content_teacher`
+--
+
+DROP TABLE IF EXISTS `detail_my_content_teacher`;
+
+CREATE TABLE IF NOT EXISTS `detail_my_content_teacher` (
+  `id_detail_my_content_teacher` int(11) NOT NULL AUTO_INCREMENT,
+  `content` int(45) NOT NULL,
+  `teacher` varchar(10) NOT NULL,
+  `date` timestamp default current_timestamp,
+  PRIMARY KEY (`id_detail_my_content_teacher`),
+  FOREIGN KEY (`content`) REFERENCES `my_content` (`id_my_content`),
+  FOREIGN KEY (`teacher`) REFERENCES `teacher` (`teacher`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `detail_my_content_student`
+--
+
+DROP TABLE IF EXISTS `detail_my_content_student`;
+
+CREATE TABLE IF NOT EXISTS `detail_my_content_student` (
+  `id_detail_my_content_student` int(11) NOT NULL AUTO_INCREMENT,
+  `content` int(45) NOT NULL,
+  `student` varchar(10) NOT NULL,
+  `date` timestamp default current_timestamp,
+  PRIMARY KEY (`id_detail_my_content_student`),
+  FOREIGN KEY (`content`) REFERENCES `my_content` (`id_my_content`),
+  FOREIGN KEY (`student`) REFERENCES `student` (`estudiante`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

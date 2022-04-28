@@ -1,5 +1,7 @@
 <?php
   header_view($data);
+  getModal('my_new_content_modal', $data);
+  getModal('manage_students_course_modal', $data);
 ?> 
 <main class="app-content">
   <div class="app-title">
@@ -25,19 +27,133 @@
     </ul>
   </div>
 
+
+  <?php
+    $MyContent =new My();
+    $MyContent_teacher = $MyContent->getAllMyContentTeacher();
+    $MyContent_student = $MyContent->getAllMyContentStudent();
+  ?>
+
+  <?php
+    if ($_SESSION['dataUser']['nombreRol'] == "Docente") {
+  ?>
+      <h4 class="text-justify">Mis contenidos</h4>
+  <?php
+    } else if ($_SESSION['dataUser']['nombreRol'] == "Estudiante") {
+        for ($i=0; $i < count($MyContent_student); $i++) {
+          if ($MyContent_student[$i]['status'] == 1) {
+            if ($MyContent_student[$i]['proceso_contable'] == 1 || $MyContent_student[$i]['apc'] == true) {
+  ?>
+      <h4 class="text-justify">Mis contenidos</h4>
+  <?php
+            }
+          }
+        }
+    }
+  ?>
+
+  <div class="album py-5 bg-light">
+    <div class="container">
+      <?php if ($_SESSION['permisosModulo']['w'] && $_SESSION['dataUser']['nombreRol'] == "Docente") { ?>
+      <div>
+        <button class="btn btn-success mb-3" type="button" onclick="OpenModalMyNewContent();"><i class="fa fa-plus fa-lg"></i> Nuevo contenido</button><br>
+      </div>
+      <?php } ?>
+      <div id="MyContent">
+        <div class="row">
+          <?php
+            if ($_SESSION['dataUser']['nombreRol'] == "Docente") {
+              if (!empty($MyContent_teacher)) {
+                for ($i=0; $i < count($MyContent_teacher); $i++) {
+                  $myContent = "'".$MyContent_teacher[$i]['name_content']."'";
+          ?>
+          <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+              <a href="<?= $MyContent_teacher[$i]['link']?>" target="_blank" style="text-decoration: none; color: rgb(0, 0, 0);">
+                <img class="bd-placeholder-img card-img-top" src="<?= MEDIA();?>images/courses.jpg" width="100%" height="225">
+              </a>
+              <div class="card-body">
+                <a href="<?= $MyContent_teacher[$i]['link']?>" target="_blank" style="text-decoration: none; color: rgb(0, 0, 0);">
+                  <h6 class="text-seccoundary"><?= $MyContent_teacher[$i]['name_content']?></h6>
+                  <p class="card-text"><?= $MyContent_teacher[$i]['description']?></p>
+                </a>
+                <br>
+                <div class="d-flex justify-content-between align-items-center">
+                  <?php if ($_SESSION['permisosModulo']['u'] || $_SESSION['permisosModulo']['d']) { ?>
+                  <div class="col-md-8">
+                    <?php if ($_SESSION['permisosModulo']['w'] || $_SESSION['permisosModulo']['u']) { ?>
+                    <button type="button" class="btn btn-sm btn-success" title="Administrar alumnos" onclick="OpenModalMsc(<?= $MyContent_teacher[$i]['id_my_content']?>, <?= $myContent?>);"><i class="fas fa-user-cog fa-lg"></i></button>
+                    <?php } ?> 
+                    <?php if ($_SESSION['permisosModulo']['u']) { ?>
+                    <button type="button" class="btn btn-sm btn-info" title="Editar contenido" onclick="FctBtnEditarMyContent(<?= $MyContent_teacher[$i]['id_my_content']?>);"><i class="fas fa-pencil-alt fa-lg"></i></button>
+                    <?php } ?>
+                    <?php if ($_SESSION['permisosModulo']['d']) { ?>
+                    <button type="button" class="btn btn-sm btn-danger" title="Eliminar contenido" onclick="FctBtnEliminarMNC(<?= $MyContent_teacher[$i]['id_my_content']?>);"><i class="fas fa-trash-alt fa-lg"></i></button>
+                    <?php } ?>
+                    <?php 
+                        if ($MyContent_teacher[$i]['status'] == 1) {
+                    ?>
+                          <small><i class="col-md-2 fas fa-circle text-success" title="Activo"></i></small>
+                    <?php
+                        } else {
+                    ?>
+                          <small><i class="col-md-2 fas fa-circle text-danger" title="Inactivo"></i></small>
+                    <?php
+                        } 
+                    ?>
+                  </div>
+                  <?php } ?>
+                  <small class="text-muted">Por: <?= $MyContent_teacher[$i]['nombres']." ".$MyContent_teacher[$i]['apellidoP']." ".$MyContent_teacher[$i]['apellidoM']?></small>
+                </div>
+              </div>
+            </div> 
+          </div>
+          <?php
+                }
+              } 
+            } else if ($_SESSION['dataUser']['nombreRol'] == "Estudiante") {
+              for ($i=0; $i < count($MyContent_student); $i++) {
+                if ($MyContent_student[$i]['status'] == 1) {
+                  if ($MyContent_student[$i]['proceso_contable'] == 1 || $MyContent_student[$i]['apc'] == true) {
+          ?>
+          <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+              <a href="<?= $MyContent_student[$i]['link']?>" target="_blank" style="text-decoration: none; color: rgb(0, 0, 0);">
+                <img class="bd-placeholder-img card-img-top" src="<?= MEDIA();?>images/courses.jpg" width="100%" height="225">
+              </a>
+              <div class="card-body">
+                <a href="<?= $MyContent_student[$i]['link']?>" target="_blank" style="text-decoration: none; color: rgb(0, 0, 0);">
+                  <h6 class="text-seccoundary"><?= $MyContent_student[$i]['name_content']?></h6>
+                  <p class="card-text"><?= $MyContent_student[$i]['description']?></p>
+                </a>
+                <br>
+                <div class="d-flex justify-content-between align-items-center">
+                  <?php
+                    for ($j=0; $j < count($MyContent_student[$i]['teacher']); $j++) {
+                  ?>
+                  <small class="text-muted">Por: <?= $MyContent_student[$i]['teacher'][$j]['teacher']?></small>
+                  <?php
+                    }
+                  ?>
+                </div>
+              </div>
+            </div> 
+          </div>
+          <?php
+                  }
+                }
+              }
+            }
+          ?>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <?php
   if ($_SESSION['dataUser']['nombreRol'] == "Estudiante") {
   ?>
-
-  
-  <div class="row">
-    <div class="col-md-7">
-      <img src="<?= MEDIA();?>images/thumbnail.jpg" width="1059px" height="470px">
-    </div>
-  </div>
-  
   <br>
-
   <h4>Conoce nuestros metodos de pago</h4>
   <br>
   <div class="row">
