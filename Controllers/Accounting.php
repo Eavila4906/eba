@@ -256,6 +256,8 @@
                     $arrayData[$i]['Fecha_inicio-final'] = $arrayData[$i]['Inicio_contable']." - ".$arrayData[$i]['Final_contable'];
                     $arrayData[$i]['V_cuota'] = '<spam class="badge badge-success">$ '.$arrayData[$i]['valor'].'</spam>';
                     
+                    $arrayData[$i]['fechaNaci'] = strftime("%Y", strtotime(date("Y-m-d"))) - strftime("%Y", strtotime($arrayData[$i]['fechaNaci']));
+
                     if ($arrayData[$i]['estado'] == '1') {
                         $acciones = '<div class="text-center">'.$btnSeeDetailAccounting.' '.$btnPauseAccounting.''.$btnStopAccounting.'</div>';     
                     } else {

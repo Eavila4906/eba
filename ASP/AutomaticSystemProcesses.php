@@ -114,10 +114,19 @@
             return $result;
         }
 
-        public function  DeleteNotifications(int $id_notifications) {
+        public function DeleteNotifications(int $id_notifications) {
             $this->id_notifications = $id_notifications;
-            $Query_Delete = "DELETE FROM notifications WHERE id_notifications = $this->id_notifications";
-            $result = $this->DeleteMySQL($Query_Delete);
+            $Query_DeleteDN = "DELETE FROM detail_notifications WHERE notifications = $this->id_notifications";
+            $Query_DeleteN = "DELETE FROM notifications WHERE id_notifications = $this->id_notifications";
+            
+            $result_DeleteDN = $this->DeleteMySQL($Query_DeleteDN);
+            $result_DeleteN = $this->DeleteMySQL($Query_DeleteN);
+
+            if ($result_DeleteDN > 0 && $result_DeleteN > 0) {
+                $result = 1;
+            } else {
+                $result = 0;
+            }
             return $result;
         }
         
@@ -145,7 +154,6 @@
         }
 
         public function paymentReminder() {
-            FormatDateLeguage();
             $this->current_date = date("Y-m-d");
             //$this->current_date = date("2022-01-05");
             $arrayData = $this->SelectAllAccountingUsers($this->current_date);

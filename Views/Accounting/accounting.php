@@ -51,6 +51,7 @@
                       <th>ID</th>
                       <th>Cedula</th>
                       <th>Estudiante</th>
+                      <th>Edad</th>
                       <th>Periodo</th>
                       <th>Ultimo pago</th>
                       <th>Proximo pago</th>

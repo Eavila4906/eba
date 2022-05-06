@@ -185,7 +185,8 @@
         }
         
         public function SelectAllAccounting() {
-            $Query_Select_All = "SELECT ac.id_accounting, CONCAT(us.nombres, ' ', us.apellidoP, ' ', us.apellidoM) AS estudiante,
+            $Query_Select_All = "SELECT ac.id_accounting, us.fechaNaci, 
+                                    CONCAT(us.nombres, ' ', us.apellidoP, ' ', us.apellidoM) AS estudiante,
                                     ac.fecha_IC, ac.fecha_FC, ac.fecha_UP, ac.fecha_PP, ac.cuota, ac.valor, ac.estudiante AS DNI, ac.estado
                                     FROM accounting ac INNER JOIN student st ON (ac.estudiante=st.estudiante)
                                     INNER JOIN usuario us ON(st.estudiante=us.DNI)

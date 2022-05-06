@@ -137,6 +137,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			{ "data": "id_accounting" },
 			{ "data": "DNI" },
 			{ "data": "estudiante" },
+			{ "data": "fechaNaci" },
 			{ "data": "Fecha_inicio-final" },
 			{ "data": "Ultimo_pago" },
 			{ "data": "Proximo_pago" },
