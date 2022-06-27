@@ -48,7 +48,7 @@ INSERT INTO `roles` (`id_rol`, `nombreRol`, `descripRol`, `estadoRol`) VALUES
 (1, 'Super Administrador', 'Access to all system functionalities', 1),
 (2, 'Administrador', 'second-degree role to that of super administrator', 1),
 (3, 'Estudiante', 'Acceso limitado de acuerdo al rol estudiante', 1),
-(4, 'Docente', 'Acceso limitado de acuerdo al rol docente', 1);
+(4, 'Docente', 'Acceso limitado de acuerdo al rol docente', 1),
 (5, 'Director Académico	', 'Coordinar la acción académica con la de administración de alumnos y profesores', 1);
 
 -- --------------------------------------------------------
