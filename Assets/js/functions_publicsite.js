@@ -333,7 +333,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
 		divLoading.style.display = "flex";
 		var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-		var ajaxUrl = BASE_URL + 'publicsite/setIcon';
+		var ajaxUrl = BASE_URL + 'publicSite/setIcon';
 		var formData = new FormData(formIcons);
 		request.open("POST", ajaxUrl, true);
 		request.send(formData);
