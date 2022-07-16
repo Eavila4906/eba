@@ -23,7 +23,9 @@ INSERT INTO `modulo` (`id_modulo`, `nombreModulo`, `descripcion`, `estadoModulo`
 (5, 'Roles y Permisos', 'Roles y permisos para los usuarios', 1),
 (7, 'Registrar Pagos', 'Llevar el control de pagos de los estudiantes', 1),
 (6, 'Contabilidad', 'Contabilidad de los pagos del estudiante', 1),
-(8, 'Reportes', 'Describe y proporciona información de todos los procesos contables', 1);
+(8, 'Reportes', 'Describe y proporciona información de todos los procesos contables', 1),
+(9, 'Categoria de cursos', 'Categoria de cursos', 1),
+(10, 'Cursos', 'Cursos', 1);
 
 -- --------------------------------------------------------
 
@@ -458,4 +460,21 @@ CREATE TABLE IF NOT EXISTS `detail_my_content_student` (
   PRIMARY KEY (`id_detail_my_content_student`),
   FOREIGN KEY (`content`) REFERENCES `my_content` (`id_my_content`),
   FOREIGN KEY (`student`) REFERENCES `student` (`estudiante`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `detail_my_content_student`
+--
+
+DROP TABLE IF EXISTS `course_category`;
+
+CREATE TABLE IF NOT EXISTS `course_category` (
+  `id_course_category` int(11) NOT NULL AUTO_INCREMENT,
+  `category` int(45) NOT NULL,
+  `description` varchar(50) NOT NULL,
+  `status` int NOT NULL,
+  `date` timestamp default current_timestamp,
+  PRIMARY KEY (`id_course_category`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
