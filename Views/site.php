@@ -525,7 +525,7 @@
      <footer id="footer">
           <div class="container">
                <div class="row">
-                    <div class="col-md-4 col-sm-6">
+                    <!-- <div class="col-md-4 col-sm-6">
                          <div class="footer-info">
                               <div class="section-title">
                                    <h2>Headquarter</h2>
@@ -552,7 +552,7 @@
                                    <p>Design by: TemplateMo</p>
                               </div>
                          </div>
-                    </div>
+                    </div>-->
 
                     <div class="col-md-4 col-sm-6">
                          <div class="footer-info">
@@ -603,7 +603,7 @@
                     <div class="col-md-4 col-sm-12">
                          <div class="footer-info newsletter-form">
                               <div class="contact-image-footer">
-                                   <img src="<?= MEDIA(); ?>images/icons/icon.ico" class="img-responsive" alt="Smiling Two Girls">
+                                   <img src="<?= MEDIA(); ?>images/icons/iconoo.png" class="img-responsive" alt="Smiling Two Girls">
                               </div>  
                          </div>
                     </div>
