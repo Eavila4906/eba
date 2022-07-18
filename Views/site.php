@@ -61,8 +61,9 @@
                     <ul class="nav navbar-nav navbar-nav-first">
                          <li><a href="#top" class="smoothScroll">Home</a></li>
                          <li><a href="#about" class="smoothScroll">About</a></li>
+                         <li><a href="#statis" class="smoothScroll">Statistics</a></li>
                          <li><a href="#team" class="smoothScroll">teachers</a></li>  
-                         <!--<li><a href="#courses" class="smoothScroll">Courses</a></li>-->   
+                         <li><a href="#courses" class="smoothScroll">Courses</a></li>   
                          <li><a href="#contact" class="smoothScroll">Contact</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-nav-first navbar-right">
@@ -169,6 +170,113 @@
           </div>
      </section>
 
+     <!-- STATISTICS -->
+
+     <section id="statis">
+          <div class="container">
+               <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                         <div class="section-title">
+                              <h2>Our results <small>our results throughout the course</small></h2>
+                         </div>
+
+                         <div class="owl-carousel owl-theme owl-courses">
+                              <div class="col-md-4 col-sm-4">
+                              <div class="item">
+                                   <div class="statis-thumb">
+                                        <div class="statis-top">
+                                             <div class="statis-image">
+                                                  <img src="<?= ASSETS_KN(); ?>images/esta-image1.png" class="img-responsive" alt="">
+                                             </div>
+                                        </div>
+
+                                   </div>
+                              </div>
+                         </div>
+
+                         <div class="col-md-4 col-sm-4">
+                              <div class="item">
+                                   <div class="statis-thumb">
+                                        <div class="statis-top">
+                                             <div class="statis-image">
+                                                  <img src="<?= ASSETS_KN(); ?>images/esta-image2.png" class="img-responsive" alt="">
+                                             </div>
+                                        </div>
+
+                                   </div>
+                              </div>
+                         </div>
+
+                         <div class="col-md-4 col-sm-4">
+                              <div class="item">
+                                   <div class="statis-thumb">
+                                        <div class="statis-top">
+                                             <div class="statis-image">
+                                                  <img src="<?= ASSETS_KN(); ?>images/esta-image3.png" class="img-responsive" alt="">
+                                             </div>
+                                        </div>
+
+                                   </div>
+                              </div>
+                         </div>
+
+                         <div class="col-md-4 col-sm-4">
+                              <div class="item">
+                                   <div class="statis-thumb">
+                                        <div class="statis-top">
+                                             <div class="statis-image">
+                                                  <img src="<?= ASSETS_KN(); ?>images/esta-image4.png" class="img-responsive" alt="">
+                                             </div>
+                                        </div>
+
+                                   </div>
+                              </div>
+                         </div>
+
+                         <div class="col-md-4 col-sm-4">
+                              <div class="item">
+                                   <div class="statis-thumb">
+                                        <div class="statis-top">
+                                             <div class="statis-image">
+                                                  <img src="<?= ASSETS_KN(); ?>images/esta-image5.png" class="img-responsive" alt="">
+                                             </div>
+                                        </div>
+
+                                   </div>
+                              </div> 
+                         </div>
+
+                         <div class="col-md-4 col-sm-4">
+                              <div class="item">
+                                   <div class="statis-thumb">
+                                        <div class="statis-top">
+                                             <div class="statis-image">
+                                                  <img src="<?= ASSETS_KN(); ?>images/esta-image6.png" class="img-responsive" alt="">
+                                             </div>
+                                        </div>
+
+                                   </div>
+                              </div> 
+                         </div>
+
+                         <div class="col-md-4 col-sm-4">
+                              <div class="item">
+                                   <div class="statis-thumb">
+                                        <div class="statis-top">
+                                             <div class="statis-image">
+                                                  <img src="<?= ASSETS_KN(); ?>images/esta-image7.png" class="img-responsive" alt="">
+                                             </div>
+                                        </div>
+
+                                   </div>
+                              </div> 
+                         </div>
+
+                    </div>
+               </div>
+          </div>
+     </section>
+
 
      <!-- TEAM -->
      <section id="team">
@@ -215,7 +323,7 @@
      </section>
 
      <!-- COURSES -->
-     <!--
+
      <section id="courses">
           <div class="container">
                <div class="row">
@@ -230,27 +338,15 @@
                                    <div class="courses-thumb">
                                         <div class="courses-top">
                                              <div class="courses-image">
-                                                  <img src="<?= ASSETS_KN(); ?>images/courses-image1.jpg" class="img-responsive" alt="">
-                                             </div>
-                                             <div class="courses-date">
-                                                  <span><i class="fa fa-calendar"></i> 12 / 7 / 2018</span>
-                                                  <span><i class="fa fa-clock-o"></i> 7 Hours</span>
+                                                  <img src="<?= ASSETS_KN(); ?>images/categori-image1.png" class="img-responsive" alt="">
                                              </div>
                                         </div>
 
                                         <div class="courses-detail">
-                                             <h3><a href="#">Social Media Management</a></h3>
+                                             <h3><a href="#">Curso: Beginnerst</a></h3>
                                              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                                        </div>
-
-                                        <div class="courses-info">
-                                             <div class="courses-author">
-                                                  <img src="<?= ASSETS_KN(); ?>images/author-image1.jpg" class="img-responsive" alt="">
-                                                  <span>Mark Wilson</span>
-                                             </div>
-                                             <div class="courses-price">
-                                                  <a href="#"><span>USD 25</span></a>
-                                             </div>
+                                             <p>!La preparación ideal si deseas iniciar desde cero!</p>
+                                             <p>Al finalizar este curso serás capaz de sostener conversaciones sencillas de manera independiente.!Incluso al viajar al extranjero!</p>
                                         </div>
                                    </div>
                               </div>
@@ -261,27 +357,16 @@
                                    <div class="courses-thumb">
                                         <div class="courses-top">
                                              <div class="courses-image">
-                                                  <img src="<?= ASSETS_KN(); ?>images/courses-image2.jpg" class="img-responsive" alt="">
-                                             </div>
-                                             <div class="courses-date">
-                                                  <span><i class="fa fa-calendar"></i> 20 / 7 / 2018</span>
-                                                  <span><i class="fa fa-clock-o"></i> 4.5 Hours</span>
+                                                  <img src="<?= ASSETS_KN(); ?>images/categori-image2.png" class="img-responsive" alt="">
                                              </div>
                                         </div>
 
                                         <div class="courses-detail">
-                                             <h3><a href="#">Graphic & Web Design</a></h3>
-                                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                                        </div>
-
-                                        <div class="courses-info">
-                                             <div class="courses-author">
-                                                  <img src="<?= ASSETS_KN(); ?>images/author-image2.jpg" class="img-responsive" alt="">
-                                                  <span>Jessica</span>
-                                             </div>
-                                             <div class="courses-price">
-                                                  <a href="#"><span>USD 80</span></a>
-                                             </div>
+                                             <h3><a href="#">Curso: EBA A2</a></h3>
+                                             <p>La preparación perfecta para certificarte en un nivel A2 Internacionalmente.</p>
+                                             <p>Al finalizar este curso serás capaz de comunicarte en situaciones de la vida real con frases comunes en inglés y vocabulario elemental en el idioma.</p> 
+                                             <p>!Alcanzarás el siguiente nivel de independencia en el idioma!</p>
+                                             <p>Incluye Certificación EBA ACCREDITED</p>
                                         </div>
                                    </div>
                               </div>
@@ -292,27 +377,15 @@
                                    <div class="courses-thumb">
                                         <div class="courses-top">
                                              <div class="courses-image">
-                                                  <img src="<?= ASSETS_KN(); ?>images/courses-image3.jpg" class="img-responsive" alt="">
-                                             </div>
-                                             <div class="courses-date">
-                                                  <span><i class="fa fa-calendar"></i> 15 / 8 / 2018</span>
-                                                  <span><i class="fa fa-clock-o"></i> 6 Hours</span>
+                                                  <img src="<?= ASSETS_KN(); ?>images/categori-image3.png" class="img-responsive" alt="">
                                              </div>
                                         </div>
 
                                         <div class="courses-detail">
-                                             <h3><a href="#">Marketing Communication</a></h3>
-                                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                                        </div>
-
-                                        <div class="courses-info">
-                                             <div class="courses-author">
-                                                  <img src="<?= ASSETS_KN(); ?>images/author-image3.jpg" class="img-responsive" alt="">
-                                                  <span>Catherine</span>
-                                             </div>
-                                             <div class="courses-price free">
-                                                  <a href="#"><span>Free</span></a>
-                                             </div>
+                                             <h3><a href="#">Curso: EBA B1</a></h3>
+                                             <p>!Obten una de las certificaciones internacionales más solicitadas!</p>
+                                             <p>Al finalizar este curso te convertiras en un usuario independiente del idioma capaz de comunicarte con fluidez, !incluso con nativos del idioma inglés!</p>
+                                             <p>Incluye Certificación EBA ACCREDITED</p>
                                         </div>
                                    </div>
                               </div>
@@ -323,7 +396,7 @@
                                    <div class="courses-thumb">
                                         <div class="courses-top">
                                              <div class="courses-image">
-                                                  <img src="<?= ASSETS_KN(); ?>images/courses-image4.jpg" class="img-responsive" alt="">
+                                                  <img src="<?= ASSETS_KN(); ?>images/categori-image4.png" class="img-responsive" alt="">
                                              </div>
                                              <div class="courses-date">
                                                   <span><i class="fa fa-calendar"></i> 10 / 8 / 2018</span>
@@ -332,18 +405,9 @@
                                         </div>
 
                                         <div class="courses-detail">
-                                             <h3><a href="#">Summer Kids</a></h3>
-                                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                                        </div>
-
-                                      <div class="courses-info">
-                                             <div class="courses-author">
-                                                  <img src="<?= ASSETS_KN(); ?>images/author-image1.jpg" class="img-responsive" alt="">
-                                                  <span>Mark Wilson</span>
-                                             </div>
-                                             <div class="courses-price">
-                                                  <a href="#"><span>USD 45</span></a>
-                                             </div>
+                                             <h3><a href="#">Curso: EBA B2</a></h3>
+                                             <p>!Conviertete en un hablante del idioma inglés de nivel intermedio alto!</p>
+                                             <p>Al finalizar este curso lograrás comunicarte con éxito y sin esfuerzo en el idioma inglés en todas las áreas: Speaking, Listening, Reading y Writing.</p>
                                         </div>
                                    </div>
                               </div>
@@ -354,36 +418,59 @@
                                    <div class="courses-thumb">
                                         <div class="courses-top">
                                              <div class="courses-image">
-                                                  <img src="<?= ASSETS_KN(); ?>images/courses-image5.jpg" class="img-responsive" alt="">
-                                             </div>
-                                             <div class="courses-date">
-                                                  <span><i class="fa fa-calendar"></i> 5 / 10 / 2018</span>
-                                                  <span><i class="fa fa-clock-o"></i> 10 Hours</span>
+                                                  <img src="<?= ASSETS_KN(); ?>images/categori-image5.png" class="img-responsive" alt="">
                                              </div>
                                         </div>
 
                                         <div class="courses-detail">
-                                             <h3><a href="#">Business &amp; Management</a></h3>
-                                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                                        </div>
-
-                                        <div class="courses-info">
-                                             <div class="courses-author">
-                                                  <img src="<?= ASSETS_KN(); ?>images/author-image2.jpg" class="img-responsive" alt="">
-                                                  <span>Jessica</span>
-                                             </div>
-                                             <div class="courses-price free">
-                                                  <a href="#"><span>Free</span></a>
-                                             </div>
+                                             <h3><a href="#">Curso: EBA C1</a></h3>
+                                             <p>!Dirigido a estudiantes que buscan dar un paso más allá en sus carreras profesionales y estudiantiles!</p>
+                                             <p>Finaliza tu curso EBA C1 con resultados increíbles. Serás capaz de entender textos demandantes y comprender el lenguaje implícito en los mismos. Adicional a ello, tendrás la habilidad de expresarte fluida y espontáneamente.</p>
                                         </div>
                                    </div>
                               </div> 
                          </div>
+
+                         <div class="col-md-4 col-sm-4">
+                              <div class="item">
+                                   <div class="courses-thumb">
+                                        <div class="courses-top">
+                                             <div class="courses-image">
+                                                  <img src="<?= ASSETS_KN(); ?>images/categori-image6.png" class="img-responsive" alt="">
+                                             </div>
+                                        </div>
+
+                                        <div class="courses-detail">
+                                             <h3><a href="#">Curso: EBA C2</a></h3>
+                                             <p>!Prepárate con los mejores y obtén excelentes resultados alcanzando el nivel más alto de inglés en relación al Marco Común Europeo!</p>
+                                        </div>
+                                   </div>
+                              </div> 
+                         </div>
+
+                         <div class="col-md-4 col-sm-4">
+                              <div class="item">
+                                   <div class="courses-thumb">
+                                        <div class="courses-top">
+                                             <div class="courses-image">
+                                                  <img src="<?= ASSETS_KN(); ?>images/categori-image10.png" class="img-responsive" alt="">
+                                             </div>
+                                        </div>
+
+                                        <div class="courses-detail">
+                                             <h3><a href="#">Young Learners</a></h3>
+                                             <p></p>  
+                                             <p></p>
+                                        </div>
+                                   </div>
+                              </div> 
+                         </div>
+
                     </div>
                </div>
           </div>
      </section>
-     -->
+
 
      <!-- CONTACT -->
      <section id="contact">
