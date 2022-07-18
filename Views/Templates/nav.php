@@ -29,6 +29,10 @@
         <li><a class="app-menu__item" href="<?= BASE_URL(); ?>publicSite"><i class="app-menu__icon fas fa-globe"></i><span class="app-menu__label">Sitio publico</span></a></li>
         <?php } ?>
 
+        <?php if (!empty($_SESSION['permisos'][9]['r'])) { ?>
+        <li><a class="app-menu__item" href="<?= BASE_URL(); ?>course_category"><i class="app-menu__icon fas fa-globe"></i><span class="app-menu__label">Categoría</span></a></li>
+        <?php } ?>
+
         <?php if (!empty($_SESSION['permisos'][4]['r']) || !empty($_SESSION['permisos'][5]['r'])) { ?>
         <li class="treeview" id="module-users"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-users"></i><span class="app-menu__label">Usuarios</span><i class="treeview-indicator fa fa-angle-right"></i></a>
           <ul class="treeview-menu">
