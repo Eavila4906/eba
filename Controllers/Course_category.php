@@ -14,9 +14,9 @@
                     header('location: '.BASE_URL().'my');
                 }
             }
-            //$data['functions_js'] = "./Assets/js/functions_course_category.js";
+            $data['functions_js'] = "./Assets/js/functions_course_category.js";
             $data['name_page'] = "Categoría de cursos";
-            //$this->views->getViews($this,"course_category", $data);
+            $this->views->getViews($this,"course_category", $data);
         }
 
         public function getAllCategory() {
