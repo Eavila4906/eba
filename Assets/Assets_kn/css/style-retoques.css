@@ -18,7 +18,7 @@
 }
 
 .custom-navbar .navbar-nav.navbar-nav-first {
-    margin-left: 8em;
+    margin-left: 5em;
 }
 
 
@@ -93,8 +93,8 @@
 }
 
 .contact-image-footer{
-    width: 120px;
-    height: 120px;
+    width: 200px;
+    height: 200px;
 }
 
 .modal-header  {
