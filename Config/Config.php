@@ -3,7 +3,7 @@
     const NAME_PROJECT = "English Bootcamp Academy";
 
     //Directorio raiz del proyecto
-    const BASE_URL = "http://localhost/eba/";
+    const BASE_URL = "http://localhost:8000/eba/";
 
     //Directorio media
     const MEDIA = "Assets/";
@@ -24,7 +24,7 @@
     const CONTR = "Controllers/"; 
 
     //Variables para acceso a la Database
-    const DB_HOST = "localhost";
+    const DB_HOST = "localhost:3310";
     const DB_USER = "root";
     const DB_PASSWORD = "";
     const DB_NAME = "eba_db";
