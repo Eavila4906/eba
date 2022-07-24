@@ -331,7 +331,6 @@
                          <div class="section-title">
                               <h2>Our Courses <small>our courses with their respective teachers</small></h2>
                          </div>
-
                          <div class="owl-carousel owl-theme owl-courses">
                               <div class="col-md-4 col-sm-4">
                               <div class="item">
@@ -344,9 +343,11 @@
 
                                         <div class="courses-detail">
                                              <h3><a href="#">Curso: Beginnerst</a></h3>
-                                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                                              <p>!La preparación ideal si deseas iniciar desde cero!</p>
+                                             <span id="hideText" class="hideText">
                                              <p>Al finalizar este curso serás capaz de sostener conversaciones sencillas de manera independiente.!Incluso al viajar al extranjero!</p>
+                                             </span>
+                                             <span id="readMore_btn" class="readMore_btn">read more</span>
                                         </div>
                                    </div>
                               </div>
@@ -364,9 +365,9 @@
                                         <div class="courses-detail">
                                              <h3><a href="#">Curso: EBA A2</a></h3>
                                              <p>La preparación perfecta para certificarte en un nivel A2 Internacionalmente.</p>
-                                             <p>Al finalizar este curso serás capaz de comunicarte en situaciones de la vida real con frases comunes en inglés y vocabulario elemental en el idioma.</p> 
-                                             <p>!Alcanzarás el siguiente nivel de independencia en el idioma!</p>
-                                             <p>Incluye Certificación EBA ACCREDITED</p>
+                                                  <p>Al finalizar este curso serás capaz de comunicarte en situaciones de la vida real con frases comunes en inglés y vocabulario elemental en el idioma.</p> 
+                                                  <p>!Alcanzarás el siguiente nivel de independencia en el idioma!</p>
+                                                  <p>Incluye Certificación EBA ACCREDITED</p>
                                         </div>
                                    </div>
                               </div>
@@ -398,16 +399,13 @@
                                              <div class="courses-image">
                                                   <img src="<?= ASSETS_KN(); ?>images/categori-image4.png" class="img-responsive" alt="">
                                              </div>
-                                             <div class="courses-date">
-                                                  <span><i class="fa fa-calendar"></i> 10 / 8 / 2018</span>
-                                                  <span><i class="fa fa-clock-o"></i> 8 Hours</span>
-                                             </div>
                                         </div>
 
                                         <div class="courses-detail">
                                              <h3><a href="#">Curso: EBA B2</a></h3>
                                              <p>!Conviertete en un hablante del idioma inglés de nivel intermedio alto!</p>
-                                             <p>Al finalizar este curso lograrás comunicarte con éxito y sin esfuerzo en el idioma inglés en todas las áreas: Speaking, Listening, Reading y Writing.</p>
+                                             <p>Al finalizar este curso lograrás comunicarte con éxito y sin esfuerzo en el 
+                                                  idioma inglés en todas las áreas: Speaking, Listening, Reading y Writing.</p>
                                         </div>
                                    </div>
                               </div>
@@ -424,9 +422,10 @@
 
                                         <div class="courses-detail">
                                              <h3><a href="#">Curso: EBA C1</a></h3>
-                                             <p>!Dirigido a estudiantes que buscan dar un paso más allá en sus carreras profesionales y estudiantiles!</p>
-                                             <p>Finaliza tu curso EBA C1 con resultados increíbles. Serás capaz de entender textos demandantes y comprender el lenguaje implícito en los mismos. Adicional a ello, tendrás la habilidad de expresarte fluida y espontáneamente.</p>
+                                             <p>!Dirigido a estudiantes que buscan dar un paso más allá en sus carreras profesionales 
+                                             y estudiantiles!</p>
                                         </div>
+
                                    </div>
                               </div> 
                          </div>
@@ -442,12 +441,13 @@
 
                                         <div class="courses-detail">
                                              <h3><a href="#">Curso: EBA C2</a></h3>
-                                             <p>!Prepárate con los mejores y obtén excelentes resultados alcanzando el nivel más alto de inglés en relación al Marco Común Europeo!</p>
+                                             <p>!Prepárate con los mejores y obtén excelentes resultados alcanzando 
+                                             el nivel más alto de inglés en relación al Marco Común Europeo!</p>
                                         </div>
                                    </div>
                               </div> 
                          </div>
-
+<!--
                          <div class="col-md-4 col-sm-4">
                               <div class="item">
                                    <div class="courses-thumb">
@@ -465,7 +465,7 @@
                                    </div>
                               </div> 
                          </div>
-
+               -->
                     </div>
                </div>
           </div>
@@ -622,6 +622,7 @@
      <script src="<?= ASSETS_KN(); ?>js/owl.carousel.min.js"></script>
      <script src="<?= ASSETS_KN(); ?>js/smoothscroll.js"></script>
      <script src="<?= ASSETS_KN(); ?>js/custom.js"></script>
+     <script src="<?= ASSETS_KN(); ?>js/buttonscrip.js"></script>
      <script src="<?= MEDIA(); ?>js/functions_website.js"></script>
      <script src="<?= MEDIA();?>js/fontawesome/fontawesome.js"></script>
      
