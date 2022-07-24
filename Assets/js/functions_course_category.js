@@ -1,3 +1,55 @@
+
+/* Starts validacion de formulario add roles */
+/*const inputs = document.querySelectorAll('#formCategory input');
+const textarea = document.querySelectorAll('#formCategory textarea');
+
+const expresiones = {
+	nombreCategoria: /^[a-zA-ZÀ-ÿ\s]{1,20}$/,
+	descripcionRol: /^[a-zA-ZÀ-ÿ0-9\s]{1,80}$/,
+}
+
+const campos = {
+	TextNombreCategory: false,
+	TextDescripcionCategory: false
+}
+
+const validarFormulario = (e) => {
+	switch (e.target.name) {
+		case "TextNombreCategory":
+			validarCamposForm(expresiones.nombreCategory, e.target, 'labelNombreCategory', 'TextNombreCategory', 'leyenda-nombreCategory');
+		break;
+		case "TextDescripcionCategory":
+			validarCamposForm(expresiones.descripcionCategory, e.target, 'labelDescripcionCategory', 'TextDescripcionCategory', 'leyenda-descripcionCategory');
+		break;
+	}
+}
+
+const validarCamposForm = (expresion, input, label, id_input, leyenda) => {
+	if(expresion.test(input.value)){
+        document.getElementById(`${id_input}`).classList.remove('invalid');
+        document.getElementById(`${leyenda}`).classList.add('none-block');
+		document.getElementById(`${label}`).classList.remove('text-danger');
+		campos[id_input] = true;
+	} else {
+		document.getElementById(`${id_input}`).classList.add('invalid');
+		document.getElementById(`${leyenda}`).classList.remove('none-block');
+		document.getElementById(`${label}`).classList.add('text-danger');
+		campos[id_input] = false;
+	}
+}
+
+inputs.forEach((input) => {
+	input.addEventListener('keyup', validarFormulario);
+	input.addEventListener('blur', validarFormulario);
+});
+textarea.forEach((textarea) => {
+	textarea.addEventListener('keyup', validarFormulario);
+	textarea.addEventListener('blur', validarFormulario);
+});
+/* Finish validacion de formulario add roles */
+
+
+//cargar los datos de la tabla
 var DataTableCategory;
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -16,6 +68,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			{ "data": "category" },
 			{ "data": "description" },
 			{ "data": "status" },
+			{ "data": "Acciones" },
 		],
 		"responsieve": "true",
 		"bDestroy": true,
