@@ -22,13 +22,6 @@
         public function getAllCategory() {
             if ($_SESSION['permisosModulo']['r']) {
                 $arrayData = $this->model->SelectAllCategory();
-                for ($i=0; $i < count($arrayData); $i++) {
-                    if ($arrayData[$i]['status'] == 1) {
-                        $arrayData[$i]['status'] = '<spam class="badge badge-success">Activo</spam>';
-                    } else {
-                        $arrayData[$i]['status'] = '<spam class="badge badge-danger">Inactivo</spam>';
-                    }
-                }
                 echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
             } else {
                 echo '<div class="alert alert-danger" role="alert" 

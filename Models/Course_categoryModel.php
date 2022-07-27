@@ -5,7 +5,7 @@
         }
 
         public function SelectAllCategory() {
-            $Query_Select_All = "SELECT * FROM course_category WHERE status = 0";
+            $Query_Select_All = "SELECT * FROM course_categoryWHERE status = 0";
             $result = $this->SelectAllMySQL($Query_Select_All);
             return $result;
         }
