@@ -472,7 +472,7 @@ DROP TABLE IF EXISTS `course_category`;
 
 CREATE TABLE IF NOT EXISTS `course_category` (
   `id_course_category` int(11) NOT NULL AUTO_INCREMENT,
-  `category` int(45) NOT NULL,
+  `category` varchar(45) NOT NULL,
   `description` varchar(50) NOT NULL,
   `status` int NOT NULL,
   `date` timestamp default current_timestamp,
