@@ -7,7 +7,7 @@
 <main class="app-content">
     <div class="app-title">
         <div>
-          <h1><i class="fa fa-tags"></i> <?= $data['name_page']; ?></h1>
+          <h1><i class="fa fa-th-large"></i> <?= $data['name_page']; ?></h1>
           <p><?= NAME_PROJECT ?></p>
         </div>
         <ul class="app-breadcrumb breadcrumb side">
@@ -19,7 +19,7 @@
 
     <?php if ($_SESSION['permisosModulo']['w']) { ?>
     <div>
-      <button class="btn btn-success mb-3" type="button" onclick="openModalCategory();"><i class="fa fa-plus-circle fa-lg"></i> Nueva Categoria</button><br>
+      <button class="btn btn-success mb-3" type="button" onclick="openModalCategory();"><i class="fa fa-plus-circle fa-lg"></i> Nueva Categoría</button><br>
     </div>
     <?php } ?>
     
@@ -32,7 +32,7 @@
                   <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Nombre Categoria</th>
+                        <th>Categoría</th>
                         <th>Descripción</th>
                         <th>Estado</th>
                         <th>Acciones</th>

@@ -1,25 +1,34 @@
+$(document).ready(function () {
+	if (document.querySelector('#module-courses')) {
+		document.querySelector('#module-courses').classList.add('is-expanded');
+		if (document.querySelector('#icon-category')) {
+            document.querySelector('#icon-category').classList.replace('fa-circle-o', 'fa-circle');
+            document.querySelector('#icon-category').classList.add('text-primary');
+        }
+	}
+});
 
 /* Starts validacion de formulario add roles */
-/*const inputs = document.querySelectorAll('#formCategory input');
+const inputs = document.querySelectorAll('#formCategory input');
 const textarea = document.querySelectorAll('#formCategory textarea');
 
 const expresiones = {
-	nombreCategoria: /^[a-zA-ZÀ-ÿ\s]{1,20}$/,
-	descripcionRol: /^[a-zA-ZÀ-ÿ0-9\s]{1,80}$/,
+	nombreCategory: /^[a-zA-ZÀ-ÿ\s]{1,25}$/,
+	descripcionCategory: /^[a-zA-ZÀ-ÿ0-9\s]{1,80}$/,
 }
 
 const campos = {
-	TextNombreCategory: false,
-	TextDescripcionCategory: false
+	InputCategory: false,
+	InputDescription: false
 }
 
 const validarFormulario = (e) => {
 	switch (e.target.name) {
-		case "TextNombreCategory":
-			validarCamposForm(expresiones.nombreCategory, e.target, 'labelNombreCategory', 'TextNombreCategory', 'leyenda-nombreCategory');
+		case "InputCategory":
+			validarCamposForm(expresiones.nombreCategory, e.target, 'labelNombreCategory', 'InputCategory', 'leyenda-nombreCategory');
 		break;
-		case "TextDescripcionCategory":
-			validarCamposForm(expresiones.descripcionCategory, e.target, 'labelDescripcionCategory', 'TextDescripcionCategory', 'leyenda-descripcionCategory');
+		case "InputDescription":
+			validarCamposForm(expresiones.descripcionCategory, e.target, 'labelDescripcionCategory', 'InputDescription', 'leyenda-descripcionCategory');
 		break;
 	}
 }
@@ -89,10 +98,10 @@ document.addEventListener('DOMContentLoaded', function () {
 			return false;
 		}
         
-		/*if (!campos.TextNombreRol || !campos.TextDescripcionRol) {
+		if (!campos.InputCategory || !campos.InputDescription) {
 			swal("¡Atención!", "Verifica los campos en rojo.", "warning");
 			return false;
-		}*/
+		}
 
 		divLoading.style.display = "flex";
 		var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
@@ -123,7 +132,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function openModalCategory() {
 	document.querySelector('#id_category').value = "";
-	document.querySelector('#title-modal-category').innerHTML = "Nuevo Categoria";
+	document.querySelector('#title-modal-category').innerHTML = "Nueva Categoría";
 	document.querySelector('#modal-header-category').classList.replace("header-update", "header-register");
 	document.querySelector('#btn-action-form').classList.replace("btn-info", "btn-success");
 	document.querySelector('#text-btn').innerHTML = "Guardar";
@@ -159,7 +168,7 @@ function FctBtnUpdateCategory(id_category) {
 
 	var id_category = id_category;
 	var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-	var ajaxUrl = BASE_URL + 'corse_category/getCategory/' + id_category;
+	var ajaxUrl = BASE_URL + 'course_category/getCategory/' + id_category;
 	request.open("GET", ajaxUrl, true);
 	request.send();
 
@@ -167,7 +176,7 @@ function FctBtnUpdateCategory(id_category) {
 		if (request.readyState == 4 && request.status == 200) {
 			var objData = JSON.parse(request.responseText);
 			if (objData.status) {
-				document.querySelector('#id_category').value = objData.data.id_corse_category;
+				document.querySelector('#id_category').value = objData.data.id_course_category;
 				document.querySelector('#InputCategory').value = objData.data.category;
 				document.querySelector('#InputDescription').value = objData.data.description;
 

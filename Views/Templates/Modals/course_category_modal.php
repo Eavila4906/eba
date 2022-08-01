@@ -4,7 +4,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header header-register" id="modal-header-category">
-        <h5 class="modal-title" id="title-modal-category">Nuevo Categoria</h5>
+        <h5 class="modal-title" id="title-modal-category">Nueva Categoría</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -19,21 +19,21 @@
                 </p>
                 
                 <div class="form-group">
-                  <label id="labelNombreRol" class="labelForm">Nombre Categoria <span class="required">*</span></label>
+                  <label id="labelNombreCategory" class="labelForm">Categoría <span class="required">*</span></label>
                   <input class="form-control inputForm" name="InputCategory" id="InputCategory" type="text" placeholder="Ingresar Nombre de la Categoria">
                   <p class="leyenda none-block text-danger" id="leyenda-nombreCategory">
                     <small> 
-                      El nombre del rol debe tener 1 o 20 caracteres, solo letras!
+                      El nombre debe tener 1 o 25 caracteres, solo letras!
                     </small>
                   </p>
                 </div>
 
                 <div class="form-group">
-                  <label id="labelDescripcionRol" class="labelForm">Descripción <span class="required">*</span></label>
+                  <label id="labelDescripcionCategory" class="labelForm">Descripción <span class="required">*</span></label>
                   <textarea class="form-control inputForm" name="InputDescription" id="InputDescription" cols="30" rows="2" placeholder="Ingresar Descripción"></textarea>
-                  <p class="leyenda none-block text-danger" id="leyenda-nombreCategory">
+                  <p class="leyenda none-block text-danger" id="leyenda-descripcionCategory">
                     <small> 
-                      La descripcion del rol debe tener 1 o 80 caracteres!
+                      La descripcion debe tener 1 o 45 caracteres!
                     </small>
                   </p>
                 </div>
@@ -42,7 +42,7 @@
                   <label class="control-label">Estado <span class="required">*</span></label>
                   <select class="form-control" name="InputStatus" id="InputStatus">
                       <option value="1">Activo</option>
-                      <option value="2">Inactivo</option>
+                      <option value="0">Inactivo</option>
                   </select>
                 </div>
                 <div class="tile-footer">

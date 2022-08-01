@@ -22,6 +22,37 @@
         public function getAllCategory() {
             if ($_SESSION['permisosModulo']['r']) {
                 $arrayData = $this->model->SelectAllCategory();
+                for ($i=0; $i < count($arrayData); $i++) { 
+                    $btnEditarCategory = "";
+                    $btnEliminarCategory = "";
+
+                    if ($arrayData[$i]['status'] == 1) {
+                        $arrayData[$i]['status'] = '<spam class="badge badge-success">Activo</spam>';
+                    } else {
+                        $arrayData[$i]['status'] = '<spam class="badge badge-danger">Inactivo</spam>';
+                    }
+
+                    if ($_SESSION['permisosModulo']['u']){
+                        $btnEditarCategory = '<button class="btn btn-info btn-sm btnEditarRol" 
+                                                      onclick="FctBtnUpdateCategory('.$arrayData[$i]['id_course_category'].')" 
+                                                      title="Editar">
+                                                      <i class="fas fa-pencil-alt"></i>
+                                              </button>';
+                    }
+
+                    if ($_SESSION['permisosModulo']['d']){
+                        $btnEliminarCategory = '<button class="btn btn-danger btn-sm btnEliminarRol" 
+                                                   onclick="FctBtnDeleteCategory('.$arrayData[$i]['id_course_category'].')" 
+                                                   title="Eliminar">
+                                                   <i class="fas fa-trash"></i>
+                                           </button>';
+                        
+                    }
+
+                    $acciones = '<div class="text-center">'.$btnEditarCategory.' '.$btnEliminarCategory.'</div>';
+                    $arrayData[$i]['Acciones'] = $acciones;
+                }
+
                 echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
             } else {
                 echo '<div class="alert alert-danger" role="alert" 
@@ -34,7 +65,7 @@
             die();
         }
 
-        public function getCategory($id_rol) {
+        public function getCategory($id_category) {
             if ($_SESSION['permisosModulo']['r']) {
                 $this->id_category = intval($id_category);
                 if ($this->id_category > 0) {

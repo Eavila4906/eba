@@ -29,8 +29,18 @@
         <li><a class="app-menu__item" href="<?= BASE_URL(); ?>publicSite"><i class="app-menu__icon fas fa-globe"></i><span class="app-menu__label">Sitio publico</span></a></li>
         <?php } ?>
 
-        <?php if (!empty($_SESSION['permisos'][9]['r'])) { ?>
-        <li><a class="app-menu__item" href="<?= BASE_URL(); ?>course_category"><i class="app-menu__icon fas fa-globe"></i><span class="app-menu__label">Categoría</span></a></li>
+        <?php if (!empty($_SESSION['permisos'][9]['r']) || !empty($_SESSION['permisos'][10]['r'])) { ?>
+        <li class="treeview" id="module-courses"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-book-open"></i><span class="app-menu__label">Cursos</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+          <ul class="treeview-menu">
+            <?php if (!empty($_SESSION['permisos'][10]['r'])) { ?>
+            <li><a class="treeview-item" href="<?= BASE_URL(); ?>courses"><i id="icon-courses" class="icon fa fa-circle-o"></i> Cursos</a></li>
+            <?php } ?>
+
+            <?php if (!empty($_SESSION['permisos'][9]['r'])) { ?>
+            <li><a class="treeview-item" href="<?= BASE_URL(); ?>course_category"><i id="icon-category" class="icon fa fa-circle-o"></i> Categorías</a></li>
+            <?php } ?>
+          </ul>
+        </li>
         <?php } ?>
 
         <?php if (!empty($_SESSION['permisos'][4]['r']) || !empty($_SESSION['permisos'][5]['r'])) { ?>

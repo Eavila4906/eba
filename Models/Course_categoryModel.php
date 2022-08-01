@@ -5,7 +5,7 @@
         }
 
         public function SelectAllCategory() {
-            $Query_Select_All = "SELECT * FROM course_category WHERE status = 0";
+            $Query_Select_All = "SELECT * FROM course_category";
             $result = $this->SelectAllMySQL($Query_Select_All);
             return $result;
         }
@@ -22,7 +22,7 @@
             $this->description = $description;
             $this->status = $status;
 
-            $Query_Select_All = "SELECT * FROM course_category WHERE category = '$this->category' AND estadoRol == 0 ";
+            $Query_Select_All = "SELECT * FROM course_category WHERE category = '$this->category' AND status = 1 ";
             $result_Select_All = $this->SelectAllMySQL($Query_Select_All);
 
             if (empty($result_Select_All)) {
@@ -41,12 +41,12 @@
             $this->description = $description;
             $this->status = $status;
 
-            $Query_Select_All = "SELECT * FROM course_category WHERE category = '$this->category' AND id_course_category != $this->id_category AND status == 0";
+            $Query_Select_All = "SELECT * FROM course_category WHERE category = '$this->category' AND id_course_category != $this->id_category AND status = 1";
             $result_Select_All = $this->SelectAllMySQL($Query_Select_All);
 
             if (empty($result_Select_All)) {
                 $Query_Update = "UPDATE course_category SET category=?, description=?, status=? WHERE id_course_category = $this->id_category";
-                $Array_Query = array($this->id_category, $this->description, $this->status);
+                $Array_Query = array($this->category, $this->description, $this->status);
                 $result = $this->UpdateMySQL($Query_Update, $Array_Query);
             } else {
                 $result = "exists";
