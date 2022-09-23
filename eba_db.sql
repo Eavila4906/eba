@@ -352,21 +352,11 @@ INSERT INTO `paymentday` (`id_paymentday`, `day`) VALUES (1, 5);
 DROP TABLE IF EXISTS `accounting`;
 CREATE TABLE IF NOT EXISTS `accounting` (
   `id_accounting` int(11) NOT NULL AUTO_INCREMENT,
-  `estudiante` varchar(10) NOT NULL,
-  `fecha_IC` date DEFAULT NULL,
-  `fecha_FC` date DEFAULT NULL,
-  `fecha_UP` date DEFAULT NULL,
-  `fecha_PP` date DEFAULT NULL,
-  `cuota` varchar(15) NOT NULL,
-  `valor` double(9,2) NOT NULL,
-  `valor_total` double(9,2) DEFAULT NULL,
-  `descuento` int(11) DEFAULT 0,
-  `valor_descuento` decimal(9,2) DEFAULT 0.00,
-  `valor_total_descuento` double(9,2) DEFAULT 0.00,
-  `descripcion` varchar(255) DEFAULT NULL,
-  `estado` int(11) NOT NULL,
-  PRIMARY KEY (`id_accounting`),
-  FOREIGN KEY (`estudiante`) REFERENCES `student` (`estudiante`)
+  `date_SA` date DEFAULT NULL, --- date of start accounting 
+  `date_FA` date DEFAULT NULL, --- date of final accounting
+  `date_LP` date DEFAULT NULL, --- date of last payment
+  `date_NP` date DEFAULT NULL, --- date of next payment
+  PRIMARY KEY (`id_accounting`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -465,7 +455,7 @@ CREATE TABLE IF NOT EXISTS `detail_my_content_student` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `detail_my_content_student`
+-- Estructura de tabla para la tabla `course_category`
 --
 
 DROP TABLE IF EXISTS `course_category`;
@@ -477,4 +467,49 @@ CREATE TABLE IF NOT EXISTS `course_category` (
   `status` int NOT NULL,
   `date` timestamp default current_timestamp,
   PRIMARY KEY (`id_course_category`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `course`
+--
+
+DROP TABLE IF EXISTS `course`;
+
+CREATE TABLE IF NOT EXISTS `course` (
+  `id_course` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
+  `category` int(11) NOT NULL,
+  `description` varchar(45) NOT NULL,
+  `date_start` date NOT NULL,
+  `date_final` date NOT NULL,
+  `value` decimal(9,2) DEFAULT 0.00,
+  PRIMARY KEY (`id_course`),
+  FOREIGN KEY (`category`) REFERENCES `course_category` (`id_course_category`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `detail_accounting`
+--
+
+DROP TABLE IF EXISTS `detail_accounting`;
+CREATE TABLE IF NOT EXISTS `detail_accounting` (
+  `id_detail_accounting` int(11) NOT NULL AUTO_INCREMENT,
+  `accounting` int(11) NOT NULL,
+  `estudiante` varchar(10) NOT NULL,
+  `course` int(11) NOT NULL,
+  `share` varchar(15) NOT NULL,
+  `full_value` double(9,2) DEFAULT NULL,
+  `discount` int(11) DEFAULT 0,
+  `discount_value` decimal(9,2) DEFAULT 0.00,
+  `full_discount_value` double(9,2) DEFAULT 0.00,
+  `description` varchar(255) DEFAULT NULL,
+  `status` int(11) NOT NULL,
+  PRIMARY KEY (`id_detail_accounting`),
+  FOREIGN KEY (`accounting`) REFERENCES `accounting` (`id_accounting`),
+  FOREIGN KEY (`estudiante`) REFERENCES `student` (`estudiante`),
+  FOREIGN KEY (`course`) REFERENCES `course` (`id_course`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
