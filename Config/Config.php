@@ -27,7 +27,7 @@
     const DB_HOST = "localhost:3310";
     const DB_USER = "root";
     const DB_PASSWORD = "";
-    const DB_NAME = "eba_db";
+    const DB_NAME = "eba_db_p";
     const DB_CHARSET = "utf8";
 
     //Datos envio de correo
