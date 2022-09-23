@@ -129,9 +129,53 @@
      <section id="about">
           <div class="container">
                <div class="row">
-                    <div class="col-md-6 col-sm-12">
+
+                    <div class="col-md-12 col-sm-12">
                          <div class="about-info">
                               <h2>About <?= NAME_PROJECT; ?></h2>
+                              <!-- prueba para mejorar about
+                              <figure>
+                                   <span><i class="fa fa-sign-out fa-lg"></i></span>
+                                   <figcaption>
+                                        <h3>quienes somos</h3>
+                                        <p>somos tal cosaaaaa aaaaaaaaaaaa aaaaaaaa aaaaaaaaaaaaaa
+                                             aaaaa aaaaa aaaaaa aaaaaaaa aaaaaa aaaaaaaaaaa aaaaaaaa
+                                             aaaa aaaa aaaa aaa
+                                        </p>
+                                   </figcaption>
+                              </figure>
+
+                              <figure>
+                                   <span><i class="fa fa-sign-out fa-lg"></i></span>
+                                   <figcaption>
+                                        <h3>Acerca del director</h3>
+                                        <p>An avid educator, Jennifer Coppiano has over 10 years experience in the teaching environment. In addition to completing part of her secondary and university studies abroad, she has obtained her T.E.F.L., T.K.T, and Cambridge C2 certifications achieving outstanding marks. She has worked as an English teacher, E.L.T.Specialist for Cambridge University Press, educational consultant for various Academic Institutions as well as a Teacher Trainer. Throughout this journey within the Educational Community, she has mastered the capability to successfully manage mixed ability classes, Cambridge exam preparation, and B learning techniques. One of her biggest profesional achievements is establishing the brand ENGLISH BOOTCAMP ACADEMY, where she is the ACADEMIC DIRECTOR. ...Leer menos
+                                        </p>
+                                   </figcaption>
+                              </figure>
+
+                              <figure>
+                                   <span><i class="fa fa-sign-out fa-lg"></i></span>
+                                   <figcaption>
+                                        <h3>Steeven Uranigo</h3>
+                                        <p>Encargado de arreglar about
+                                        aaaaa aaaaa aaaaaa aaaaaaaa aaaaaa aaaaaaaaaaa aaaaaaaa
+                                             aaaa aaaa aaaa aaa
+                                        </p>
+                                   </figcaption>
+                              </figure>
+
+                              <figure>
+                                   <span><i class="fa fa-sign-out fa-lg"></i></span>
+                                   <figcaption>
+                                        <h3>Eriick Avlia</h3>
+                                        <p>INgeniero gran jefe 
+                                        aaaaa aaaaa aaaaaa aaaaaaaa aaaaaa aaaaaaaaaaa aaaaaaaa
+                                             aaaa aaaa aaaa aaa
+                                        </p>
+                                   </figcaption>
+                              </figure> -->
+
                               <?php
                               if (!empty($ContentsAbout)) {
                                    for ($i=0; $i < count($ContentsAbout); $i++) {
@@ -161,11 +205,9 @@
                               <?php
                               }
                               ?>
+
                          </div>
                     </div>
-
-                    
-
                </div>
           </div>
      </section>
@@ -344,10 +386,10 @@
                                         <div class="courses-detail">
                                              <h3><a href="#">Curso: Beginnerst</a></h3>
                                              <p>!La preparación ideal si deseas iniciar desde cero!</p>
-                                             <span id="hideText" class="hideText">
+                                             <span class="hide" id="hideText">
                                              <p>Al finalizar este curso serás capaz de sostener conversaciones sencillas de manera independiente.!Incluso al viajar al extranjero!</p>
                                              </span>
-                                             <span id="readMore_btn" class="readMore_btn">read more</span>
+                                             <button class="readMore_btn" id="hideText_btns">Leer mas</button>
                                         </div>
                                    </div>
                               </div>
@@ -365,9 +407,12 @@
                                         <div class="courses-detail">
                                              <h3><a href="#">Curso: EBA A2</a></h3>
                                              <p>La preparación perfecta para certificarte en un nivel A2 Internacionalmente.</p>
-                                                  <p>Al finalizar este curso serás capaz de comunicarte en situaciones de la vida real con frases comunes en inglés y vocabulario elemental en el idioma.</p> 
-                                                  <p>!Alcanzarás el siguiente nivel de independencia en el idioma!</p>
-                                                  <p>Incluye Certificación EBA ACCREDITED</p>
+                                              <span class="hide" id="ht2">   
+                                             <p>Al finalizar este curso serás capaz de comunicarte en situaciones de la vida real con frases comunes en inglés y vocabulario elemental en el idioma.</p> 
+                                             <p>!Alcanzarás el siguiente nivel de independencia en el idioma!</p>
+                                             <p>Incluye Certificación EBA ACCREDITED</p>
+                                             </span> 
+                                             <button class="readMore_btn" id="btn2" >Leer mas</button>
                                         </div>
                                    </div>
                               </div>
@@ -385,8 +430,11 @@
                                         <div class="courses-detail">
                                              <h3><a href="#">Curso: EBA B1</a></h3>
                                              <p>!Obten una de las certificaciones internacionales más solicitadas!</p>
+                                             <span class="hide" id="ht3">
                                              <p>Al finalizar este curso te convertiras en un usuario independiente del idioma capaz de comunicarte con fluidez, !incluso con nativos del idioma inglés!</p>
                                              <p>Incluye Certificación EBA ACCREDITED</p>
+                                             </span>
+                                             <button class="readMore_btn" id="btn3" >Leer mas</button>
                                         </div>
                                    </div>
                               </div>
@@ -404,8 +452,11 @@
                                         <div class="courses-detail">
                                              <h3><a href="#">Curso: EBA B2</a></h3>
                                              <p>!Conviertete en un hablante del idioma inglés de nivel intermedio alto!</p>
+                                             <span class="hide" id="ht5">
                                              <p>Al finalizar este curso lograrás comunicarte con éxito y sin esfuerzo en el 
                                                   idioma inglés en todas las áreas: Speaking, Listening, Reading y Writing.</p>
+                                             </span>
+                                             <button class="readMore_btn" id="btn5" >Leer mas</button>
                                         </div>
                                    </div>
                               </div>
