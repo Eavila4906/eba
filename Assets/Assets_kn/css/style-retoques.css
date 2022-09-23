@@ -159,16 +159,16 @@
     cursor: pointer;
 }
 
-.readMore_btn:hover {
+.readMore_btns:hover {
     box-shadow: none;
     background-color: black;
     color: #ffffff;
     transition: cubic-bezier(0.075, 0.82, 0.165, 1) 3.05s;
 }
-.hideText {
+.hide {
     display: none;
   }
   
-.showText {
+.show {
     display: block;
 }
