@@ -55,19 +55,3 @@ function toggleText3(){
  }
 
 }
-
-//boton 5
-htb5 = document.getElementById('btn5');
-ht5 = document.getElementById('ht5');
-
-htb5.addEventListener('click', toggleText5);   
-
-function toggleText5(){
- ht5.classList.toggle('show');
- if(ht5.classList.contains('show')){
-   htb5.innerHTML = 'Leer menos';
- }else{
-   htb5.innerHTML = 'Leer mas';
- }
-
-}
