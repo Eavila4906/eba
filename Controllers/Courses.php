@@ -18,13 +18,13 @@
             $data['name_page'] = "Cursos";
             $this->views->getViews($this,"courses", $data);
         }
-        /*
-        public function getAllCategory() {
+        
+        public function getAllCourses() {
             if ($_SESSION['permisosModulo']['r']) {
-                $arrayData = $this->model->SelectAllCategory();
+                $arrayData = $this->model->SelectAllCourses();
                 for ($i=0; $i < count($arrayData); $i++) { 
-                    $btnEditarCategory = "";
-                    $btnEliminarCategory = "";
+                    $btnEditCourse = "";
+                    $btnRemoveCourse = "";
 
                     if ($arrayData[$i]['status'] == 1) {
                         $arrayData[$i]['status'] = '<spam class="badge badge-success">Activo</spam>';
@@ -33,23 +33,23 @@
                     }
 
                     if ($_SESSION['permisosModulo']['u']){
-                        $btnEditarCategory = '<button class="btn btn-info btn-sm btnEditarRol" 
-                                                      onclick="FctBtnUpdateCategory('.$arrayData[$i]['id_course_category'].')" 
+                        $btnEditCourse = '<button class="btn btn-info btn-sm btnEditarRol" 
+                                                      onclick="FctBtnUpdateCourse('.$arrayData[$i]['id_course'].')" 
                                                       title="Editar">
                                                       <i class="fas fa-pencil-alt"></i>
                                               </button>';
                     }
 
                     if ($_SESSION['permisosModulo']['d']){
-                        $btnEliminarCategory = '<button class="btn btn-danger btn-sm btnEliminarRol" 
-                                                   onclick="FctBtnDeleteCategory('.$arrayData[$i]['id_course_category'].')" 
+                        $btnRemoveCourse = '<button class="btn btn-danger btn-sm btnEliminarRol" 
+                                                   onclick="FctBtnDeleteCourse('.$arrayData[$i]['id_course'].')" 
                                                    title="Eliminar">
                                                    <i class="fas fa-trash"></i>
                                            </button>';
                         
                     }
 
-                    $acciones = '<div class="text-center">'.$btnEditarCategory.' '.$btnEliminarCategory.'</div>';
+                    $acciones = '<div class="text-center">'.$btnEditCourse.' '.$btnRemoveCourse.'</div>';
                     $arrayData[$i]['Acciones'] = $acciones;
                 }
 
@@ -64,7 +64,7 @@
             }
             die();
         }
-
+        /*
         public function getCategory($id_category) {
             if ($_SESSION['permisosModulo']['r']) {
                 $this->id_category = intval($id_category);
