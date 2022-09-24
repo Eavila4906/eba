@@ -3,13 +3,14 @@
         public function __construct(){
             parent::__construct();
         }
-        /*
-        public function SelectAllCategory() {
-            $Query_Select_All = "SELECT * FROM course_category";
+        
+        public function SelectAllCourses() {
+            $Query_Select_All = "SELECT * FROM course co INNER JOIN course_category cc 
+                                          ON (co.category=cc.id_course_category)";
             $result = $this->SelectAllMySQL($Query_Select_All);
             return $result;
         }
-
+        /*
         public function SelectCategory(int $id_category) {
             $this->id_category = $id_category;
             $Query_Select = "SELECT * FROM course_category WHERE id_course_category = $this->id_category";
