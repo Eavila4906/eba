@@ -129,53 +129,34 @@
      <section id="about">
           <div class="container">
                <div class="row">
-
                     <div class="col-md-12 col-sm-12">
-                         <div class="about-info">
-                              <h2>About <?= NAME_PROJECT; ?></h2>
-                              <!-- prueba para mejorar about
-                              <figure>
-                                   <span><i class="fa fa-sign-out fa-lg"></i></span>
-                                   <figcaption>
-                                        <h3>quienes somos</h3>
-                                        <p>somos tal cosaaaaa aaaaaaaaaaaa aaaaaaaa aaaaaaaaaaaaaa
-                                             aaaaa aaaaa aaaaaa aaaaaaaa aaaaaa aaaaaaaaaaa aaaaaaaa
-                                             aaaa aaaa aaaa aaa
-                                        </p>
-                                   </figcaption>
-                              </figure>
 
-                              <figure>
-                                   <span><i class="fa fa-sign-out fa-lg"></i></span>
-                                   <figcaption>
-                                        <h3>Acerca del director</h3>
-                                        <p>An avid educator, Jennifer Coppiano has over 10 years experience in the teaching environment. In addition to completing part of her secondary and university studies abroad, she has obtained her T.E.F.L., T.K.T, and Cambridge C2 certifications achieving outstanding marks. She has worked as an English teacher, E.L.T.Specialist for Cambridge University Press, educational consultant for various Academic Institutions as well as a Teacher Trainer. Throughout this journey within the Educational Community, she has mastered the capability to successfully manage mixed ability classes, Cambridge exam preparation, and B learning techniques. One of her biggest profesional achievements is establishing the brand ENGLISH BOOTCAMP ACADEMY, where she is the ACADEMIC DIRECTOR. ...Leer menos
-                                        </p>
-                                   </figcaption>
-                              </figure>
+                              <div class="about-info">
+                                   <h2>About <small><?= NAME_PROJECT; ?></small></h2>
+                              </div>
+                         <div class="owl-carousel owl-theme owl-courses">
+                                        <div class="courses-detail">
+                                             <h3><a href="#">Quienes Somos</a></h3>
+                                             <p>!Somos una empresa que se dedica a tal cosa por tal motivo!</p>
+                                             <a href="#">leer mas</a>
+                                             <p>Al finalizar este curso serás capaz de sostener conversaciones sencillas de manera independiente.!Incluso al viajar al extranjero!</p>
+                                        </div>
 
-                              <figure>
-                                   <span><i class="fa fa-sign-out fa-lg"></i></span>
-                                   <figcaption>
-                                        <h3>Steeven Uranigo</h3>
-                                        <p>Encargado de arreglar about
-                                        aaaaa aaaaa aaaaaa aaaaaaaa aaaaaa aaaaaaaaaaa aaaaaaaa
-                                             aaaa aaaa aaaa aaa
-                                        </p>
-                                   </figcaption>
-                              </figure>
+                                        <div class="courses-detail">
+                                             <h3><a href="#">Directora Academica</a></h3>
+                                             <p>!Soy la directora academica encargada de inmpartir clases tal!</p>
+                                             <a href="#">leer mas</a>
+                                             <p>Al finalizar este curso serás capaz de sostener conversaciones sencillas de manera independiente.!Incluso al viajar al extranjero!</p>
+                                        </div>
 
-                              <figure>
-                                   <span><i class="fa fa-sign-out fa-lg"></i></span>
-                                   <figcaption>
-                                        <h3>Eriick Avlia</h3>
-                                        <p>INgeniero gran jefe 
-                                        aaaaa aaaaa aaaaaa aaaaaaaa aaaaaa aaaaaaaaaaa aaaaaaaa
-                                             aaaa aaaa aaaa aaa
-                                        </p>
-                                   </figcaption>
-                              </figure> -->
+                                        <div class="courses-detail">
+                                             <h3><a href="#">Mision</a></h3>
+                                             <p>!Formar personas de calidad y cladidez para porder!</p>
+                                             <a href="#">leer mas</a>
+                                             <p>Al finalizar este curso serás capaz de sostener conversaciones sencillas de manera independiente.!Incluso al viajar al extranjero!</p>
+                                        </div>
 
+<!--
                               <?php
                               if (!empty($ContentsAbout)) {
                                    for ($i=0; $i < count($ContentsAbout); $i++) {
@@ -204,7 +185,7 @@
                                    <h3 class="col-md-6 col-sm-12 csms text-muted">¡No existen datos para mostrar!</h3>
                               <?php
                               }
-                              ?>
+                              ?>  -->
 
                          </div>
                     </div>
@@ -451,12 +432,8 @@
 
                                         <div class="courses-detail">
                                              <h3><a href="#">Curso: EBA B2</a></h3>
-                                             <p>!Conviertete en un hablante del idioma inglés de nivel intermedio alto!</p>
-                                             <span class="hide" id="ht5">
-                                             <p>Al finalizar este curso lograrás comunicarte con éxito y sin esfuerzo en el 
-                                                  idioma inglés en todas las áreas: Speaking, Listening, Reading y Writing.</p>
-                                             </span>
-                                             <button class="readMore_btn" id="btn5" >Leer mas</button>
+                                             <p>!Conviertete en un hablante del idioma inglés de nivel intermedio alto!... Areas: Speaking, Listening, Reading y Writing.</p>
+                                             
                                         </div>
                                    </div>
                               </div>
