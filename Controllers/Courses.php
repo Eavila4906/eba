@@ -64,12 +64,12 @@
             }
             die();
         }
-        /*
-        public function getCategory($id_category) {
+        
+        public function getCourse($id_course) {
             if ($_SESSION['permisosModulo']['r']) {
-                $this->id_category = intval($id_category);
-                if ($this->id_category > 0) {
-                    $arrayData = $this->model->SelectCategory($this->id_category);
+                $this->id_course = intval($id_course);
+                if ($this->id_course > 0) {
+                    $arrayData = $this->model->SelectCourse($this->id_course);
                     if (!empty($arrayData)) {
                         $arrayData = array('status' => true, 'data' => $arrayData);
                     } else {
@@ -87,7 +87,8 @@
             } 
             die(); 
         }
-
+        
+        /*
         public function setCategory() {
             if ($_POST) {
                 $this->id_category = intval($_POST['id_category']);
