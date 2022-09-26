@@ -10,14 +10,16 @@
             $result = $this->SelectAllMySQL($Query_Select_All);
             return $result;
         }
-        /*
-        public function SelectCategory(int $id_category) {
-            $this->id_category = $id_category;
-            $Query_Select = "SELECT * FROM course_category WHERE id_course_category = $this->id_category";
+        
+        public function SelectCourse(int $id_course) {
+            $this->id_course = $id_course;
+            $Query_Select = "SELECT * FROM course co INNER JOIN course_category cc 
+                                      ON (co.category=cc.id_course_category)
+                                      WHERE id_course = $this->id_course";
             $result = $this->SelectMySQL($Query_Select);
             return $result;
         }
-
+        /*
         public function InsertCategory(String $category, String $description, int $status) {
             $this->category = $category;
             $this->description = $description;
