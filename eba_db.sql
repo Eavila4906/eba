@@ -352,10 +352,10 @@ INSERT INTO `paymentday` (`id_paymentday`, `day`) VALUES (1, 5);
 DROP TABLE IF EXISTS `accounting`;
 CREATE TABLE IF NOT EXISTS `accounting` (
   `id_accounting` int(11) NOT NULL AUTO_INCREMENT,
-  `date_SA` date DEFAULT NULL, --- date of start accounting 
-  `date_FA` date DEFAULT NULL, --- date of final accounting
-  `date_LP` date DEFAULT NULL, --- date of last payment
-  `date_NP` date DEFAULT NULL, --- date of next payment
+  `date_SA` date DEFAULT NULL, -- date of start accounting 
+  `date_FA` date DEFAULT NULL, -- date of final accounting
+  `date_LP` date DEFAULT NULL, -- date of last payment
+  `date_NP` date DEFAULT NULL, -- date of next payment
   PRIMARY KEY (`id_accounting`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
