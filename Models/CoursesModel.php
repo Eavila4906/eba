@@ -19,18 +19,26 @@
             $result = $this->SelectMySQL($Query_Select);
             return $result;
         }
-        /*
-        public function InsertCategory(String $category, String $description, int $status) {
+        
+        public function InsertCourse(String $course, int $category, String $description, String $dateStart, String $dateFinal, $value, int $status) {
+            $this->course = $course;
             $this->category = $category;
             $this->description = $description;
+            $this->dateStart = $dateStart;
+            $this->dateFinal = $dateFinal;
+            $this->value = $value;
             $this->status = $status;
 
-            $Query_Select_All = "SELECT * FROM course_category WHERE category = '$this->category' AND status = 1 ";
+            $Query_Select_All = "SELECT * FROM course WHERE name = '$this->course' AND status = 1 ";
             $result_Select_All = $this->SelectAllMySQL($Query_Select_All);
 
             if (empty($result_Select_All)) {
-                $Query_Insert = "INSERT INTO course_category (category, description, status) VALUES (?, ?, ?)";
-                $Array_Query = array($this->category, $this->description, $this->status);
+                $Query_Insert = "INSERT INTO course (name, category, description, date_start, date_final, value, status) 
+                                 VALUES (?, ?, ?, ?, ?, ?, ?)";
+                $Array_Query = array($this->course, $this->category, 
+                                     $this->description, $this->dateStart,
+                                     $this->dateFinal, $this->value,
+                                     $this->status);
                 $result = $this->InsertMySQL($Query_Insert, $Array_Query);
             } else {
                 $result = "exists";
@@ -38,25 +46,33 @@
             return $result;
         }
 
-        public function UpdateCategory(int $id_category, String $category, String $description, int $status) {
-            $this->id_category = $id_category;
+        public function UpdateCourse(int $id_course, String $course, int $category, String $description, String $dateStart, String $dateFinal, $value, int $status) {
+            $this->id_course = $id_course;
+            $this->course = $course;
             $this->category = $category;
             $this->description = $description;
+            $this->dateStart = $dateStart;
+            $this->dateFinal = $dateFinal;
+            $this->value = $value;
             $this->status = $status;
 
-            $Query_Select_All = "SELECT * FROM course_category WHERE category = '$this->category' AND id_course_category != $this->id_category AND status = 1";
+            $Query_Select_All = "SELECT * FROM course WHERE name = '$this->course' AND id_course != $this->id_course AND status = 1";
             $result_Select_All = $this->SelectAllMySQL($Query_Select_All);
 
             if (empty($result_Select_All)) {
-                $Query_Update = "UPDATE course_category SET category=?, description=?, status=? WHERE id_course_category = $this->id_category";
-                $Array_Query = array($this->category, $this->description, $this->status);
+                $Query_Update = "UPDATE course SET name=?, category=?, description=?, date_start=?, date_final=?, value=?, status=? 
+                                 WHERE id_course = $this->id_course";
+                $Array_Query = array($this->course, $this->category, 
+                                     $this->description, $this->dateStart,
+                                     $this->dateFinal, $this->value,
+                                     $this->status);
                 $result = $this->UpdateMySQL($Query_Update, $Array_Query);
             } else {
                 $result = "exists";
             }
             return $result;
         }
-
+        /*
         public function DeleteCategory(int $id_category) {
             $this->id_category = $id_category;
 
