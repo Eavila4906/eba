@@ -485,6 +485,7 @@ CREATE TABLE IF NOT EXISTS `course` (
   `date_start` date NOT NULL,
   `date_final` date NOT NULL,
   `value` decimal(9,2) DEFAULT 0.00,
+  `status` int(11) NOT NULL,
   PRIMARY KEY (`id_course`),
   FOREIGN KEY (`category`) REFERENCES `course_category` (`id_course_category`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
