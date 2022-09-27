@@ -88,31 +88,45 @@
             die(); 
         }
         
-        /*
-        public function setCategory() {
+        
+        public function setCourse() {
             if ($_POST) {
-                $this->id_category = intval($_POST['id_category']);
-                $this->category = $_POST['InputCategory'];
+                $this->id_course = intval($_POST['id_course']);
+                $this->course = $_POST['InputCourse'];
+                $this->category = intval($_POST['category']);
                 $this->description = $_POST['InputDescription'];
+                $this->dateStart = $_POST['InputDateStart'];
+                $this->dateFinal = $_POST['InputDateFinal'];
+                $this->value = $_POST['InputValue'];
                 $this->status = $_POST['InputStatus'];
                 $arrayData = "";
 
-                if ($this->category == "" || $this->description == "" || $this->status == "") {
+                if ($this->course == "" || $this->category == 0 || $this->description == "" 
+                    || $this->dateStart == "" || $this->dateFinal == "" || $this->value == "" 
+                    || $this->status == "") {
                     $arrayData = array('status' => false, 'msg' => 'No se pudo ejecutar este proceso.');
                 } else {
-                    if ($this->id_category == 0) {
+                    if ($this->id_course == 0) {
                         if ($_SESSION['permisosModulo']['w']) {
-                            $arrayData = $this->model->InsertCategory($this->category,
+                            $arrayData = $this->model->InsertCategory($this->course,
+                                                                      $this->category,
                                                                       $this->description,
+                                                                      $this->dateStart,
+                                                                      $this->dateFinal,
+                                                                      $this->value,
                                                                       $this->status
                                                                     );
                             $opcion = 1;
                         }
                     } else {
                         if ($_SESSION['permisosModulo']['u']) {
-                            $arrayData = $this->model->UpdateCategory($this->id_category,
+                            $arrayData = $this->model->UpdateCategory($this->id_course,
+                                                                      $this->course,
                                                                       $this->category,
                                                                       $this->description,
+                                                                      $this->dateStart,
+                                                                      $this->dateFinal,
+                                                                      $this->value,
                                                                       $this->status
                                                                     );
                             $opcion = 2;
@@ -126,7 +140,7 @@
                             $arrayData = array('status' => true, 'msg' => 'Actualización Exitosa.');
                         }  
                     } else if ($arrayData == "exists") {
-                        $arrayData = array('status' => false, 'msg' => 'La categoría ya esta registrado en el sistema.');
+                        $arrayData = array('status' => false, 'msg' => 'El curso ya esta registrado en el sistema.');
                     } else {
                         $arrayData = array('status' => false, 'msg' => 'No se pudo ejecutar este proceso.');
                     }
@@ -135,7 +149,7 @@
             }
             die();
         }
-
+        /*
         public function DeleteCategory() {
             if ($_POST) {
                 $this->id_category = intval($_POST['id_category']);
