@@ -57,8 +57,8 @@
         public function DeleteCategory(int $id_category) {
             $this->id_category = $id_category;
 
-            /*$Query_Select_All = "SELECT * FROM usuario WHERE rol = $this->id_category";
-            $result_Select_All = $this->SelectAllMySQL($Query_Select_All);*/
+            $Query_Select_All = "SELECT * FROM course WHERE category = $this->id_category";
+            $result_Select_All = $this->SelectAllMySQL($Query_Select_All);
 
             if (empty($result_Select_All)) {
                 $Query_Delete = "DELETE FROM course_category WHERE id_course_category = $this->id_category";
@@ -73,7 +73,6 @@
             }
             return $result;
         }
-        
         
     }
 ?>
