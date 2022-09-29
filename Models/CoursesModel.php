@@ -72,12 +72,15 @@
             }
             return $result;
         }
-        /*
-        public function DeleteCategory(int $id_category) {
-            $this->id_category = $id_category;
+        
+        public function DeleteCourse(int $id_course) {
+            $this->id_course = $id_course;
+
+            $Query_Select_All = "SELECT * FROM detail_accounting WHERE course = $this->id_course";
+            $result_Select_All = $this->SelectAllMySQL($Query_Select_All);
 
             if (empty($result_Select_All)) {
-                $Query_Delete = "DELETE FROM course_category WHERE id_course_category = $this->id_category";
+                $Query_Delete = "DELETE FROM course WHERE id_course = $this->id_course";
                 $result = $this->DeleteMySQL($Query_Delete);
                 if ($result) {
                     $result = "ok";
@@ -89,6 +92,6 @@
             }
             return $result;
         }
-        */
+        
     }
 ?>
