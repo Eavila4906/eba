@@ -149,19 +149,19 @@
             }
             die();
         }
-        /*
-        public function DeleteCategory() {
+
+        public function DeleteCourse() {
             if ($_POST) {
-                $this->id_category = intval($_POST['id_category']);
-                if ($this->id_category > 0) {
+                $this->id_course = intval($_POST['id_course']);
+                if ($this->id_course > 0) {
                     $arrayData = "";
                     if ($_SESSION['permisosModulo']['d']) {
-                        $arrayData = $this->model->DeleteCategory($this->id_category);
+                        $arrayData = $this->model->DeleteCourse($this->id_course);
                     }
                     if ($arrayData == "ok") {
                         $arrayData = array('status' => true, 'msg' => 'Eliminado con exito.');
                     } else if ($arrayData == "Exists") {
-                        $arrayData = array('status' => false, 'msg' => 'No es posible eliminar un rol asociado a un usuario.');
+                        $arrayData = array('status' => false, 'msg' => 'No es posible eliminar un curso asociado a un usuario.');
                     } else {
                         $arrayData = array('status' => false, 'msg' => 'No se pudo ejecutar este proceso.');
                     }
@@ -170,6 +170,6 @@
             }
             die();
         }
-        */
+
     }
 ?>
