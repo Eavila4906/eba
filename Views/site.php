@@ -142,21 +142,7 @@
                                              <p>Al finalizar este curso serás capaz de sostener conversaciones sencillas de manera independiente.!Incluso al viajar al extranjero!</p>
                                         </div>
 
-                                        <div class="courses-detail">
-                                             <h3><a href="#">Directora Academica</a></h3>
-                                             <p>!Soy la directora academica encargada de inmpartir clases tal!</p>
-                                             <a href="#">leer mas</a>
-                                             <p>Al finalizar este curso serás capaz de sostener conversaciones sencillas de manera independiente.!Incluso al viajar al extranjero!</p>
-                                        </div>
 
-                                        <div class="courses-detail">
-                                             <h3><a href="#">Mision</a></h3>
-                                             <p>!Formar personas de calidad y cladidez para porder!</p>
-                                             <a href="#">leer mas</a>
-                                             <p>Al finalizar este curso serás capaz de sostener conversaciones sencillas de manera independiente.!Incluso al viajar al extranjero!</p>
-                                        </div>
-
-<!--
                               <?php
                               if (!empty($ContentsAbout)) {
                                    for ($i=0; $i < count($ContentsAbout); $i++) {
@@ -169,23 +155,39 @@
                                              $t2 = "text2".$id;
                                              $text1 = substr($descripcion,0,100).'...<a id="leermas'.$id.'" onclick="leerMas('.$idlmas.','.$t1.','.$t2.');" href="javascript:;">Leer mas</a>';
                                              $text2 = $descripcion.'...<a id="leermenos'.$id.'" onclick="leerMenos('.$idlmenos.','.$t1.','.$t2.');" href="javascript:;">Leer menos</a>';
+                                             $des = 1;
+                                        }else{
+                                             $descripcion = $ContentsAbout[$i]['descripcion'];
+                                             $des = 2;
                                         }
                               ?>
                               <figure>
                                    <span><i class="fas fa-<?= $ContentsAbout[$i]['icono']?>"></i></span>
                                    <figcaption>
                                         <h3><?= $ContentsAbout[$i]['titulo']?></h3>
+                                        <?php 
+                                             if($des == 1){
+                                        ?>
                                         <p id="text1<?=$id;?>"><?= $text1; ?></p><p id="text2<?=$id;?>" style="display: none;"><?= $text2; ?></p>
+                                   
+                                        <?php 
+                                             }else{
+                                        ?>
+                                        <p><?=$descripcion;?>></p>
+                                        <?php
+                                             }
+                                        ?>
                                    </figcaption>
                               </figure>
                               <?php
                                    }
                               } else {
+                                   
                               ?>
                                    <h3 class="col-md-6 col-sm-12 csms text-muted">¡No existen datos para mostrar!</h3>
                               <?php
                               }
-                              ?>  -->
+                              ?>  
 
                          </div>
                     </div>
