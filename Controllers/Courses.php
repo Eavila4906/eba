@@ -88,6 +88,13 @@
             die(); 
         }
         
+        public function getCategoryList() {
+            if ($_POST) {
+                $arrayData = $this->model->SelectAllCategory();
+                echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
+            }
+            die();
+        }
         
         public function setCourse() {
             if ($_POST) {
