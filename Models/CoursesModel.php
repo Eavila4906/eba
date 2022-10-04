@@ -19,6 +19,12 @@
             $result = $this->SelectMySQL($Query_Select);
             return $result;
         }
+
+        public function SelectAllCategory() {
+            $Query_Select_All = "SELECT id_course_category, category FROM course_category WHERE status != 0";
+            $result = $this->SelectAllMySQL($Query_Select_All);
+            return $result;
+        }
         
         public function InsertCourse(String $course, int $category, String $description, String $dateStart, String $dateFinal, $value, int $status) {
             $this->course = $course;
