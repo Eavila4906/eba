@@ -137,13 +137,27 @@
                     $t2 = "text2".$id;
                     $text1 = substr($descripcion,0,100).'...<a id="leermas'.$id.'" onclick="leerMas('.$idlmas.','.$t1.','.$t2.');" href="javascript:;">Leer mas</a>';
                     $text2 = $descripcion.'...<a id="leermenos'.$id.'" onclick="leerMenos('.$idlmenos.','.$t1.','.$t2.');" href="javascript:;">Leer menos</a>';
+                    $des=1;
+                  } else {
+                      $descripcion =$dataAbout[$i]['descripcion'];
+                      $des=2;
                   }   
             ?>
               <div class="col-md-4">
                 <div class="card mb-4 shadow-sm">
                   <div class="card-body">
                     <h6>Titulo: </h6> <p><?= $dataAbout[$i]['titulo']; ?></p>
-                    <h6>Descripcion: </h6> <p id="text1<?=$id;?>"><?= $text1; ?></p><p id="text2<?=$id;?>" style="display: none;"><?= $text2; ?></p>
+                    <?php 
+                      if ($des == 1) { 
+                    ?>
+                        <h6>Descripcion: </h6> <p id="text1<?=$id;?>"><?= $text1; ?></p><p id="text2<?=$id;?>" style="display: none;"><?= $text2; ?></p>
+                    <?php  
+                      } else {
+                    ?>  
+                        <p><?=$descripcion;?> </p>      
+                    <?php 
+                      }
+                    ?>
                     <?php if ($_SESSION['permisosModulo']['u']) {?>
                     <button type="button" class="btn btn-sm btn-primary btnEditarConteAbout" onclick="FctBtnEditarConteAbout(<?= $dataAbout[$i]['id_cont']; ?>)" title="Editar"><i class="fas fa-pencil-alt fa-lg"></i></button>
                     <?php } ?>
