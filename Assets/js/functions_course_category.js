@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', function () {
 				if (objData.status) {
 					$('#ModalFormCategory').modal('hide');
 					formCategory.reset();
-					swal("¡Rol de usuario!", objData.msg, "success");
+					swal("¡Categoría!", objData.msg, "success");
 					DataTableCategory.ajax.reload();
 				} else {
 					swal("¡Atención!", objData.msg, "warning");
