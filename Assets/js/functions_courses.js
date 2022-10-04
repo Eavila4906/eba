@@ -8,15 +8,15 @@ $(document).ready(function () {
 	}
 });
 
-function openModalCurses() {
-	document.querySelector('#id_curses').value = "";
-	document.querySelector('#title-modal-curses').innerHTML = "Nuevo Curso";
-	document.querySelector('#modal-header-curses').classList.replace("header-update", "header-register");
+function openModalCourse() {
+	document.querySelector('#id_course').value = "";
+	document.querySelector('#title-modal-course').innerHTML = "Nuevo Curso";
+	document.querySelector('#modal-header-course').classList.replace("header-update", "header-register");
 	document.querySelector('#btn-action-form').classList.replace("btn-info", "btn-success");
 	document.querySelector('#text-btn').innerHTML = "Guardar";
-	document.querySelector('#formCurses').reset();
+	document.querySelector('#formCourse').reset();
 	//cleanResiduoVali();
-	$('#ModalFormCurses').modal('show');
+	$('#ModalFormCourse').modal('show');
 }
 
 //show list category
