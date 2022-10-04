@@ -7,7 +7,7 @@
 <main class="app-content">
     <div class="app-title">
         <div>
-          <h1><i class="fa fa-th-large"></i> <?= $data['name_page']; ?></h1>
+          <h1><i class="fas fa-book"></i> <?= $data['name_page']; ?></h1>
           <p><?= NAME_PROJECT ?></p>
         </div>
         <ul class="app-breadcrumb breadcrumb side">
@@ -19,7 +19,7 @@
 
     <?php if ($_SESSION['permisosModulo']['w']) { ?>
     <div>
-      <button class="btn btn-success mb-3" type="button" onclick="openModalCurses();"><i class="fa fa-plus-circle fa-lg"></i> Nuevo Curso</button><br>
+      <button class="btn btn-success mb-3" type="button" onclick="openModalCourse();"><i class="fa fa-plus-circle fa-lg"></i> Nuevo Curso</button><br>
     </div>
     <?php } ?>
     
