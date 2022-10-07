@@ -38,6 +38,7 @@
                         <th>Fecha Inicio</th>
                         <th>Fecha Final</th>
                         <th>Valor</th>
+                        <th>Estado</th>
                         <th>Acciones</th>
                     </tr>
                   </thead>
