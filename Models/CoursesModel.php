@@ -5,17 +5,21 @@
         }
         
         public function SelectAllCourses() {
-            $Query_Select_All = "SELECT * FROM course co INNER JOIN course_category cc 
-                                          ON (co.category=cc.id_course_category)";
+            $Query_Select_All = "SELECT co.id_course, co.name, cc.category, co.description, co.date_start,
+                                        co.date_final, co.value, co.status 
+                                 FROM course co INNER JOIN course_category cc 
+                                 ON (co.category=cc.id_course_category)";
             $result = $this->SelectAllMySQL($Query_Select_All);
             return $result;
         }
         
         public function SelectCourse(int $id_course) {
             $this->id_course = $id_course;
-            $Query_Select = "SELECT * FROM course co INNER JOIN course_category cc 
-                                      ON (co.category=cc.id_course_category)
-                                      WHERE id_course = $this->id_course";
+            $Query_Select = "SELECT co.id_course, cc.id_course_category, co.name, cc.category, 
+                                    co.description, co.date_start, co.date_final, co.value, co.status  
+                             FROM course co INNER JOIN course_category cc 
+                             ON (co.category=cc.id_course_category)
+                             WHERE id_course = $this->id_course";
             $result = $this->SelectMySQL($Query_Select);
             return $result;
         }
@@ -35,7 +39,7 @@
             $this->value = $value;
             $this->status = $status;
 
-            $Query_Select_All = "SELECT * FROM course WHERE name = '$this->course' AND status = 1 ";
+            $Query_Select_All = "SELECT * FROM course WHERE name = '$this->course' AND category = $this->category AND status = 1";
             $result_Select_All = $this->SelectAllMySQL($Query_Select_All);
 
             if (empty($result_Select_All)) {
