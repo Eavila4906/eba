@@ -1,7 +1,7 @@
 <!-- Modal -->
 <div class="modal fade" id="ModalFormCourse" tabindex="-1" role="dialog" 
   aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-keyboard="false" data-backdrop="static">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header header-register" id="modal-header-course">
         <h5 class="modal-title" id="title-modal-course">Nuevo Curso</h5>
@@ -18,22 +18,24 @@
                   Los campos con asterisco (<span class="required">*</span>) son obligatorios.
                 </p>
                 
-                <div class="form-group">
-                  <label id="labelNombreCourse" class="labelForm">Curso <span class="required">*</span></label>
-                  <input class="form-control inputForm" name="InputCourse" id="InputCourse" type="text" placeholder="Ingresar Nombre del curso">
-                  <p class="leyenda none-block text-danger" id="leyenda-nameCourse">
-                    <small> 
-                      El nombre debe tener 1 o 25 caracteres, solo letras!
-                    </small>
-                  </p>
+                <div class="row mb-4">
+                  <div class="col-md-8">
+                    <label id="labelNombreCourse" class="labelForm">Curso <span class="required">*</span></label>
+                    <input class="form-control inputForm" name="InputCourse" id="InputCourse" type="text" placeholder="Ingresar Nombre del curso">
+                    <p class="leyenda none-block text-danger" id="leyenda-nameCourse">
+                      <small> 
+                        El nombre debe tener 1 o 25 caracteres, solo letras!
+                      </small>
+                    </p>
+                  </div>
+                  <div class="col-md-4">
+                    <label>Categoria <span class="required">*</span></label>
+                    <select class="form-control category-register category-update" name="InputCategory" id="InputCategory" required>
+                    </select>
+                  </div>
                 </div>
 
                 <div class="row mb-4">
-                  <div class="col-md-4">
-                        <label>Categoria <span class="required">*</span></label>
-                          <select class="form-control category-register category-update" name="InputCategory" id="InputCategory" required>
-                          </select>
-                  </div>
                   <div class="col-md-4">
                     <label id="labelNewPass" class="">Fecha Inicio curso <span class="required">*</span></label>
                     <input class="form-control" type="date" name="InputDateStart" id="InputDateStart" required>
@@ -42,35 +44,34 @@
                     <label id="labelConfirmPass" class="">Fecha final curso <span class="required">*</span></label>
                     <input class="form-control" type="date" name="InputDateFinal" id="InputDateFinal" required>
                   </div>
-                </div>
-
-                <div class="form-group">
-                  <label id="labelDescripcionCourse" class="labelForm">Descripción </label>
-                  <textarea class="form-control inputForm" name="InputDescription" id="InputDescription" cols="30" rows="2" placeholder="Ingresar Descripción"></textarea>
-                  <p class="leyenda none-block text-danger" id="leyenda-descripcionCourse">
-                    <small> 
-                      La descripcion debe tener 1 o 45 caracteres!
-                    </small>
-                  </p>
+                  <div class="col-md-4">
+                    <label id="labelValorCourse" class="labelForm">Valor del curso <span class="required">*</span></label>
+                    <input class="form-control inputForm" name="InputValueCourse" id="InputValueCourse" type="number" placeholder="Ingresar valor del curso" required>
+                    <p class="leyenda none-block text-danger" id="leyenda-Valor-TP">
+                      <small> 
+                        Ingresar un valor numerico valido.
+                      </small>
+                    </p>
+                  </div>
                 </div>
 
                 <div class="row mb-4">
-                    <div class="col-md-6">
-                        <label id="labelValorCourse" class="labelForm">Valor del curso <span class="required">*</span></label>
-                        <input class="form-control inputForm" name="InputValueCourse" id="InputValueCourse" type="number" placeholder="Ingresar valor del curso" required>
-                        <p class="leyenda none-block text-danger" id="leyenda-Valor-TP">
-                          <small> 
-                            Ingresar un valor numerico valido.
-                          </small>
-                        </p>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="control-label">Estado <span class="required">*</span></label>
-                        <select class="form-control" name="InputStatus" id="InputStatus">
-                            <option value="1">Activo</option>
-                            <option value="0">Inactivo</option>
-                        </select>
-                    </div>
+                  <div class="col-md-8">
+                    <label id="labelDescripcionCourse" class="labelForm">Descripción </label>
+                    <textarea class="form-control inputForm" name="InputDescription" id="InputDescription" cols="30" rows="2" placeholder="Ingresar Descripción"></textarea>
+                    <p class="leyenda none-block text-danger" id="leyenda-descripcionCourse">
+                      <small> 
+                        La descripcion debe tener 1 o 45 caracteres!
+                      </small>
+                    </p>
+                  </div>
+                  <div class="col-md-4">
+                    <label class="control-label">Estado <span class="required">*</span></label>
+                    <select class="form-control" name="InputStatus" id="InputStatus">
+                        <option value="1">Activo</option>
+                        <option value="0">Inactivo</option>
+                    </select>
+                  </div>
                 </div>
                 
                 <div class="tile-footer">
