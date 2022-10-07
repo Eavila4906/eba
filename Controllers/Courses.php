@@ -89,7 +89,7 @@
         }
         
         public function getCategoryList() {
-            if ($_POST) {
+            if ($_GET) {
                 $arrayData = $this->model->SelectAllCategory();
                 echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
             }
@@ -100,11 +100,11 @@
             if ($_POST) {
                 $this->id_course = intval($_POST['id_course']);
                 $this->course = $_POST['InputCourse'];
-                $this->category = intval($_POST['category']);
+                $this->category = intval($_POST['InputCategory']);
                 $this->description = $_POST['InputDescription'];
                 $this->dateStart = $_POST['InputDateStart'];
                 $this->dateFinal = $_POST['InputDateFinal'];
-                $this->value = $_POST['InputValue'];
+                $this->value = $_POST['InputValueCourse'];
                 $this->status = $_POST['InputStatus'];
                 $arrayData = "";
 
@@ -115,7 +115,7 @@
                 } else {
                     if ($this->id_course == 0) {
                         if ($_SESSION['permisosModulo']['w']) {
-                            $arrayData = $this->model->InsertCategory($this->course,
+                            $arrayData = $this->model->InsertCourse($this->course,
                                                                       $this->category,
                                                                       $this->description,
                                                                       $this->dateStart,
@@ -127,7 +127,7 @@
                         }
                     } else {
                         if ($_SESSION['permisosModulo']['u']) {
-                            $arrayData = $this->model->UpdateCategory($this->id_course,
+                            $arrayData = $this->model->UpdateCourse($this->id_course,
                                                                       $this->course,
                                                                       $this->category,
                                                                       $this->description,
