@@ -191,7 +191,7 @@ function FctBtnUpdateCategory(id_category) {
 									<option value="2">Inactivo</option>
 								`;
 
-				document.querySelector('#ListaEstadoRol').innerHTML = SelectHTML;
+				document.querySelector('#InputStatus').innerHTML = SelectHTML;
 
 			} else {
 				swal("ERROR!", objData.msg, "error");
