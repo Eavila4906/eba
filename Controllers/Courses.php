@@ -23,6 +23,7 @@
             if ($_SESSION['permisosModulo']['r']) {
                 $arrayData = $this->model->SelectAllCourses();
                 for ($i=0; $i < count($arrayData); $i++) { 
+                    $btnInfoCourse = "";
                     $btnEditCourse = "";
                     $btnRemoveCourse = "";
 
@@ -30,6 +31,14 @@
                         $arrayData[$i]['status'] = '<spam class="badge badge-success">Activo</spam>';
                     } else {
                         $arrayData[$i]['status'] = '<spam class="badge badge-danger">Inactivo</spam>';
+                    }
+
+                    if ($_SESSION['permisosModulo']['r']){
+                        $btnInfoCourse = '<button class="btn btn-primary btn-sm btnEditarRol" 
+                                                      onclick="FctBtnInfoCourse('.$arrayData[$i]['id_course'].')" 
+                                                      title="Ver">
+                                                      <i class="fas fa-eye"></i>
+                                              </button>';
                     }
 
                     if ($_SESSION['permisosModulo']['u']){
@@ -49,7 +58,7 @@
                         
                     }
 
-                    $acciones = '<div class="text-center">'.$btnEditCourse.' '.$btnRemoveCourse.'</div>';
+                    $acciones = '<div class="text-center">'.$btnInfoCourse.' '.$btnEditCourse.' '.$btnRemoveCourse.'</div>';
                     $arrayData[$i]['Acciones'] = $acciones;
                 }
 
@@ -66,25 +75,27 @@
         }
         
         public function getCourse($id_course) {
-            if ($_SESSION['permisosModulo']['r']) {
-                $this->id_course = intval($id_course);
-                if ($this->id_course > 0) {
-                    $arrayData = $this->model->SelectCourse($this->id_course);
-                    if (!empty($arrayData)) {
-                        $arrayData = array('status' => true, 'data' => $arrayData);
-                    } else {
-                        $arrayData = array('status' => false, 'msg' => 'Datos no encontrados!');
+            if ($_GET) {
+                if ($_SESSION['permisosModulo']['r']) {
+                    $this->id_course = intval($id_course);
+                    if ($this->id_course > 0) {
+                        $arrayData = $this->model->SelectCourse($this->id_course);
+                        if (!empty($arrayData)) {
+                            $arrayData = array('status' => true, 'data' => $arrayData);
+                        } else {
+                            $arrayData = array('status' => false, 'msg' => 'Datos no encontrados!');
+                        }
+                        echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
                     }
-                    echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
-                }
-            } else {
-                echo '<div class="alert alert-danger" role="alert" 
-                        style="position: relative;padding: 0.75rem 1.25rem;margin-bottom: 1rem;border: 
-                        1px solid transparent;border-radius: 0.25rem;color: #721c24;background-color: #f8d7da;
-                        border-color: #f5c6cb;border-top-color: #f1b0b7;">
-                        <b>¡Restricted access!</b> you do not have permission to manipulate this module.
-                      </div>';
-            } 
+                } else {
+                    echo '<div class="alert alert-danger" role="alert" 
+                            style="position: relative;padding: 0.75rem 1.25rem;margin-bottom: 1rem;border: 
+                            1px solid transparent;border-radius: 0.25rem;color: #721c24;background-color: #f8d7da;
+                            border-color: #f5c6cb;border-top-color: #f1b0b7;">
+                            <b>¡Restricted access!</b> you do not have permission to manipulate this module.
+                          </div>';
+                } 
+            }
             die(); 
         }
         
@@ -98,6 +109,7 @@
         
         public function setCourse() {
             if ($_POST) {
+                //dep($_POST);
                 $this->id_course = intval($_POST['id_course']);
                 $this->course = $_POST['InputCourse'];
                 $this->category = intval($_POST['InputCategory']);
@@ -108,9 +120,8 @@
                 $this->status = $_POST['InputStatus'];
                 $arrayData = "";
 
-                if ($this->course == "" || $this->category == 0 || $this->description == "" 
-                    || $this->dateStart == "" || $this->dateFinal == "" || $this->value == "" 
-                    || $this->status == "") {
+                if ($this->course == "" || $this->category == 0 || $this->dateStart == "" || $this->description == ""
+                    || $this->dateFinal == "" || $this->value == "" || $this->status == "") {
                     $arrayData = array('status' => false, 'msg' => 'No se pudo ejecutar este proceso.');
                 } else {
                     if ($this->id_course == 0) {
