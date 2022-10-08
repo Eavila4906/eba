@@ -138,7 +138,6 @@
                                         <div class="courses-detail">
                                              <h3><a href="#">Quienes Somos</a></h3>
                                              <p>!Somos una empresa que se dedica a tal cosa por tal motivo!</p>
-                                             <a href="#">leer mas</a>
                                              <p>Al finalizar este curso serás capaz de sostener conversaciones sencillas de manera independiente.!Incluso al viajar al extranjero!</p>
                                         </div>
 
