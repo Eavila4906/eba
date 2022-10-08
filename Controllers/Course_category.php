@@ -125,7 +125,7 @@
                             $arrayData = array('status' => true, 'msg' => 'Actualización Exitosa.');
                         }  
                     } else if ($arrayData == "exists") {
-                        $arrayData = array('status' => false, 'msg' => 'La categoría ya esta registrado en el sistema.');
+                        $arrayData = array('status' => false, 'msg' => 'La categoría ya esta registrada en el sistema.');
                     } else {
                         $arrayData = array('status' => false, 'msg' => 'No se pudo ejecutar este proceso.');
                     }
@@ -146,7 +146,7 @@
                     if ($arrayData == "ok") {
                         $arrayData = array('status' => true, 'msg' => 'Eliminado con exito.');
                     } else if ($arrayData == "Exists") {
-                        $arrayData = array('status' => false, 'msg' => 'No es posible eliminar un rol asociado a un usuario.');
+                        $arrayData = array('status' => false, 'msg' => 'No es posible eliminar una categoría asociada a un curso.');
                     } else {
                         $arrayData = array('status' => false, 'msg' => 'No se pudo ejecutar este proceso.');
                     }
