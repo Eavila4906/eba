@@ -25,7 +25,7 @@
         }
 
         public function SelectAllCategory() {
-            $Query_Select_All = "SELECT id_course_category, category FROM course_category WHERE status != 0";
+            $Query_Select_All = "SELECT id_course_category, category FROM course_category WHERE status != 2";
             $result = $this->SelectAllMySQL($Query_Select_All);
             return $result;
         }
@@ -66,7 +66,10 @@
             $this->value = $value;
             $this->status = $status;
 
-            $Query_Select_All = "SELECT * FROM course WHERE name = '$this->course' AND id_course != $this->id_course AND status = 1";
+            $Query_Select_All = "SELECT * FROM course 
+                                 WHERE name = '$this->course' 
+                                 AND category = $this->category
+                                 AND id_course != $this->id_course AND status = 1";
             $result_Select_All = $this->SelectAllMySQL($Query_Select_All);
 
             if (empty($result_Select_All)) {
