@@ -34,10 +34,8 @@
                         <th>ID</th>
                         <th>Curso</th>
                         <th>Categoría</th>
-                        <th>Descripción</th>
                         <th>Fecha Inicio</th>
                         <th>Fecha Final</th>
-                        <th>Valor</th>
                         <th>Estado</th>
                         <th>Acciones</th>
                     </tr>

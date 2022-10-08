@@ -25,10 +25,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			{ "data": "id_course" },
 			{ "data": "name" },
 			{ "data": "category" },
-			{ "data": "description" },
 			{ "data": "date_start" },
 			{ "data": "date_final" },
-			{ "data": "value" },
 			{ "data": "status" },
 			{ "data": "Acciones" }
 		],
@@ -118,6 +116,37 @@ function openModalCourse() {
 	//
 	//cleanResiduoVali();
 	$('#ModalFormCourse').modal('show');
+}
+
+//View course information
+function FctBtnInfoCourse(id_course) {
+	var id_course = id_course;
+	var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+	var ajaxUrl = BASE_URL + 'courses/getCourse/' + id_course;
+	request.open("GET", ajaxUrl, true);
+	request.send();
+
+	request.onreadystatechange = function () {
+		if (request.readyState == 4 && request.status == 200) {
+			var objData = JSON.parse(request.responseText);
+
+			document.querySelector('#getIdCourse').innerHTML = objData.id_course;
+			document.querySelector('#getCourse').innerHTML = objData.name;
+			document.querySelector('#getCategory').innerHTML = objData.category;
+			document.querySelector('#getDateStart').innerHTML = objData.date_start;
+			document.querySelector('#getDateFinal').innerHTML = objData.date_final;
+			document.querySelector('#getValueCourse').innerHTML = objData.value;
+			document.querySelector('#getDescription').innerHTML = objData.description;
+
+			if (objData.status == 1) {
+				var status = '<spam class="badge badge-success">Activo</spam>';
+			} else {
+				var status = '<spam class="badge badge-danger">Inactivo</spam>';
+			}
+			document.querySelector('#getStatus').innerHTML = status;
+		}
+	}
+	$('#ModalInfoCourse').modal('show');
 }
 
 function FctBtnUpdateCourse(id_course) {
