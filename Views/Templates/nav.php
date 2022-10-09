@@ -6,7 +6,8 @@
           <p class="app-sidebar__user-designation"><?= $_SESSION['dataUser']['nombreRol']; ?></p>
         </div>
       </div>
-      <ul class="app-menu">''
+      <ul class="app-menu">
+        <!-- PERSONAL AREA MODULE -->
         <?php if (!empty($_SESSION['permisos'][1]['r'])) { ?>
         <li><a class="app-menu__item" href="<?= BASE_URL(); ?>my"><i class="app-menu__icon 
           <?php 
@@ -20,29 +21,18 @@
           ?>"></i><span class="app-menu__label">Area personal</span></a>
         </li>
         <?php } ?>
-
+        
+        <!-- DASHBOARD MODULE -->
         <?php if (!empty($_SESSION['permisos'][2]['r'])) { ?>
         <li><a class="app-menu__item" href="<?= BASE_URL(); ?>dashboard"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
         <?php } ?>
 
+        <!-- PUBLIC SITE MANAGER MODULE -->
         <?php if (!empty($_SESSION['permisos'][3]['r'])) { ?>
         <li><a class="app-menu__item" href="<?= BASE_URL(); ?>publicSite"><i class="app-menu__icon fas fa-globe"></i><span class="app-menu__label">Sitio publico</span></a></li>
         <?php } ?>
-
-        <?php if (!empty($_SESSION['permisos'][9]['r']) || !empty($_SESSION['permisos'][10]['r'])) { ?>
-        <li class="treeview" id="module-courses"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-book-open"></i><span class="app-menu__label">Cursos</span><i class="treeview-indicator fa fa-angle-right"></i></a>
-          <ul class="treeview-menu">
-            <?php if (!empty($_SESSION['permisos'][10]['r'])) { ?>
-            <li><a class="treeview-item" href="<?= BASE_URL(); ?>courses"><i id="icon-courses" class="icon fa fa-circle-o"></i> Cursos</a></li>
-            <?php } ?>
-
-            <?php if (!empty($_SESSION['permisos'][9]['r'])) { ?>
-            <li><a class="treeview-item" href="<?= BASE_URL(); ?>course_category"><i id="icon-category" class="icon fa fa-circle-o"></i> Categorías</a></li>
-            <?php } ?>
-          </ul>
-        </li>
-        <?php } ?>
-
+        
+        <!-- USER AND ROLES MODULES -->
         <?php if (!empty($_SESSION['permisos'][4]['r']) || !empty($_SESSION['permisos'][5]['r'])) { ?>
         <li class="treeview" id="module-users"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-users"></i><span class="app-menu__label">Usuarios</span><i class="treeview-indicator fa fa-angle-right"></i></a>
           <ul class="treeview-menu">
@@ -57,6 +47,22 @@
         </li>
         <?php } ?>
 
+        <!-- COURSES AND CATEGORYS MODULES -->
+        <?php if (!empty($_SESSION['permisos'][9]['r']) || !empty($_SESSION['permisos'][10]['r'])) { ?>
+        <li class="treeview" id="module-courses"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-book-open"></i><span class="app-menu__label">Cursos</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+          <ul class="treeview-menu">
+            <?php if (!empty($_SESSION['permisos'][10]['r'])) { ?>
+            <li><a class="treeview-item" href="<?= BASE_URL(); ?>courses"><i id="icon-courses" class="icon fa fa-circle-o"></i> Cursos</a></li>
+            <?php } ?>
+
+            <?php if (!empty($_SESSION['permisos'][9]['r'])) { ?>
+            <li><a class="treeview-item" href="<?= BASE_URL(); ?>course_category"><i id="icon-category" class="icon fa fa-circle-o"></i> Categorías</a></li>
+            <?php } ?>
+          </ul>
+        </li>
+        <?php } ?>
+
+        <!-- ACCOUNTING, PAYMENT AND REPORTS MODULES -->
         <?php if (!empty($_SESSION['permisos'][6]['r']) || !empty($_SESSION['permisos'][7]['r']) || !empty($_SESSION['permisos'][8]['r'])) { ?>
         <li class="treeview" id="module-accounting">
           <a class="app-menu__item" href="js:;" data-toggle="treeview"><i class="app-menu__icon fas fa-calculator"></i><span class="app-menu__label">Contabilidad</span><i class="treeview-indicator fa fa-angle-right"></i></a>
