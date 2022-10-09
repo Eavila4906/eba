@@ -3,7 +3,7 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header header-infoCourse">
-        <h5 class="modal-title" id="title-modal"><i class="fa fa-user col-1"></i> <b id="title"></b></h5>
+        <h5 class="modal-title" id="title-modal"></i> <b id="title"></b></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -13,6 +13,7 @@
       <!-- info course -->
       <div class="tab-pane active" >
       <input type="hidden" id="id_Course" name="id_Course" value="">
+      <!-- <input type="hidden" id="getIdCourse" name="getIdCourse" value=""> -->
               <div class="timeline-post">
                 <div class="post-media"> 
                   <div class="content">
