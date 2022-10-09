@@ -46,8 +46,8 @@
                   </div>
                   <div class="col-md-4">
                     <label id="labelValorCourse" class="labelForm">Valor del curso <span class="required">*</span></label>
-                    <input class="form-control inputForm" name="InputValueCourse" id="InputValueCourse" type="number" placeholder="Ingresar valor del curso" required>
-                    <p class="leyenda none-block text-danger" id="leyenda-Valor-TP">
+                    <input class="form-control inputForm" name="InputValueCourse" id="InputValueCourse" type="text" placeholder="Ingresar valor del curso" required>
+                    <p class="leyenda none-block text-danger" id="leyenda-Valor-Course">
                       <small> 
                         Ingresar un valor numerico valido.
                       </small>
@@ -57,7 +57,7 @@
 
                 <div class="row mb-4">
                   <div class="col-md-8">
-                    <label id="labelDescripcionCourse" class="labelForm">Descripción </label>
+                    <label id="labelDescripcionCourse" class="labelForm">Descripción <span class="required">*</span></label>
                     <textarea class="form-control inputForm" name="InputDescription" id="InputDescription" cols="30" rows="2" placeholder="Ingresar Descripción"></textarea>
                     <p class="leyenda none-block text-danger" id="leyenda-descripcionCourse">
                       <small> 
