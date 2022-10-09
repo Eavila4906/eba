@@ -1,6 +1,7 @@
 <?php
   header_view($data);
   getModal('courses_modal', $data);
+  getModal('info_course_modal', $data);
 ?>
 
 <div id="ContentAjax"></div>
