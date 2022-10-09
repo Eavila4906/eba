@@ -1,3 +1,57 @@
+/* Starts validacion de formulario add roles */
+const inputs = document.querySelectorAll('#formCourse input');
+const textarea = document.querySelectorAll('#formCourse textarea');
+
+const expresiones = {
+	nombreCourse: /^[a-zA-ZÀ-ÿ\s]{1,25}$/,
+	descripcionCourse: /^[a-zA-ZÀ-ÿ0-9\s]{1,80}$/,
+	valorCourse: /^\d.{0,9}$/,
+}
+
+const campos = {
+	InputCourse: false,
+	InputDescription: false,
+	InputValueCourse: false
+}
+
+const validarFormulario = (e) => {
+	switch (e.target.name) {
+		case "InputCourse":
+			validarCamposForm(expresiones.nombreCourse, e.target, 'labelNombreCourse', 'InputCourse', 'leyenda-nameCourse');
+		break;
+		case "InputDescription":
+			validarCamposForm(expresiones.descripcionCourse, e.target, 'labelDescripcionCourse', 'InputDescription', 'leyenda-descripcionCourse');
+		break;
+		case "InputValueCourse":
+			validarCamposForm(expresiones.valorCourse, e.target, 'labelValorCourse', 'InputValueCourse', 'leyenda-Valor-Course');
+		break;
+	}
+}
+
+const validarCamposForm = (expresion, input, label, id_input, leyenda) => {
+	if(expresion.test(input.value)){
+        document.getElementById(`${id_input}`).classList.remove('invalid');
+        document.getElementById(`${leyenda}`).classList.add('none-block');
+		document.getElementById(`${label}`).classList.remove('text-danger');
+		campos[id_input] = true;
+	} else {
+		document.getElementById(`${id_input}`).classList.add('invalid');
+		document.getElementById(`${leyenda}`).classList.remove('none-block');
+		document.getElementById(`${label}`).classList.add('text-danger');
+		campos[id_input] = false;
+	}
+}
+
+inputs.forEach((input) => {
+	input.addEventListener('keyup', validarFormulario);
+	input.addEventListener('blur', validarFormulario);
+});
+textarea.forEach((textarea) => {
+	textarea.addEventListener('keyup', validarFormulario);
+	textarea.addEventListener('blur', validarFormulario);
+});
+/* Finish validacion de formulario add roles */
+
 $(document).ready(function () {
 	if (document.querySelector('#module-courses')) {
 		document.querySelector('#module-courses').classList.add('is-expanded');
