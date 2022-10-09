@@ -129,16 +129,16 @@ function FctBtnInfoCourse(id_course) {
 	request.onreadystatechange = function () {
 		if (request.readyState == 4 && request.status == 200) {
 			var objData = JSON.parse(request.responseText);
+			document.querySelector('#getTitleCourese').innerHTML = objData.data.name+" / "+objData.data.category;
+			document.querySelector('#getIdCourse').innerHTML = objData.data.id_course;
+			document.querySelector('#getCourse').innerHTML = objData.data.name;
+			document.querySelector('#getCategory').innerHTML = objData.data.category;
+			document.querySelector('#getDateStart').innerHTML = objData.data.date_start;
+			document.querySelector('#getDateFinal').innerHTML = objData.data.date_final;
+			document.querySelector('#getValueCourse').innerHTML = objData.data.value;
+			document.querySelector('#getDescription').innerHTML = objData.data.description;
 
-			document.querySelector('#getIdCourse').innerHTML = objData.id_course;
-			document.querySelector('#getCourse').innerHTML = objData.name;
-			document.querySelector('#getCategory').innerHTML = objData.category;
-			document.querySelector('#getDateStart').innerHTML = objData.date_start;
-			document.querySelector('#getDateFinal').innerHTML = objData.date_final;
-			document.querySelector('#getValueCourse').innerHTML = objData.value;
-			document.querySelector('#getDescription').innerHTML = objData.description;
-
-			if (objData.status == 1) {
+			if (objData.data.status == 1) {
 				var status = '<spam class="badge badge-success">Activo</spam>';
 			} else {
 				var status = '<spam class="badge badge-danger">Inactivo</spam>';
