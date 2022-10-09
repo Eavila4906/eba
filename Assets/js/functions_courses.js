@@ -3,9 +3,9 @@ const inputs = document.querySelectorAll('#formCourse input');
 const textarea = document.querySelectorAll('#formCourse textarea');
 
 const expresiones = {
-	nombreCourse: /^[a-zA-ZÀ-ÿ\s]{1,25}$/,
-	descripcionCourse: /^[a-zA-ZÀ-ÿ0-9\s]{1,80}$/,
-	valorCourse: /^\d.{0,9}$/,
+	nombreCourse: /^[a-zA-ZÀ-ÿ\s0-9]{1,25}$/,
+	descripcionCourse: /^[`a-zA-ZÀ-ÿ0-9\s]{1,80}$/,
+	valorCourse: /^[0-9.,]{1,9}$/,
 }
 
 const campos = {
@@ -107,12 +107,12 @@ document.addEventListener('DOMContentLoaded', function () {
 			swal("¡Atención!", "Todos los campos son obligatorios.", "warning");
 			return false;
 		}
-        /*
-		if (!campos.InputCourse || !campos.InputDescription) {
+        
+		if (!campos.InputCourse || !campos.InputValueCourse || !campos.InputDescription) {
 			swal("¡Atención!", "Verifica los campos en rojo.", "warning");
 			return false;
 		}
-		*/
+		
 		divLoading.style.display = "flex";
 		var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
 		var ajaxUrl = BASE_URL + 'courses/setCourse';
@@ -168,8 +168,23 @@ function openModalCourse() {
 		loadCategoryList();
 	});
 	//
-	//cleanResiduoVali();
+	cleanResiduoVali();
 	$('#ModalFormCourse').modal('show');
+}
+
+function cleanResiduoVali() {
+	var ocuLeyenda = document.querySelectorAll('.labelForm');	
+	ocuLeyenda.forEach.call(ocuLeyenda, c => {
+		c.classList.remove('text-danger');
+	});
+	var ocuLeyenda = document.querySelectorAll('.inputForm');	
+	ocuLeyenda.forEach.call(ocuLeyenda, c => {
+		c.classList.remove('invalid');
+	});
+	var ocuLeyenda = document.querySelectorAll('.leyenda');	
+	ocuLeyenda.forEach.call(ocuLeyenda, c => {
+		c.classList.add('none-block');
+	});
 }
 
 //View course information
@@ -209,9 +224,11 @@ function FctBtnUpdateCourse(id_course) {
 	document.querySelector('#btn-action-form').classList.replace("btn-success", "btn-info");
 	document.querySelector('#text-btn').innerHTML = "Actualizar";
 
-	/*cleanResiduoVali();
+	cleanResiduoVali();
+	
 	campos.InputCourse = true; 
-	campos.InputDescription = true;*/
+	campos.InputDescription = true;
+	campos.InputValueCourse = true;
 
 	var id_course = id_course;
 	var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
