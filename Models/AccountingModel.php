@@ -199,11 +199,12 @@
 
         public function SelectAllInactiveAccounting() {
             $Query_Select_All = "SELECT ac.id_accounting, CONCAT(us.nombres, ' ', us.apellidoP, ' ', us.apellidoM) AS estudiante,
-                                    CONCAT(ac.fecha_IC, ' - ', ac.fecha_FC) AS periodo, COUNT(ac.id_accounting) AS periodos, 
-                                    ac.estudiante AS DNI, ac.estado
-                                    FROM accounting ac INNER JOIN student st ON (ac.estudiante=st.estudiante)
+                                    CONCAT(ac.date_SA, ' - ', ac.date_FA) AS periodo, COUNT(ac.id_accounting) AS periodos, 
+                                    da.estudiante AS DNI, da.status
+                                    FROM detail_accounting da INNER JOIN accounting ac ON (da.accounting=ac.id_accounting) 
+                                    INNER JOIN student st ON (da.estudiante=st.estudiante)
                                     INNER JOIN usuario us ON(st.estudiante=us.DNI)
-                                    WHERE ac.estado = 0 GROUP BY ac.estudiante ORDER BY periodos DESC";
+                                    WHERE da.status = 0 GROUP BY da.estudiante ORDER BY periodos DESC";
             $result = $this->SelectAllMySQL($Query_Select_All);
             return $result;
         }
