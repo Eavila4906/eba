@@ -16,10 +16,11 @@
         public function SelectDataUserAccounting(String $DNI) {
             $this->DNI = $DNI;
             $Query_Select = "SELECT us.DNI, CONCAT(us.nombres, ' ', us.apellidoP, ' ', us.apellidoM) AS nombres, 
-                                    ac.fecha_UP, us.email
-                                    FROM accounting ac INNER JOIN student st ON (ac.estudiante=st.estudiante)
+                                    ac.date_LP, us.email
+                                    FROM detail_accounting da INNER JOIN accounting ac ON (da.accounting=ac.id_accounting)
+                                    INNER JOIN student st ON (da.estudiante=st.estudiante)
                                     INNER JOIN usuario us ON(st.estudiante=us.DNI)
-                                    WHERE ac.estudiante = '$this->DNI' AND ac.estado = 1";
+                                    WHERE da.estudiante = '$this->DNI' AND da.status = 1";
             $result = $this->SelectMySQL($Query_Select);
             return $result;
         }
@@ -187,10 +188,11 @@
         public function SelectAllAccounting() {
             $Query_Select_All = "SELECT ac.id_accounting, us.fechaNaci, 
                                     CONCAT(us.nombres, ' ', us.apellidoP, ' ', us.apellidoM) AS estudiante,
-                                    ac.fecha_IC, ac.fecha_FC, ac.fecha_UP, ac.fecha_PP, ac.cuota, ac.valor, ac.estudiante AS DNI, ac.estado
-                                    FROM accounting ac INNER JOIN student st ON (ac.estudiante=st.estudiante)
+                                    ac.date_SA, ac.date_FA, ac.date_LP, ac.date_NP, da.share, da.full_value, da.estudiante AS DNI, da.status
+                                    FROM detail_accounting da INNER JOIN accounting ac ON (da.accounting=ac.id_accounting)
+                                    INNER JOIN student st ON (da.estudiante=st.estudiante)
                                     INNER JOIN usuario us ON(st.estudiante=us.DNI)
-                                    WHERE (ac.estado = 1 OR ac.estado = 2) AND st.proceso_contable = 1";
+                                    WHERE (da.status = 1 OR da.status = 2) AND st.proceso_contable = 1";
             $result = $this->SelectAllMySQL($Query_Select_All);
             return $result;
         }
