@@ -223,7 +223,7 @@
                     $btnPauseAccounting = "";
                     $btnPlayAccounting = "";
                     $btnSeeDetailAccounting = "";
-                    $periodo = "'".$arrayData[$i]['fecha_IC']." - ".$arrayData[$i]['fecha_FC']."'";
+                    $periodo = "'".$arrayData[$i]['date_SA']." - ".$arrayData[$i]['date_FA']."'";
                     $student = "'".$arrayData[$i]['estudiante']."'";
                     if ($_SESSION['permisosModulo']['w'] && $_SESSION['permisosModulo']['u']){
                         $btnStopAccounting = '<button class="btn btn-danger btn-sm btnStopAccounting" 
@@ -249,16 +249,16 @@
                     }
                     //Formato de fecha
                     FormatDateLeguage();
-                    $arrayData[$i]['Inicio_contable'] = strftime("%B %Y", strtotime($arrayData[$i]['fecha_IC']));
-                    $arrayData[$i]['Final_contable'] = strftime("%B %Y", strtotime($arrayData[$i]['fecha_FC']));
-                    $arrayData[$i]['Ultimo_pago'] = strftime("%d de %B de %Y", strtotime($arrayData[$i]['fecha_UP']));
-                    $arrayData[$i]['Proximo_pago'] = strftime("%d de %B de %Y", strtotime($arrayData[$i]['fecha_PP']));
+                    $arrayData[$i]['Inicio_contable'] = strftime("%B %Y", strtotime($arrayData[$i]['date_SA']));
+                    $arrayData[$i]['Final_contable'] = strftime("%B %Y", strtotime($arrayData[$i]['date_FA']));
+                    $arrayData[$i]['Ultimo_pago'] = strftime("%d de %B de %Y", strtotime($arrayData[$i]['date_LP']));
+                    $arrayData[$i]['Proximo_pago'] = strftime("%d de %B de %Y", strtotime($arrayData[$i]['date_NP']));
                     $arrayData[$i]['Fecha_inicio-final'] = $arrayData[$i]['Inicio_contable']." - ".$arrayData[$i]['Final_contable'];
                     $arrayData[$i]['V_cuota'] = '<spam class="badge badge-success">$ '.$arrayData[$i]['valor'].'</spam>';
                     
                     $arrayData[$i]['fechaNaci'] = strftime("%Y", strtotime(date("Y-m-d"))) - strftime("%Y", strtotime($arrayData[$i]['fechaNaci']));
 
-                    if ($arrayData[$i]['estado'] == '1') {
+                    if ($arrayData[$i]['status'] == '1') {
                         $acciones = '<div class="text-center">'.$btnSeeDetailAccounting.' '.$btnPauseAccounting.''.$btnStopAccounting.'</div>';     
                     } else {
                         $acciones = '<div class="text-center">'.$btnPlayAccounting.''.$btnStopAccounting.'</div>';
