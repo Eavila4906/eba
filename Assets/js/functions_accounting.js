@@ -17,7 +17,7 @@ const expresiones = {
 }
 
 const campos = {
-	InputValor: false
+	InputFullValue: false
 }
 
 const campos2 = {
@@ -26,8 +26,8 @@ const campos2 = {
 
 const validarFormulario = (e) => {
 	switch (e.target.name) {
-		case "InputValor":
-			validarCamposForm(expresiones.cuota, e.target, 'labelValor', 'InputValor', 'leyenda-Valor');
+		case "InputFullValue":
+			validarCamposForm(expresiones.cuota, e.target, 'labelFullValue', 'InputFullValue', 'leyenda-FullValue');
 		break;
 	}
 }
@@ -179,20 +179,20 @@ document.addEventListener('DOMContentLoaded', function () {
 	formStartsAccounting.onsubmit = function (e) {
 		e.preventDefault();
 		var id_student = document.querySelector('#id_student').value;
-		var InputCuota = document.querySelector('#InputCuota').value;
-		var InputValor = document.querySelector('#InputValor').value;
-		var InputFechaFC = document.querySelector('#InputFechaFC').value;
-		var InputDescuentoIC = document.querySelector('#InputDescuentoIC').value;
+		var InputShare = document.querySelector('#InputShare').value;
+		var InputFullValue = document.querySelector('#InputFullValue').value;
+		var InputDateFA = document.querySelector('#InputDateFA').value;
+		var InputDiscountSA = document.querySelector('#InputDiscountSA').value;
 
-		if (id_student == '' || InputCuota == '' || InputValor == '' || InputFechaFC == '') {
+		if (id_student == '' || InputShare == '' || InputFullValue == '' || InputDateFA == '') {
 			swal("¡Atención!", "Todos los campos son obligatorios.", "warning");
 			return false;
 		}
-		if (!campos.InputValor) {
+		if (!campos.InputFullValue) {
 			swal("¡Atención!", "Verifica los campos en rojo.", "warning");
 			return false;
 		}
-		if ($('#InputADIC').prop('checked') && InputDescuentoIC == 0) {
+		if ($('#InputADIC').prop('checked') && InputDiscountSA == 0) {
 			swal("¡Atención!", "La opcion aplicar descuento esta activa, por lo tanto debes de aplicar un porcentaje de descuento.", "warning");
 			return false;
 		}
