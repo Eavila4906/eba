@@ -44,38 +44,39 @@
             die();
         }
 
+        //#
         public function setAccounting() {
             if ($_POST) {
                 $arrayData = "";
                 if ($_POST['id_student'] == "" || $_POST['InputTypePayment-sa'] == "" 
-                    || $_POST['InputCuota'] == "" || $_POST['InputValor'] == "" 
-                    || $_POST['InputFechaIC'] == "" || $_POST['InputFechaFC'] == "") {
+                    || $_POST['InputShare'] == "" || $_POST['InputFullValue'] == "" 
+                    || $_POST['InputDateSA'] == "" || $_POST['InputDateFA'] == "") {
                     $arrayData = array('status' => false, 'msg' => 'No se pudo ejecutar este proceso.');
                 } else {
                     $this->id_student = $_POST['id_student'];
                     $this->InputTypePayment_sa = $_POST['InputTypePayment-sa'];
-                    $this->InputCuota = $_POST['InputCuota'];
-                    $this->InputValor = $_POST['InputValor'];
+                    $this->InputCuota = $_POST['InputShare'];
+                    $this->InputValor = $_POST['InputFullValue'];
 
                     $paymentDay = $this->model->SelectPaymentDay();
                     if ($paymentDay['day'] <= 9) {
                         $paymentDay['day'] = '0'.$paymentDay['day'];
                     }
                     $day = $paymentDay['day'];
-                    $this->fecha_UP = paymentDay($_POST['InputFechaIC']).$day;
+                    $this->Date_LP = paymentDay($_POST['InputDateSA']).$day;
 
-                    $this->InputFechaIC = $_POST['InputFechaIC'];
-                    $this->InputFechaFC = $_POST['InputFechaFC'];
-                    $this->InputDescuentoIC = $_POST['InputDescuentoIC'];
-                    $this->InputDescripcionIC = $_POST['InputDescripcionIC'];
+                    $this->InputDateSA = $_POST['InputDateSA'];
+                    $this->InputDateFA = $_POST['InputDateFA'];
+                    $this->InputDiscountSA = $_POST['InputDiscountSA'];
+                    $this->InputDescripcionIC = $_POST['InputDescriptionSA'];
                     $descuento = 0;
                     $valor_descuento = 0;
                     $valor_total_descuento = 0;
-                    $cm = intval(calculateRangeDate($this->InputFechaIC, $this->InputFechaFC));
+                    $cm = intval(calculateRangeDate($this->InputDateSA, $this->InputDateFA));
 
-                    if (isset($_POST['InputADIC']) && $_POST['InputADIC'] == 1 && $this->InputDescuentoIC != 0) {
-                        $descuento = $this->InputDescuentoIC;
-                        $valor_descuento = ($this->InputDescuentoIC * $this->InputValor) / 100;
+                    if (isset($_POST['InputADIC']) && $_POST['InputADIC'] == 1 && $this->InputDiscountSA != 0) {
+                        $descuento = $this->InputDiscountSA;
+                        $valor_descuento = ($this->InputDiscountSA * $this->InputValor) / 100;
                         $valor_total_descuento = $this->InputValor - $valor_descuento;
                         $valor = $valor_total_descuento / $cm;
                     } else {
@@ -84,8 +85,8 @@
 
                     if ($_SESSION['permisosModulo']['w']) {
                         $period_validation = $this->model->periodValidation($this->id_student,
-                                                                            $this->InputFechaIC,
-                                                                            $this->InputFechaFC);
+                                                                            $this->InputDateSA,
+                                                                            $this->InputDateFA);
                         
                         if ($period_validation) {
                             $arrayData = 0;
@@ -95,9 +96,9 @@
                                                                         $this->InputCuota, 
                                                                         $valor, 
                                                                         $this->InputValor,
-                                                                        $this->InputFechaIC, 
-                                                                        $this->InputFechaFC,
-                                                                        $this->fecha_UP,
+                                                                        $this->InputDateSA, 
+                                                                        $this->InputDateFA,
+                                                                        $this->Date_LP,
                                                                         $descuento,
                                                                         $valor_descuento,
                                                                         $valor_total_descuento,
@@ -107,7 +108,7 @@
                     if ($arrayData > 0) {
                         setlocale(LC_ALL,"es-ES");
                         $arrDataUser = $this->model->SelectDataUserAccounting($this->id_student);
-                        $mes = ucwords(strftime("%B", strtotime($arrDataUser['fecha_UP'])));
+                        $mes = ucwords(strftime("%B", strtotime($arrDataUser['date_LP'])));
                         $dataUser = array(
                             'usuario' => $arrDataUser['nombres'],
                             'DNI' => $arrDataUser['DNI'],
@@ -135,6 +136,7 @@
             die();
         }
 
+        //#
         public function setTotalPurchaseAccounting() {
             if ($_POST) {
                 $arrayData = "";
@@ -215,6 +217,7 @@
             die();
         }
         
+        //*
         public function getAllAccounting() {
             if ($_SESSION['permisosModulo']['r']) {
                 $arrayData = $this->model->SelectAllAccounting();
@@ -277,6 +280,7 @@
             die();
         }
 
+        //*
         public function getAllInactiveAccounting() {
             if ($_SESSION['permisosModulo']['r']) {
                 $arrayData = $this->model->SelectAllInactiveAccounting();
@@ -308,6 +312,7 @@
             die();
         }
 
+        //#
         public function stopAccounting() {
             if ($_POST) {
                 if ($_POST['id_accounting-sa'] == '' || $_POST['id_student-sa'] == '' || $_POST['periodo-sa'] == '' || $_POST['InputJustificacion'] == '') {
@@ -335,6 +340,7 @@
             die();
         }
 
+        //Deprecated function
         public function pauseAccounting() {
             if ($_POST) {
                 if ($_POST['id_student'] == '' || $_POST['periodo'] == '') {
@@ -356,7 +362,7 @@
             }
             die();
         }
-
+        //Deprecated function
         public function playAccounting() {
             if ($_POST) {
                 if ($_POST['id_student'] == '' || $_POST['periodo'] == '') {
@@ -378,7 +384,7 @@
             }
             die();
         }
-
+        //#
         public function getSeeDetailsAccounting($parameters) {
             if ($_GET) {
                 if ($_SESSION['permisosModulo']['r']){
@@ -388,21 +394,21 @@
                     $periodo = $arrayparameters[2];
                     $arrayData = $this->model->SelectDetailsAccounting($id_accounting, $dni, $periodo);
                     FormatDateLeguage();
-                    $arrayData['periodo'] = ucwords(strftime("%B %Y", strtotime($arrayData['fecha_IC'])))." - ".ucwords(strftime("%B %Y", strtotime($arrayData['fecha_FC'])));
-                    $arrayData['fecha_UP'] = strftime("%d de %B de %Y", strtotime($arrayData['fecha_UP']));
-                    $arrayData['fecha_PP'] = strftime("%d de %B de %Y", strtotime($arrayData['fecha_PP']));
-                    $porc = round($arrayData['valor'] * $arrayData['descuento'] / 100);
-                    $valor = round($arrayData['valor'] + $porc);
+                    $arrayData['periodo'] = ucwords(strftime("%B %Y", strtotime($arrayData['date_SA'])))." - ".ucwords(strftime("%B %Y", strtotime($arrayData['date_FA'])));
+                    $arrayData['fecha_UP'] = strftime("%d de %B de %Y", strtotime($arrayData['date_LP']));
+                    $arrayData['fecha_PP'] = strftime("%d de %B de %Y", strtotime($arrayData['date_NP']));
+                    $porc = round($arrayData['full_value'] * $arrayData['descuento'] / 100);
+                    $valor = round($arrayData['full_value'] + $porc);
                     $arrayData['valor_m'] = "$".$valor;
-                    $arrayData['valor_mcd'] = "$".$arrayData['valor'];
-                    $arrayData['valor_total'] = "$".$arrayData['valor_total'];
-                    $arrayData['descuento'] = $arrayData['descuento']."%";
-                    $arrayData['valor_descuento'] = "$".$arrayData['valor_descuento'];
-                    $arrayData['valor_total_descuento'] = "$".$arrayData['valor_total_descuento'];
+                    $arrayData['valor_mcd'] = "$".$arrayData['full_value'];
+                    $arrayData['valor_total'] = "$".$arrayData['full_value'];
+                    $arrayData['descuento'] = $arrayData['discount']."%";
+                    $arrayData['valor_descuento'] = "$".$arrayData['discount_value'];
+                    $arrayData['valor_total_descuento'] = "$".$arrayData['full_discount_value'];
                     if ($arrayData['descripcion'] == "") {
                         $arrayData['descripcion'] = "-";
                     }
-                    if ($arrayData['estado'] == 1) {
+                    if ($arrayData['status'] == 1) {
                         $arrayData['estado'] = '<span class="badge badge-info" style="font-size:.9em;">En proceso de pago</span>';
                     }
                     echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
@@ -418,6 +424,7 @@
             die();
         }
 
+        //*
         public function getSeeIIA($dni) {
             if ($_GET) {
                 if ($_SESSION['permisosModulo']['r']){
@@ -426,20 +433,20 @@
                     for ($i=0; $i < count($arrayData); $i++) {
                         //Formato de fecha
                         FormatDateLeguage(); 
-                        $Inicio_periodo = ucwords(strftime("%B %Y", strtotime($arrayData[$i]['fecha_IC'])));
-                        $Fin_periodo = ucwords(strftime("%B %Y", strtotime($arrayData[$i]['fecha_FC'])));
+                        $Inicio_periodo = ucwords(strftime("%B %Y", strtotime($arrayData[$i]['date_SA'])));
+                        $Fin_periodo = ucwords(strftime("%B %Y", strtotime($arrayData[$i]['date_FC'])));
                         $arrayData[$i]['periodo_format'] = $Inicio_periodo." - ".$Fin_periodo; 
-                        $arrayData[$i]['fecha_UP_format'] = strftime("%d de %B de %Y", strtotime($arrayData[$i]['fecha_UP']));
+                        $arrayData[$i]['fecha_UP_format'] = strftime("%d de %B de %Y", strtotime($arrayData[$i]['date_LP']));
                         if ($arrayData[$i]['fecha_PP'] == "0000-00-00") {
                             $arrayData[$i]['fecha_PP_format'] = "-";
                         } else {
-                            $arrayData[$i]['fecha_PP_format'] = strftime("%d de %B de %Y", strtotime($arrayData[$i]['fecha_PP']));
+                            $arrayData[$i]['fecha_PP_format'] = strftime("%d de %B de %Y", strtotime($arrayData[$i]['date_NP']));
                         }
                         
                         $btnSeeIIA = ""; 
                         $btnDeleteIIA = ""; 
                         if ($_SESSION['permisosModulo']['r']){
-                            $p = "'".$arrayData[$i]['fecha_IC']." - ".$arrayData[$i]['fecha_FC']."'";
+                            $p = "'".$arrayData[$i]['date_SA']." - ".$arrayData[$i]['date_FA']."'";
                             $e = "'".$arrayData[$i]['DNI']."'";
                             $pf = "'".$arrayData[$i]['periodo_format']."'";
                             $btnSeeIIA = '<button class="btn btn-primary btn-sm btnSeePayments" 
@@ -473,6 +480,7 @@
             die();
         }
 
+        //#
         public function getSeeDIIA($parameters) {
             if ($_GET) {
                 if ($_SESSION['permisosModulo']['r']){
@@ -481,27 +489,27 @@
                     $periodo = $arrayparameters[1];
                     $arrayData = $this->model->SelectDIIA($dni, $periodo);
                     FormatDateLeguage();
-                    $arrayData['periodo'] = ucwords(strftime("%B %Y", strtotime($arrayData['fecha_IC'])))." - ".ucwords(strftime("%B %Y", strtotime($arrayData['fecha_FC'])));
-                    $arrayData['fecha_UP'] = strftime("%d de %B de %Y", strtotime($arrayData['fecha_UP']));
+                    $arrayData['periodo'] = ucwords(strftime("%B %Y", strtotime($arrayData['date_SA'])))." - ".ucwords(strftime("%B %Y", strtotime($arrayData['date_FA'])));
+                    $arrayData['fecha_UP'] = strftime("%d de %B de %Y", strtotime($arrayData['date_LP']));
                     if ($arrayData['fecha_PP'] == "0000-00-00") {
                         $arrayData['fecha_PP'] = "-";
                     } else {
-                        $arrayData['fecha_PP'] = strftime("%d de %B de %Y", strtotime($arrayData['fecha_PP']));;
+                        $arrayData['fecha_PP'] = strftime("%d de %B de %Y", strtotime($arrayData['date_NP']));;
                     }
-                    $porc = round($arrayData['valor'] * $arrayData['descuento'] / 100);
-                    $valor = round($arrayData['valor'] + $porc);
+                    $porc = round($arrayData['full_value'] * $arrayData['discount'] / 100);
+                    $valor = round($arrayData['full_value'] + $porc);
                     $arrayData['valor_m_DIIA'] = "$".$valor;
-                    $arrayData['valor_mcd_DIIA'] = "$".$arrayData['valor'];
+                    $arrayData['valor_mcd_DIIA'] = "$".$arrayData['full_value'];
                     //$arrayData['valor'] = "$".$arrayData['valor'];
-                    $arrayData['valor_total'] = "$".$arrayData['valor_total'];
-                    $arrayData['descuento'] = $arrayData['descuento']."%";
-                    $arrayData['valor_descuento'] = "$".$arrayData['valor_descuento'];
-                    $arrayData['valor_total_descuento'] = "$".$arrayData['valor_total_descuento'];
-                    if ($arrayData['descripcion'] == "") {
+                    $arrayData['valor_total'] = "$".$arrayData['full_value'];
+                    $arrayData['descuento'] = $arrayData['discount']."%";
+                    $arrayData['valor_descuento'] = "$".$arrayData['discount_value'];
+                    $arrayData['valor_total_descuento'] = "$".$arrayData['full_discount_value'];
+                    if ($arrayData['description'] == "") {
                         $arrayData['descripcion'] = "-";
                     }
 
-                    if ($arrayData['estado'] == 0 && $arrayData['fecha_PP'] == "-") {
+                    if ($arrayData['status'] == 0 && $arrayData['date_NP'] == "-") {
                         $arrayData['estado_format'] = '<span class="badge badge-info" style="font-size:.9em;">
                             Proceso de pago completo
                         </span>';
@@ -511,7 +519,7 @@
                         </span>';
                     }
 
-                    if ($arrayData['observacion'] == '') {
+                    if ($arrayData['observation'] == '') {
                         $arrayData['obs'] = 0;
                     } else {
                         $arrayData['obs'] = 1;
@@ -529,6 +537,7 @@
             die();
         }
 
+        //#
         public function deleteAccountingInactive() {
             if ($_POST) {
                 if (intval($_POST['id_accounting']) == 0) {
