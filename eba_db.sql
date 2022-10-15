@@ -508,6 +508,7 @@ CREATE TABLE IF NOT EXISTS `detail_accounting` (
   `discount_value` decimal(9,2) DEFAULT 0.00,
   `full_discount_value` double(9,2) DEFAULT 0.00,
   `description` varchar(255) DEFAULT NULL,
+  `observation` varchar(255) DEFAULT NULL,
   `status` int(11) NOT NULL,
   PRIMARY KEY (`id_detail_accounting`),
   FOREIGN KEY (`accounting`) REFERENCES `accounting` (`id_accounting`),
