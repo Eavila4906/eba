@@ -18,7 +18,7 @@
 
                 <div class="form-group">
                   <label for="exampleSelect1">Cuota <span class="required">*</span></label>
-                  <select class="form-control selectpicker" name="InputCuota" id="InputCuota" required="">
+                  <select class="form-control selectpicker" name="InputShare" id="InputShare" required="">
                     <option value="Mensual">Mensual</option>
                   </select>
                 </div>
@@ -26,7 +26,7 @@
                 <div class="row mb-1">
                   <div class="col-md-6">
                     <label for="exampleSelect1">Tipo de pago <span class="required">*</span></label>
-                    <select class="form-control selectpicker" name="InputTypePayment-sa" id="InputTypePayment-sa" required="">
+                    <select class="form-control selectpicker" name="InputFullValue" id="InputFullValue" required="">
                       <option value="Deposito">Deposito</option>
                       <option value="Efectivo">Efectivo</option>
                       <option value="Transferencia">Transferencia</option>
@@ -34,23 +34,19 @@
                     </select>
                   </div>
                   <div class="col-md-6">
-                    <label id="labelValor" class="labelForm">Valor del curso <span class="required">*</span></label>
-                    <input class="form-control inputForm" name="InputValor" id="InputValor" type="text" placeholder="Ingresar valor del curso" required>
-                    <p class="leyenda none-block text-danger" id="leyenda-Valor">
-                      <small> 
-                        Ingresar un valor numerico valido.
-                      </small>
-                    </p>
+                    <label>Curso <span class="required">*</span></label>
+                    <select class="form-control category-register category-update" name="InputCourse" id="InputCourse" required>
+                    </select>
                   </div>
                 </div><br>
 
                 <div class="row mb-1">
                   <div class="col-md-6">
-                    <label for="exampleSelect1">Fecha inicio curso <span class="required">*</span></label>
+                    <label for="exampleSelect1">Fecha inicio Contabilidad <span class="required">*</span></label>
                     <input type="date" class="form-control inputForm" id="InputFechaIC" name="InputFechaIC" required>
                   </div>
                   <div class="col-md-6">
-                    <label for="exampleSelect1">Fecha final curso <span class="required">*</span></label>
+                    <label for="exampleSelect1">Fecha final Contabilidad <span class="required">*</span></label>
                     <input type="date" class="form-control inputForm" id="InputFechaFC" name="InputFechaFC" required>
                   </div>
                 </div><br>
@@ -90,7 +86,7 @@
 
                 <div class="form-group">
                   <label id="labelDescripcion" class="labelForm">Descripción</label>
-                  <textarea class="form-control inputForm" name="InputDescripcionIC" id="InputDescripcionIC" cols="30" rows="2" placeholder="Ingresar Descripción"></textarea>
+                  <textarea class="form-control inputForm" name="description" id="description" cols="30" rows="2" placeholder="Ingresar Descripción"></textarea>
                 </div>
 
                 <div class="tile-footer">
