@@ -19,6 +19,7 @@
             $this->views->getViews($this,"payment_record", $data);
         }
 
+        //*
         public function getAllAccounting() {
             if ($_SESSION['permisosModulo']['r']) {
                 $arrayData = $this->model->SelectAllAccounting();
@@ -28,10 +29,10 @@
                     //$btnPaymentNotAccounting = "";
                     $dni = "'".$arrayData[$i]['DNI']."'";
                     $nombres = "'".$arrayData[$i]['estudiante']."'";
-                    $fecha_UP = "'".$arrayData[$i]['fecha_PP']."'";
+                    $date_NP = "'".$arrayData[$i]['date_NP']."'";
                     if ($_SESSION['permisosModulo']['w']){
                         $btnPaymentRecord = '<button class="btn btn-success btn-sm btnPaymentRecord" 
-                        onclick="FctBtnPaymentRecord(1,'.$dni.','.$nombres.','.$arrayData[$i]['id_accounting'].','.$fecha_UP.')" 
+                        onclick="FctBtnPaymentRecord(1,'.$dni.','.$nombres.','.$arrayData[$i]['id_accounting'].','.$date_NP.')" 
                         title="Registrar pago mensual">
                             <i class="far fa-calendar-check fa-lg"> Registrar pago</i>
                         </button>';
@@ -40,10 +41,10 @@
                     }
                     //Formato de fecha
                     FormatDateLeguage();
-                    $arrayData[$i]['Ultimo_pago'] = strftime("%d de %B de %Y", strtotime($arrayData[$i]['fecha_UP']));
-                    $arrayData[$i]['Proximo_pago'] = strftime("%d de %B de %Y", strtotime($arrayData[$i]['fecha_PP']));
+                    $arrayData[$i]['Ultimo_pago'] = strftime("%d de %B de %Y", strtotime($arrayData[$i]['date_LP']));
+                    $arrayData[$i]['Proximo_pago'] = strftime("%d de %B de %Y", strtotime($arrayData[$i]['date_NP']));
 
-                    $arrayData[$i]['V_cuota'] = '<spam class="badge badge-success">$ '.$arrayData[$i]['valor'].'</spam>';
+                    $arrayData[$i]['V_cuota'] = '<spam class="badge badge-success">$ '.$arrayData[$i]['full_value'].'</spam>';
                     $acciones = '<div class="text-center">'.$btnPaymentRecord.'</div>';
                     $arrayData[$i]['Acciones'] = $acciones;  
                 }
@@ -59,6 +60,7 @@
             die();
         }
 
+        //#
         public function setPaymentRecord() {
             if ($_POST) {
                 if (intval($_POST['accion']) == 0 || $_POST['DNI'] == "" || intval($_POST['id_accounting']) == 0 || $_POST['fecha_UP'] == "") {
@@ -120,7 +122,7 @@
                         if ($request == 1) {
                             FormatDateLeguage();
                             $arrDataUser = $this->model->SelectDataUserAccounting($this->DNI, $this->id_accounting);
-                            $mes = ucwords(strftime("%B", strtotime($arrDataUser['fecha_UP'])));
+                            $mes = ucwords(strftime("%B", strtotime($arrDataUser['date_LP'])));
                             $dataUser = array(
                                 'usuario' => $arrDataUser['nombres'],
                                 'DNI' => $arrDataUser['DNI'],
@@ -138,7 +140,7 @@
                         } else if ($request == 2) {
                             FormatDateLeguage();
                             $arrDataUser = $this->model->SelectDataUserAccounting($this->DNI, $this->id_accounting);
-                            $mes = ucwords(strftime("%B", strtotime($arrDataUser['fecha_UP'])));
+                            $mes = ucwords(strftime("%B", strtotime($arrDataUser['date_LP'])));
                             $dataUser = array(
                                 'usuario' => $arrDataUser['nombres'],
                                 'DNI' => $arrDataUser['DNI'],
@@ -173,7 +175,7 @@
                     } else if ($arrayData == "rango completo") {
                         FormatDateLeguage();
                         $arrDataUser = $this->model->SelectDataUserAccounting($this->DNI, $this->id_accounting);
-                        $mes = ucwords(strftime("%B", strtotime($arrDataUser['fecha_UP'])));
+                        $mes = ucwords(strftime("%B", strtotime($arrDataUser['date_LP'])));
                         $dataUser = array(
                             'usuario' => $arrDataUser['nombres'],
                             'DNI' => $arrDataUser['DNI'],
@@ -191,7 +193,7 @@
                     } else if ($arrayData == "rango completo - no contable") {
                         FormatDateLeguage();
                         $arrDataUser = $this->model->SelectDataUserAccounting($this->DNI, $this->id_accounting);
-                        $mes = ucwords(strftime("%B", strtotime($arrDataUser['fecha_UP'])));
+                        $mes = ucwords(strftime("%B", strtotime($arrDataUser['date_LP'])));
                         $dataUser = array(
                             'usuario' => $arrDataUser['nombres'],
                             'DNI' => $arrDataUser['DNI'],
@@ -215,6 +217,7 @@
             die();
         }
 
+        //*
         public function getPaymentDay() {
             if ($_GET) {
                 if ($_SESSION['permisosModulo']['r']) {
@@ -232,10 +235,11 @@
             }
         }
 
+        //*
         public function setPaymentDay() {
             if ($_POST) {
                 if (intval($_POST['InputPaymentDay']) == 0) {
-                    $arrayData = array('status' => false, 'msg' => 'No se pudo ejecutar este proceso 1.');
+                    $arrayData = array('status' => false, 'msg' => 'No se pudo ejecutar este proceso.');
                 } else {
                     if (intval($_POST['InputPaymentDay']) <= 0 || intval($_POST['InputPaymentDay']) > 28) {
                         $arrayData = array('status' => false, 'msg' => 'El valor ingresado esta fuera del rango de los requisitos.');
@@ -247,7 +251,7 @@
                         if ($arrayData > 0) {
                             $arrayData = array('status' => true, 'msg' => 'Se actualizo el nuevo día de pago.');
                         } else {
-                            $arrayData = array('status' => false, 'msg' => 'No se pudo ejecutar este proceso 2.');
+                            $arrayData = array('status' => false, 'msg' => 'No se pudo ejecutar este proceso.');
                         }
                     }
                 }
