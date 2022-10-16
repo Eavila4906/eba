@@ -5,7 +5,7 @@
     const DB_HOST = "localhost";
     const DB_USER = "root";
     const DB_PASSWORD = "";
-    const DB_NAME = "eba_db";
+    const DB_NAME = "eba_db_p";
     const DB_CHARSET = "utf8";
     
     //data of seend email
@@ -80,12 +80,15 @@
             parent::__construct();
         }
 
+        //*
         public function SelectAllAccountingUsers(String $current_date) {
             $this->current_date = $current_date;
             $Query_Select_All = "SELECT CONCAT(us.nombres, ' ', us.apellidoP, ' ', us.apellidoM) AS nombres,
-                                 ac.estudiante AS DNI, ac.fecha_pp, DATEDIFF(ac.fecha_PP, '$this->current_date') AS plazo,
+                                 da.estudiante AS DNI, ac.date_NP, DATEDIFF(ac.date_NP, '$this->current_date') AS plazo,
                                  us.email 
-                                 FROM accounting ac INNER JOIN usuario us ON(ac.estudiante=us.DNI) WHERE ac.estado=1";
+                                 FROM detail_accounting da INNER JOIN accounting ac ON (da.accounting=ac.id_accounting)
+                                 INNER JOIN usuario us ON(da.estudiante=us.DNI) 
+                                 WHERE da.status = 1";
             $result = $this->SelectAllMySQL($Query_Select_All);
             return $result;
         }
@@ -163,11 +166,11 @@
                     #Insert Notifications payment reminder
                     $user = $arrayData[$i]['DNI'];
                     $type = "Recordatorio de pago";
-                    $description = "Hola ".$arrayData[$i]['nombres'].", con número de cedula ".$arrayData[$i]['DNI'].". te recordamos que te quedan ".$arrayData[$i]['plazo']." días para realizar el pago de tu mensualidad correspondiente al mes de ".ucwords(strftime("%B", strtotime($arrayData[$i]['fecha_pp']))).".";
-                    $date = $arrayData[$i]['fecha_pp'];
+                    $description = "Hola ".$arrayData[$i]['nombres'].", con número de cedula ".$arrayData[$i]['DNI'].". te recordamos que te quedan ".$arrayData[$i]['plazo']." días para realizar el pago de tu mensualidad correspondiente al mes de ".ucwords(strftime("%B", strtotime($arrayData[$i]['date_NP']))).".";
+                    $date = $arrayData[$i]['date_NP'];
                     $this->InsertNotifications($user, $type, $description, $date);
                     #Seend email payment reminder
-                    $mes = ucwords(strftime("%B", strtotime($arrayData[$i]['fecha_pp'])));
+                    $mes = ucwords(strftime("%B", strtotime($arrayData[$i]['date_NP'])));
                     $dataUser = array(
                         'usuario' => $arrayData[$i]['nombres'],
                         'DNI' => $arrayData[$i]['DNI'],
@@ -183,11 +186,11 @@
                     #Insert Notifications late payment
                     $user = $arrayData[$i]['DNI'];
                     $type = "Pago atrasado";
-                    $description = "Hola ".$arrayData[$i]['nombres'].", con número de cedula ".$arrayData[$i]['DNI'].". te informamos que el plazo para realizar el pago de tu mensualidad correspondiente al mes de ".ucwords(strftime("%B", strtotime($arrayData[$i]['fecha_pp'])))." a caducado.  Por favor, debera de hacer el pago en un plazo menos de 3 días.";
-                    $date = $arrayData[$i]['fecha_pp'];
+                    $description = "Hola ".$arrayData[$i]['nombres'].", con número de cedula ".$arrayData[$i]['DNI'].". te informamos que el plazo para realizar el pago de tu mensualidad correspondiente al mes de ".ucwords(strftime("%B", strtotime($arrayData[$i]['date_NP'])))." a caducado.  Por favor, debera de hacer el pago en un plazo menos de 3 días.";
+                    $date = $arrayData[$i]['date_NP'];
                     $this->InsertNotifications($user, $type, $description, $date);
                     #Seend email late payment
-                    $mes = ucwords(strftime("%B", strtotime($arrayData[$i]['fecha_pp'])));
+                    $mes = ucwords(strftime("%B", strtotime($arrayData[$i]['date_NP'])));
                     $dataUser = array(
                         'usuario' => $arrayData[$i]['nombres'],
                         'DNI' => $arrayData[$i]['DNI'],
