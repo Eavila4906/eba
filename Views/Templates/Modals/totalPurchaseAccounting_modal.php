@@ -18,7 +18,7 @@
                 <div class="row mb-1">
                   <div class="col-md-6">
                     <label for="exampleSelect1">Tipo de pago <span class="required">*</span></label>
-                    <select class="form-control selectpicker" name="InputTypePayment" id="InputTypePayment" required="">
+                    <select class="form-control selectpicker" name="InputValorTP" id="InputValorTP" required="">
                       <option value="Deposito">Deposito</option>
                       <option value="Efectivo">Efectivo</option>
                       <option value="Transferencia">Transferencia</option>
@@ -26,23 +26,19 @@
                     </select>
                   </div>
                   <div class="col-md-6">
-                    <label id="labelValor-TP" class="labelForm">Valor del curso <span class="required">*</span></label>
-                    <input class="form-control inputForm" name="InputValorTP" id="InputValorTP" type="text" placeholder="Ingresar valor del curso" required>
-                    <p class="leyenda none-block text-danger" id="leyenda-Valor-TP">
-                      <small> 
-                        Ingresar un valor numerico valido.
-                      </small>
-                    </p>
+                    <label>Curso <span class="required">*</span></label>
+                    <select class="form-control category-register category-update" name="InputCategory" id="InputCategory" required>
+                    </select>
                   </div>
                 </div><br>
 
                 <div class="row mb-1">
                   <div class="col-md-6">
-                    <label id="labelNewPass" class="">Fecha Inicio curso <span class="required">*</span></label>
+                    <label id="labelNewPass" class="">Fecha Inicio Contabilidad <span class="required">*</span></label>
                     <input class="form-control" type="date" name="InputFechaInicio" id="InputFechaInicio" required>
                     </div>
                   <div class="col-md-6">
-                    <label id="labelConfirmPass" class="">Fecha final curso <span class="required">*</span></label>
+                    <label id="labelConfirmPass" class="">Fecha final Contabilidad <span class="required">*</span></label>
                     <input class="form-control" type="date" name="InputFechaFinal" id="InputFechaFinal" required>
                   </div>
                 </div><br>
