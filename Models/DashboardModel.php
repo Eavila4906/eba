@@ -47,8 +47,9 @@
         }
 
         public function selectCountAccounting() {
-            $Query_Select = "SELECT COUNT(id_accounting) AS countAccounting
-                            FROM accounting WHERE estado != 0
+            $Query_Select = "SELECT COUNT(ac.id_accounting) AS countAccounting
+                             FROM detail_accounting da INNER JOIN accounting ac ON (da.accounting=ac.id_accounting)
+                             WHERE da.status != 0
                             ";
             
             $result = $this->SelectMySQL($Query_Select);
