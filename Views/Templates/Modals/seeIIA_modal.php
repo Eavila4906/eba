@@ -22,6 +22,7 @@
                     <thead>
                       <tr>
                         <th>Periodo</th>
+                        <th>Curso / categoría</th>
                         <th>Ultimo pago</th>
                         <th>Proximo pago</th>
                         <th>Acciones</th>

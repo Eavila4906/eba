@@ -188,10 +188,10 @@ document.addEventListener('DOMContentLoaded', function () {
 			swal("¡Atención!", "Todos los campos son obligatorios.", "warning");
 			return false;
 		}
-		if (!campos.InputFullValue) {
+		/*if (!campos.InputFullValue) {
 			swal("¡Atención!", "Verifica los campos en rojo.", "warning");
 			return false;
-		}
+		}*/
 		if ($('#InputADIC').prop('checked') && InputDiscountSA == 0) {
 			swal("¡Atención!", "La opcion aplicar descuento esta activa, por lo tanto debes de aplicar un porcentaje de descuento.", "warning");
 			return false;
@@ -226,16 +226,12 @@ document.addEventListener('DOMContentLoaded', function () {
 	formTotalPurchaseAccounting.onsubmit = function (e) {
 		e.preventDefault();
 		var id_studentTP = document.querySelector('#id_student-TP').value;
-		var InputValorTP = document.querySelector('#InputValorTP').value;
+		var InputValorTP = document.querySelector('#InputTypePayment-tp').value;
 		var InputFechaInicio = document.querySelector('#InputFechaInicio').value;
 		var InputFechaFinal = document.querySelector('#InputFechaFinal').value;
 
 		if (id_studentTP == '' || InputValorTP == '' || InputFechaInicio == '' || InputFechaFinal == '') {
 			swal("¡Atención!", "Todos los campos son obligatorios.", "warning");
-			return false;
-		}
-		if (!campos2.InputValorTP) {
-			swal("¡Atención!", "Verifica los campos en rojo.", "warning");
 			return false;
 		}
 		if ($('#InputAD').prop('checked') && InputDescuentoIC == 0) {
@@ -356,9 +352,30 @@ function FctBtnStartsAccounting(id_student) {
 	$('#campoDescuentoIC').hide();
 	document.querySelector('#InputADIC').value = 0;
 	cleanResiduoVali();
-	setTimeout(initialDate('#InputFechaIC'), 10);
-	setTimeout(finishDate('#InputFechaFC'), 10);
+	//setTimeout(initialDate('#InputFechaIC'), 10);
+	//setTimeout(finishDate('#InputFechaFC'), 10);
 	$('#ModalFormStartsAccounting').modal('show');
+
+	//Request courses selects
+	$(document).ready(function () {
+		var coursesList = document.querySelector('.courses-register');
+		function loadCourseList() {
+			$.ajax({
+				type: 'GET',
+				url: 'accounting/getCoursesList',
+				success: function (data) {
+					var objData = JSON.parse(data);
+					var selectedDisable = '<option class="form-control none-block" selected disabled> Seleccionar curso</option>';
+					objData.forEach(objData => {
+						selectedDisable += `
+							<option value="${objData.id_course}">${objData.name} - ${objData.category}</option>`;
+					});
+					coursesList.innerHTML = selectedDisable;
+				}
+			});
+		}
+		loadCourseList();
+	});
 } 
 
 function FctBtnTotalPurchaseAccounting(id_student) {
@@ -368,10 +385,59 @@ function FctBtnTotalPurchaseAccounting(id_student) {
 	$('#campoDescuento').hide();
 	document.querySelector('#InputAD').value = 0;
 	cleanResiduoVali();
-	setTimeout(initialDate('#InputFechaInicio'), 10);
-	setTimeout(finishDate('#InputFechaFinal'), 10);
 	$('#ModalFormTotalPurchaseAccounting').modal('show');
+
+	//Request courses selects
+	$(document).ready(function () {
+		var coursesList = document.querySelector('.courses-register-tp');
+		function loadCourseList() {
+			$.ajax({
+				type: 'GET',
+				url: 'accounting/getCoursesList',
+				success: function (data) {
+					var objData = JSON.parse(data);
+					var selectedDisable = '<option class="form-control none-block" selected disabled> Seleccionar curso</option>';
+					objData.forEach(objData => {
+						selectedDisable += `
+							<option value="${objData.id_course}">${objData.name} - ${objData.category}</option>`;
+					});
+					coursesList.innerHTML = selectedDisable;
+				}
+			});
+		}
+		loadCourseList();
+	});
 } 
+
+//LLenar los demas campos de acuerdo al curso seleccionado StartsAccounting
+$(document).on('change', ".courses-register", function () {
+    var select_id = $('.courses-register').val();
+	$.ajax({
+		type: 'GET',
+		url: 'accounting/getDataCourse/'+select_id,
+		success: function (data) {
+			var objData = JSON.parse(data);
+			setTimeout(initialDate('#InputDateSA'), 10);
+			document.querySelector('#InputDateFA').value = objData.data.date_final;
+			document.querySelector('#InputFullValue').value = objData.data.value;
+		}
+	});
+});
+
+//LLenar los demas campos de acuerdo al curso seleccionado TotalPurchaseAccounting
+$(document).on('change', ".courses-register-tp", function () {
+    var select_id = $('.courses-register-tp').val();
+	$.ajax({
+		type: 'GET',
+		url: 'accounting/getDataCourse/'+select_id,
+		success: function (data) {
+			var objData = JSON.parse(data);
+			setTimeout(initialDate('#InputFechaInicio'), 10);
+			document.querySelector('#InputFechaFinal').value = objData.data.date_final;
+			document.querySelector('#InputCourseValue').value = objData.data.value;
+		}
+	});
+});
 
 $(document).ready(function () {
 	$('#InputAD').click(function () {
@@ -544,6 +610,7 @@ function FctBtnSeeIIA(dni, name) {
         },
         "columns": [/* Campos de la base de datos*/
             { "data": "periodo_format" },
+			{ "data": "course_category" },
             { "data": "fecha_UP_format" },
 			{"data": "fecha_PP_format" },
             { "data": "Acciones" },

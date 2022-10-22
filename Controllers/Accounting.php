@@ -44,19 +44,53 @@
             die();
         }
 
-        //#
+        public function getCoursesList() {
+            if ($_GET) {
+                $arrayData = $this->model->SelectAllCourses();
+                echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
+            }
+            die();
+        }
+
+        public function getDataCourse($id_course) {
+            if ($_GET) {
+                if ($_SESSION['permisosModulo']['r']) {
+                    $this->id_course = intval($id_course);
+                    if ($this->id_course > 0) {
+                        $arrayData = $this->model->SelectDataCourse($this->id_course);
+                        if (!empty($arrayData)) {
+                            $arrayData = array('status' => true, 'data' => $arrayData);
+                        } else {
+                            $arrayData = array('status' => false, 'msg' => 'Datos no encontrados!');
+                        }
+                        echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
+                    }
+                } else {
+                    echo '<div class="alert alert-danger" role="alert" 
+                            style="position: relative;padding: 0.75rem 1.25rem;margin-bottom: 1rem;border: 
+                            1px solid transparent;border-radius: 0.25rem;color: #721c24;background-color: #f8d7da;
+                            border-color: #f5c6cb;border-top-color: #f1b0b7;">
+                            <b>¡Restricted access!</b> you do not have permission to manipulate this module.
+                          </div>';
+                } 
+            }
+            die(); 
+        }
+
+        //*
         public function setAccounting() {
             if ($_POST) {
                 $arrayData = "";
                 if ($_POST['id_student'] == "" || $_POST['InputTypePayment-sa'] == "" 
-                    || $_POST['InputShare'] == "" || $_POST['InputFullValue'] == "" 
+                    || $_POST['InputShare'] == "" || $_POST['InputFullValue'] == "" || $_POST['InputCourse'] == "" 
                     || $_POST['InputDateSA'] == "" || $_POST['InputDateFA'] == "") {
-                    $arrayData = array('status' => false, 'msg' => 'No se pudo ejecutar este proceso.');
+                    $arrayData = array('status' => false, 'msg' => 'No se pudo ejecutar este proceso 1.');
                 } else {
                     $this->id_student = $_POST['id_student'];
                     $this->InputTypePayment_sa = $_POST['InputTypePayment-sa'];
                     $this->InputCuota = $_POST['InputShare'];
                     $this->InputValor = $_POST['InputFullValue'];
+                    $this->InputCourse = $_POST['InputCourse'];
 
                     $paymentDay = $this->model->SelectPaymentDay();
                     if ($paymentDay['day'] <= 9) {
@@ -78,9 +112,9 @@
                         $descuento = $this->InputDiscountSA;
                         $valor_descuento = ($this->InputDiscountSA * $this->InputValor) / 100;
                         $valor_total_descuento = $this->InputValor - $valor_descuento;
-                        $valor = $valor_total_descuento / $cm;
+                        $share_value = $valor_total_descuento / $cm;
                     } else {
-                        $valor = $this->InputValor / $cm;
+                        $share_value = $this->InputValor / $cm;
                     }
 
                     if ($_SESSION['permisosModulo']['w']) {
@@ -92,10 +126,11 @@
                             $arrayData = 0;
                         } else {
                             $arrayData = $this->model->InsertAccounting($this->id_student,
+                                                                        $this->InputCourse, 
                                                                         $this->InputTypePayment_sa, 
                                                                         $this->InputCuota, 
-                                                                        $valor, 
                                                                         $this->InputValor,
+                                                                        $share_value,
                                                                         $this->InputDateSA, 
                                                                         $this->InputDateFA,
                                                                         $this->Date_LP,
@@ -136,17 +171,18 @@
             die();
         }
 
-        //#
+        //*
         public function setTotalPurchaseAccounting() {
             if ($_POST) {
                 $arrayData = "";
-                if ($_POST['id_student-TP'] == "" || $_POST['InputValorTP'] == "" 
+                if ($_POST['id_student-TP'] == "" || $_POST['InputTypePayment-tp'] == "" 
                     || $_POST['InputFechaInicio'] == "" || $_POST['InputFechaFinal'] == "") {
                     $arrayData = array('status' => false, 'msg' => 'No se pudo ejecutar este proceso.');
                 } else {
                     $this->id_studentTP = $_POST['id_student-TP'];
-                    $this->InputTypePayment = $_POST['InputTypePayment'];
-                    $this->InputValorTP = $_POST['InputValorTP'];
+                    $this->InputTypePayment = $_POST['InputTypePayment-tp'];
+                    $this->InputCourse = $_POST['InputCourse-tp'];
+                    $this->InputCourseValue = $_POST['InputCourseValue'];
                     $this->InputFechaInicio = $_POST['InputFechaInicio'];
                     $this->InputFechaFinal = $_POST['InputFechaFinal'];
                     $this->InputDescripcion = $_POST['InputDescripcion'];
@@ -157,11 +193,11 @@
                     
                     if (isset($_POST['InputAD']) && $_POST['InputAD'] == 1 && $this->InputDescuento != 0) {
                         $descuento = $this->InputDescuento;
-                        $valor_descuento = round(($this->InputDescuento * $this->InputValorTP) / 100);
-                        $valor_total_descuento = round($this->InputValorTP - $valor_descuento);
+                        $valor_descuento = round(($this->InputDescuento * $this->InputCourseValue) / 100);
+                        $valor_total_descuento = round($this->InputCourseValue - $valor_descuento);
                         $valor = round($valor_total_descuento);
                     } else {
-                        $valor = round($this->InputValorTP);
+                        $valor = round($this->InputCourseValue);
                     }
 
                     if ($_SESSION['permisosModulo']['w']) {
@@ -172,10 +208,11 @@
                         if ($period_validation) {
                             $arrayData = 0;
                         } else {
-                            $arrayData = $this->model->InsertTotalPurchaseAccounting($this->id_studentTP, 
+                            $arrayData = $this->model->InsertTotalPurchaseAccounting($this->id_studentTP,  
+                                                                                    $this->InputCourse,
                                                                                     $this->InputTypePayment,
-                                                                                    $valor, 
-                                                                                    $this->InputValorTP,
+                                                                                    $this->InputCourseValue,
+                                                                                    $valor,
                                                                                     $this->InputFechaInicio, 
                                                                                     $this->InputFechaFinal,
                                                                                     $descuento,
@@ -257,7 +294,7 @@
                     $arrayData[$i]['Ultimo_pago'] = strftime("%d de %B de %Y", strtotime($arrayData[$i]['date_LP']));
                     $arrayData[$i]['Proximo_pago'] = strftime("%d de %B de %Y", strtotime($arrayData[$i]['date_NP']));
                     $arrayData[$i]['Fecha_inicio-final'] = $arrayData[$i]['Inicio_contable']." - ".$arrayData[$i]['Final_contable'];
-                    $arrayData[$i]['V_cuota'] = '<spam class="badge badge-success">$ '.$arrayData[$i]['valor'].'</spam>';
+                    $arrayData[$i]['V_cuota'] = '<spam class="badge badge-success">$ '.$arrayData[$i]['full_value'].'</spam>';
                     
                     $arrayData[$i]['fechaNaci'] = strftime("%Y", strtotime(date("Y-m-d"))) - strftime("%Y", strtotime($arrayData[$i]['fechaNaci']));
 
@@ -312,7 +349,7 @@
             die();
         }
 
-        //#
+        //*
         public function stopAccounting() {
             if ($_POST) {
                 if ($_POST['id_accounting-sa'] == '' || $_POST['id_student-sa'] == '' || $_POST['periodo-sa'] == '' || $_POST['InputJustificacion'] == '') {
@@ -384,7 +421,7 @@
             }
             die();
         }
-        //#
+        //*
         public function getSeeDetailsAccounting($parameters) {
             if ($_GET) {
                 if ($_SESSION['permisosModulo']['r']){
@@ -397,15 +434,16 @@
                     $arrayData['periodo'] = ucwords(strftime("%B %Y", strtotime($arrayData['date_SA'])))." - ".ucwords(strftime("%B %Y", strtotime($arrayData['date_FA'])));
                     $arrayData['fecha_UP'] = strftime("%d de %B de %Y", strtotime($arrayData['date_LP']));
                     $arrayData['fecha_PP'] = strftime("%d de %B de %Y", strtotime($arrayData['date_NP']));
-                    $porc = round($arrayData['full_value'] * $arrayData['descuento'] / 100);
+                    $porc = round($arrayData['full_value'] * $arrayData['discount'] / 100);
                     $valor = round($arrayData['full_value'] + $porc);
                     $arrayData['valor_m'] = "$".$valor;
-                    $arrayData['valor_mcd'] = "$".$arrayData['full_value'];
+                    $arrayData['valor_mcd'] = "$".$arrayData['share_value'];
                     $arrayData['valor_total'] = "$".$arrayData['full_value'];
                     $arrayData['descuento'] = $arrayData['discount']."%";
                     $arrayData['valor_descuento'] = "$".$arrayData['discount_value'];
                     $arrayData['valor_total_descuento'] = "$".$arrayData['full_discount_value'];
-                    if ($arrayData['descripcion'] == "") {
+                    $arrayData['cuota'] = $arrayData['share'];
+                    if ($arrayData['description'] == "") {
                         $arrayData['descripcion'] = "-";
                     }
                     if ($arrayData['status'] == 1) {
@@ -434,10 +472,10 @@
                         //Formato de fecha
                         FormatDateLeguage(); 
                         $Inicio_periodo = ucwords(strftime("%B %Y", strtotime($arrayData[$i]['date_SA'])));
-                        $Fin_periodo = ucwords(strftime("%B %Y", strtotime($arrayData[$i]['date_FC'])));
+                        $Fin_periodo = ucwords(strftime("%B %Y", strtotime($arrayData[$i]['date_FA'])));
                         $arrayData[$i]['periodo_format'] = $Inicio_periodo." - ".$Fin_periodo; 
                         $arrayData[$i]['fecha_UP_format'] = strftime("%d de %B de %Y", strtotime($arrayData[$i]['date_LP']));
-                        if ($arrayData[$i]['fecha_PP'] == "0000-00-00") {
+                        if ($arrayData[$i]['date_NP'] == "0000-00-00") {
                             $arrayData[$i]['fecha_PP_format'] = "-";
                         } else {
                             $arrayData[$i]['fecha_PP_format'] = strftime("%d de %B de %Y", strtotime($arrayData[$i]['date_NP']));
@@ -464,6 +502,7 @@
                             </button>';
                         }
                         $acciones = '<div class="text-center">'.$btnSeeIIA." ".$btnDeleteIIA.'</div>';
+                        $arrayData[$i]['course_category'] = $arrayData[$i]['name']." / ".$arrayData[$i]['category'];
 
                         $arrayData[$i]['Acciones'] = $acciones;  
                     }
@@ -480,7 +519,7 @@
             die();
         }
 
-        //#
+        //*
         public function getSeeDIIA($parameters) {
             if ($_GET) {
                 if ($_SESSION['permisosModulo']['r']){
@@ -491,7 +530,7 @@
                     FormatDateLeguage();
                     $arrayData['periodo'] = ucwords(strftime("%B %Y", strtotime($arrayData['date_SA'])))." - ".ucwords(strftime("%B %Y", strtotime($arrayData['date_FA'])));
                     $arrayData['fecha_UP'] = strftime("%d de %B de %Y", strtotime($arrayData['date_LP']));
-                    if ($arrayData['fecha_PP'] == "0000-00-00") {
+                    if ($arrayData['date_NP'] == "0000-00-00") {
                         $arrayData['fecha_PP'] = "-";
                     } else {
                         $arrayData['fecha_PP'] = strftime("%d de %B de %Y", strtotime($arrayData['date_NP']));;
@@ -505,12 +544,14 @@
                     $arrayData['descuento'] = $arrayData['discount']."%";
                     $arrayData['valor_descuento'] = "$".$arrayData['discount_value'];
                     $arrayData['valor_total_descuento'] = "$".$arrayData['full_discount_value'];
+                    $arrayData['cuota'] = $arrayData['share'];
+                    $arrayData['observacion'] = $arrayData['observation'];
                     if ($arrayData['description'] == "") {
                         $arrayData['descripcion'] = "-";
                     }
 
-                    if ($arrayData['status'] == 0 && $arrayData['date_NP'] == "-") {
-                        $arrayData['estado_format'] = '<span class="badge badge-info" style="font-size:.9em;">
+                    if ($arrayData['status'] == 0 && $arrayData['fecha_PP'] == "-") {
+                        $arrayData['estado_format'] = '<span class="badge badge-success" style="font-size:.9em;">
                             Proceso de pago completo
                         </span>';
                     } else {
@@ -537,7 +578,7 @@
             die();
         }
 
-        //#
+        //*
         public function deleteAccountingInactive() {
             if ($_POST) {
                 if (intval($_POST['id_accounting']) == 0) {

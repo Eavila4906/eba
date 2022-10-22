@@ -48,7 +48,7 @@
                                  FROM detail_payment dp INNER JOIN payment pt ON(dp.payment=pt.id_payment)
                                  WHERE dp.estudiante = '$this->id_student' AND pt.periodo = '$period'";
             $result = $this->SelectAllMySQL($Query_Select_All);
-            if ($result) {
+            if (!empty($result)) {
                 $result = true;
             } else {
                 $result = false;
@@ -63,14 +63,14 @@
             return $result;
         }
 
-        //#
-        public function InsertAccounting(String $id_student, int $course, String $InputTypePayment_sa, String $InputShare, $InputFullValue, $valor_ordinario, String $InputDateSA, String $InputDateFA, String $Date_LP, $discount, $discount_value, $full_discount_value, $description) {
+        //*
+        public function InsertAccounting(String $id_student, int $course, String $InputTypePayment_sa, String $InputShare, $InputFullValue, $share_value, String $InputDateSA, String $InputDateFA, String $Date_LP, $discount, $discount_value, $full_discount_value, $description) {
             $this->id_student = $id_student;
             $this->course = $course;
             $this->InputTypePayment_sa = $InputTypePayment_sa;
             $this->InputShare = $InputShare;
             $this->InputFullValue = $InputFullValue;
-            $this->valor_ordinario = $valor_ordinario;
+            $this->share_value = $share_value;
             $this->InputDateSA = $InputDateSA;
             $this->InputDateFA = $InputDateFA;
             $this->Date_LP =$Date_LP;
@@ -95,10 +95,10 @@
             $result_insert_accounting = $this->InsertMySQL($Query_Insert_accounting, $Array_Query_accounting);
 
             //Insert detail accounting table
-            $Query_Insert_da = "INSERT INTO detail_accounting (accounting, estudiante, course, share, full_value, discount, discount_value, full_discount_value, description, status) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $Query_Insert_da = "INSERT INTO detail_accounting (accounting, estudiante, course, share, full_value, share_value, discount, discount_value, full_discount_value, description, status) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             $Array_Query_da = array($result_insert_accounting, $this->id_student, $this->course, $this->InputShare,
-                                    $this->InputFullValue, $this->discount, $this->discount_value, 
+                                    $this->InputFullValue, $this->share_value, $this->discount, $this->discount_value, 
                                     $this->full_discount_value, $this->description, 1);
             $result_insert_da = $this->InsertMySQL($Query_Insert_da, $Array_Query_da);
 
@@ -117,7 +117,7 @@
             //Insert payment table
             $Query_Insert_payment = "INSERT INTO payment (tipo_pago, fecha_pago, valor, periodo, estado) 
                                      VALUES (?, ?, ?, CONCAT('$this->InputDateSA',' - ', '$this->InputDateFA'), ?)";
-            $Array_Query_payment = array($this->InputTypePayment_sa, $this->Date_LP, $this->InputFullValue, 1);
+            $Array_Query_payment = array($this->InputTypePayment_sa, $this->Date_LP, $this->share_value, 1);
             $result_insert_payment = $this->InsertMySQL($Query_Insert_payment, $Array_Query_payment);
 
             //Insert detail payment table
@@ -142,7 +142,7 @@
             $Array_Query = array(1);
             $result_update = $this->UpdateMySQL($Query_Update, $Array_Query);
 
-            if ($Query_Insert_accounting > 0 && $Query_Insert_da > 0 && $result_insert_payment > 0 && $result_insert_d_payment > 0 
+            if ($result_insert_accounting > 0 && $result_insert_da > 0 && $result_insert_payment > 0 && $result_insert_d_payment > 0 
             && $result_insert_notifications > 0 && $result_insert_d_notifications > 0 && $result_update > 0) {
                 $result = 1; 
             } else {
@@ -244,6 +244,24 @@
             return $result;
         }
 
+        public function SelectAllCourses() {
+            $Query_Select_All = "SELECT co.id_course, co.name, cc.category 
+                                 FROM course_category cc INNER JOIN course co ON (cc.id_course_category=co.category) 
+                                 WHERE co.status = 1";
+            $result = $this->SelectAllMySQL($Query_Select_All);
+            return $result;
+        }
+
+        public function SelectDataCourse(int $id_course) {
+            $this->id_course = $id_course;
+            $Query_Select = "SELECT co.id_course, co.date_start, co.date_final, co.value 
+                             FROM course co INNER JOIN course_category cc 
+                             ON (co.category=cc.id_course_category)
+                             WHERE id_course = $this->id_course";
+            $result = $this->SelectMySQL($Query_Select);
+            return $result;
+        }
+
         //*
         public function SelectAllInactiveAccounting() {
             $Query_Select_All = "SELECT ac.id_accounting, CONCAT(us.nombres, ' ', us.apellidoP, ' ', us.apellidoM) AS estudiante,
@@ -257,7 +275,7 @@
             return $result;
         }
         
-        //#
+        //*
         public function stopAccounting(int $id_accounting, String $id_student, String $periodo, String $InputJustificacion) {
             $this->id_accounting = $id_accounting;
             $this->id_student = $id_student;
@@ -378,9 +396,9 @@
             $this->periodo = $periodo;
 
             $Query_Select = "SELECT ac.id_accounting, CONCAT(us.nombres, ' ', us.apellidoP, ' ', us.apellidoM) AS estudiante,
-                                    ac.date_SA, ac.date_FA, ac.date_LP, ac.date_NP, da.share, da.full_value,
-                                    da.discount, da,discount_value, da.full_discount_value, da.descripcion,
-                                    da.estudiante AS DNI, da.statuss
+                                    ac.date_SA, ac.date_FA, ac.date_LP, ac.date_NP, da.share, da.full_value, da.share_value,
+                                    da.discount, da.discount_value, da.full_discount_value, da.description,
+                                    da.estudiante AS DNI, da.status
 
                                     FROM detail_accounting da INNER JOIN accounting ac ON (da.accounting=ac.id_accounting)
                                     INNER JOIN student st ON (da.estudiante=st.estudiante)
@@ -394,8 +412,10 @@
         //*
         public function SelectSeeIIA(String $dni) {
             $this->dni = $dni;
-            $Query_Select = "SELECT ac.id_accounting, us.DNI, ac.date_SA, ac.date_FA, ac.date_LP, ac.date_NP
+            $Query_Select = "SELECT ac.id_accounting, us.DNI, ac.date_SA, ac.date_FA, ac.date_LP, ac.date_NP, co.name, cc.category
                                     FROM detail_accounting da INNER JOIN accounting ac ON (da.accounting=ac.id_accounting)
+                                    INNER JOIN course co ON (co.id_course=da.course)
+                                    INNER JOIN course_category cc ON (cc.id_course_category=co.category)
                                     INNER JOIN student st ON (da.estudiante=st.estudiante)
                                     INNER JOIN usuario us ON(st.estudiante=us.DNI)
                                     WHERE da.estudiante = '$this->dni' AND da.status = 0";
@@ -410,7 +430,7 @@
 
             $Query_Select = "SELECT ac.id_accounting, CONCAT(us.nombres, ' ', us.apellidoP, ' ', us.apellidoM) AS estudiante,
                                     ac.date_SA, ac.date_FA, ac.date_LP, ac.date_NP, da.share, da.full_value,
-                                    da.discount, ac.discount_value, ac.full_discount_value, description, observation,
+                                    da.discount, da.discount_value, da.full_discount_value, da.description, da.observation,
                                     da.estudiante AS DNI, da.status
                                     
                                     FROM detail_accounting da INNER JOIN accounting ac ON (da.accounting=ac.id_accounting)
@@ -425,13 +445,13 @@
         //*
         public function DeleteAccountingInactive(int $id_accounting) {
             $this->id_accounting = $id_accounting;
-            //Delete register accounting table
-            $Query_Delete_accounting = "DELETE FROM accounting WHERE id_accounting = $this->id_accounting";
-            $result_accounting = $this->DeleteMySQL($Query_Delete_accounting);
-
             //Delete register detail accountig table
             $Query_Delete_da = "DELETE FROM detail_accounting WHERE accounting = $this->id_accounting";
             $result_da = $this->DeleteMySQL($Query_Delete_da);
+
+            //Delete register accounting table
+            $Query_Delete_accounting = "DELETE FROM accounting WHERE id_accounting = $this->id_accounting";
+            $result_accounting = $this->DeleteMySQL($Query_Delete_accounting);
 
             if ($result_accounting && $result_da) {
                 $result = 1;

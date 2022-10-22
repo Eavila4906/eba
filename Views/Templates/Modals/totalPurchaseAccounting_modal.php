@@ -18,7 +18,7 @@
                 <div class="row mb-1">
                   <div class="col-md-6">
                     <label for="exampleSelect1">Tipo de pago <span class="required">*</span></label>
-                    <select class="form-control selectpicker" name="InputValorTP" id="InputValorTP" required="">
+                    <select class="form-control selectpicker" name="InputTypePayment-tp" id="InputTypePayment-tp" required="">
                       <option value="Deposito">Deposito</option>
                       <option value="Efectivo">Efectivo</option>
                       <option value="Transferencia">Transferencia</option>
@@ -27,7 +27,7 @@
                   </div>
                   <div class="col-md-6">
                     <label>Curso <span class="required">*</span></label>
-                    <select class="form-control category-register category-update" name="InputCategory" id="InputCategory" required>
+                    <select class="form-control courses-register-tp" name="InputCourse-tp" id="InputCourse-tp" required>
                     </select>
                   </div>
                 </div><br>
@@ -44,12 +44,16 @@
                 </div><br>
 
                 <div class="row mb-1">
-                  <div class="col-md-6" style="right: -22px;">
+                  <div class="col-md-6">
+                    <label id="" class="labelForm">Valor del curso <span class="required">*</span></label>
+                    <input class="form-control inputForm" name="InputCourseValue" id="InputCourseValue" type="text" placeholder="Seleccione curso" required readonly>
+                  </div>
+                  <div class="col-md-3" style="right: -22px;">
                     <label class="form-check-label" >
                       <input class="form-check-input" type="checkbox" name="InputAD" id="InputAD">Aplicar descuento
                     </label>
                   </div>
-                  <div class="col-md-6" id="campoDescuento">
+                  <div class="col-md-3" id="campoDescuento">
                     <label for="exampleSelect1">Descuento <span class="required">*</span></label>
                     <select class="form-control selectpicker" name="InputDescuento" id="InputDescuento" required="">
                       <option value="0">0%</option>
