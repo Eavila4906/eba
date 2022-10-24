@@ -42,7 +42,7 @@
             return $result;
         }
 
-        //#
+        //*
         public function InsertPaymentRecord(String $DNI, int $id_accounting, String $date_LP, String $InputTypePayment, String $InputDescripcion) {
             $this->DNI = $DNI;
             $this->id_accounting = $id_accounting;
@@ -51,14 +51,14 @@
             $this->InputDescripcion = $InputDescripcion;
 
             //Validate rango date
-            $Query_Select = "SELECT da.full_value, ac.date_SA, ac.date_FA, ac.date_LP 
+            $Query_Select = "SELECT da.share_value, ac.date_SA, ac.date_FA, ac.date_LP 
                              FROM detail_accounting da INNER JOIN accounting ac ON (da.accounting=ac.id_accounting)
                              WHERE ac.id_accounting = $this->id_accounting AND da.estudiante = '$this->DNI'";
             $result_select = $this->SelectMySQL($Query_Select);
             $date_FA = $result_select['date_FA'];
             $date_LP = $result_select['date_LP'];
             $periodo = $result_select['date_SA']." - ".$date_FA;
-            $valor = $result_select['full_value'];
+            $valor = $result_select['share_value'];
 
             $Query_Select_PD = "SELECT * FROM paymentday WHERE id_paymentday = 1";                   
             $PD = $this->SelectMySQL($Query_Select_PD);
@@ -89,7 +89,9 @@
                 $date_NP = $result_select['date_NP'];
 
                 //update date payment accounting
-                $Query_Update = "UPDATE accounting SET date_LP=?, date_NP=? WHERE id_accounting = $this->id_accounting AND estudiante = '$this->DNI'";
+                $Query_Update = "UPDATE detail_accounting da INNER JOIN accounting ac ON (ac.id_accounting=da.accounting)
+                                 SET ac.date_LP=?, ac.date_NP=? 
+                                 WHERE ac.id_accounting = $this->id_accounting AND da.estudiante = '$this->DNI'";
                 $Array_Query = array($this->date_LP, $date_NP);
                 $result_update = $this->UpdateMySQL($Query_Update, $Array_Query);
 
@@ -128,7 +130,9 @@
                 $date_NP = $result_select['date_NP'];
 
                 //update date payment accounting
-                $Query_Update = "UPDATE accounting SET date_LP=?, date_NP=? WHERE id_accounting = $this->id_accounting AND estudiante = '$this->DNI'";
+                $Query_Update = "UPDATE detail_accounting da INNER JOIN accounting ac ON (ac.id_accounting=da.accounting)
+                                 SET ac.date_LP=?, ac.date_NP=? 
+                                 WHERE ac.id_accounting = $this->id_accounting AND da.estudiante = '$this->DNI'";
                 $Array_Query = array($this->date_LP, $date_NP);
                 $result_update = $this->UpdateMySQL($Query_Update, $Array_Query);
 
@@ -144,7 +148,7 @@
                 $result_insert_d_notifications = $this->InsertMySQL($Query_Insert_d_notifications, $Array_Query_d_notifications);
 
                 //Finish accounting
-                $Query_Update_C1 = "UPDATE detail_accounting da INNER JOIN accounting ac ON(da.accounting=ac.id_accounting)
+                $Query_Update_C1 = "UPDATE detail_accounting da INNER JOIN accounting ac ON (da.accounting=ac.id_accounting)
                                     SET ac.date_NP='0000-00-00 00:00:00', da.status=? 
                                     WHERE ac.id_accounting = $this->id_accounting AND da.estudiante = '$this->DNI'";
                 $Array_Query_C1 = array(0);
@@ -179,7 +183,7 @@
             return $result;
         }
 
-        //#
+        //*
         public function UpdatePaymentDay(int $day) {
             $this->day = $day;
 
