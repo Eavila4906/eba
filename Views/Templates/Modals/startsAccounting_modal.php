@@ -15,39 +15,50 @@
               <form id="formStartsAccounting" name="formStartsAccounting">
                 <p class="text-primary">Los campos con asterisco (<span class="required">*</span>) son obligatorios.</p>
                 <input type="hidden" id="id_student" class="id_student" name="id_student" value="">
-
-                <div class="form-group">
-                  <label for="exampleSelect1">Cuota <span class="required">*</span></label>
-                  <select class="form-control selectpicker" name="InputShare" id="InputShare" required="">
-                    <option value="Mensual">Mensual</option>
-                  </select>
-                </div>
                 
                 <div class="row mb-1">
                   <div class="col-md-6">
+                    <label for="exampleSelect1">Cuota <span class="required">*</span></label>
+                    <select class="form-control selectpicker" name="InputShare" id="InputShare" required="">
+                      <option value="Mensual">Mensual</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
                     <label for="exampleSelect1">Tipo de pago <span class="required">*</span></label>
-                    <select class="form-control selectpicker" name="InputFullValue" id="InputFullValue" required="">
+                    <select class="form-control selectpicker" name="InputTypePayment-sa" id="InputTypePayment-sa" required="">
                       <option value="Deposito">Deposito</option>
                       <option value="Efectivo">Efectivo</option>
                       <option value="Transferencia">Transferencia</option>
                       <option value="Tarjeta de credito">Tarjeta de credito</option>
                     </select>
                   </div>
+                </div><br>
+                
+                <div class="row mb-1">
                   <div class="col-md-6">
                     <label>Curso <span class="required">*</span></label>
-                    <select class="form-control category-register category-update" name="InputCourse" id="InputCourse" required>
+                    <select class="form-control courses-register" name="InputCourse" id="InputCourse" required>
                     </select>
+                  </div>
+                  <div class="col-md-6">
+                    <label id="labelFullValue" class="labelForm">Valor del curso <span class="required">*</span></label>
+                    <input class="form-control inputForm" name="InputFullValue" id="InputFullValue" type="text" placeholder="Seleccione curso" required readonly>
+                    <p class="leyenda none-block text-danger" id="leyenda-FullValue">
+                      <small> 
+                        Ingresar un valor numerico valido.
+                      </small>
+                    </p>
                   </div>
                 </div><br>
 
                 <div class="row mb-1">
                   <div class="col-md-6">
                     <label for="exampleSelect1">Fecha inicio Contabilidad <span class="required">*</span></label>
-                    <input type="date" class="form-control inputForm" id="InputFechaIC" name="InputFechaIC" required>
+                    <input type="date" class="form-control inputForm" id="InputDateSA" name="InputDateSA" required>
                   </div>
                   <div class="col-md-6">
                     <label for="exampleSelect1">Fecha final Contabilidad <span class="required">*</span></label>
-                    <input type="date" class="form-control inputForm" id="InputFechaFC" name="InputFechaFC" required>
+                    <input type="date" class="form-control inputForm" id="InputDateFA" name="InputDateFA" required>
                   </div>
                 </div><br>
 
@@ -59,7 +70,7 @@
                   </div>
                   <div class="col-md-6" id="campoDescuentoIC">
                     <label for="exampleSelect1">Descuento <span class="required">*</span></label>
-                    <select class="form-control selectpicker" name="InputDescuentoIC" id="InputDescuentoIC" required="">
+                    <select class="form-control selectpicker" name="InputDiscountSA" id="InputDiscountSA" required="">
                       <option value="0">0%</option>
                       <option value="5">5%</option>
                       <option value="10">10%</option>
@@ -86,7 +97,7 @@
 
                 <div class="form-group">
                   <label id="labelDescripcion" class="labelForm">Descripción</label>
-                  <textarea class="form-control inputForm" name="description" id="description" cols="30" rows="2" placeholder="Ingresar Descripción"></textarea>
+                  <textarea class="form-control inputForm" name="InputDescriptionSA" id="InputDescriptionSA" cols="30" rows="2" placeholder="Ingresar Descripción"></textarea>
                 </div>
 
                 <div class="tile-footer">
