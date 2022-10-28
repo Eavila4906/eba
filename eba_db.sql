@@ -25,7 +25,8 @@ INSERT INTO `modulo` (`id_modulo`, `nombreModulo`, `descripcion`, `estadoModulo`
 (6, 'Contabilidad', 'Contabilidad de los pagos del estudiante', 1),
 (8, 'Reportes', 'Describe y proporciona información de todos los procesos contables', 1),
 (9, 'Categoria de cursos', 'Categoria de cursos', 1),
-(10, 'Cursos', 'Cursos', 1);
+(10, 'Cursos', 'Cursos', 1),
+(11, 'Backup', 'Realizara respaldos o copia de seguridad de la base de datos', 1);
 
 -- --------------------------------------------------------
 
