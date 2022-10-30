@@ -9,7 +9,8 @@
       <ul class="app-menu">
         <!-- PERSONAL AREA MODULE -->
         <?php if (!empty($_SESSION['permisos'][1]['r'])) { ?>
-        <li><a class="app-menu__item" href="<?= BASE_URL(); ?>my"><i class="app-menu__icon 
+        <li class="treeview" id="module-personalArea">
+          <a class="app-menu__item" id="personalArea" href="<?= BASE_URL(); ?>my"><i class="app-menu__icon 
           <?php 
             if ($_SESSION['dataUser']['nombreRol'] == "Estudiante") {
               echo "fas fa-user-graduate";
@@ -24,12 +25,16 @@
         
         <!-- DASHBOARD MODULE -->
         <?php if (!empty($_SESSION['permisos'][2]['r'])) { ?>
-        <li><a class="app-menu__item" href="<?= BASE_URL(); ?>dashboard"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
+        <li class="treeview" id="module-dashboard">
+          <a class="app-menu__item" id="dashboard" href="<?= BASE_URL(); ?>dashboard"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a>
+        </li>
         <?php } ?>
 
         <!-- PUBLIC SITE MANAGER MODULE -->
         <?php if (!empty($_SESSION['permisos'][3]['r'])) { ?>
-        <li><a class="app-menu__item" href="<?= BASE_URL(); ?>publicSite"><i class="app-menu__icon fas fa-globe"></i><span class="app-menu__label">Sitio publico</span></a></li>
+        <li class="treeview" id="module-publicSite">
+          <a class="app-menu__item" id="publicSite" href="<?= BASE_URL(); ?>publicSite"><i class="app-menu__icon fas fa-globe"></i><span class="app-menu__label">Sitio publico</span></a>
+        </li>
         <?php } ?>
         
         <!-- USER AND ROLES MODULES -->
@@ -79,6 +84,13 @@
             <li><a class="treeview-item" href="payment"><i id="icon-reportes" class="icon fa fa-circle-o"></i> Reportes</a></li>
             <?php } ?>
           </ul>
+        </li>
+        <?php } ?>
+
+        <!-- BACKUP MODULE -->
+        <?php if (!empty($_SESSION['permisos'][11]['r'])) { ?>
+        <li class="treeview" id="module-backup">
+          <a class="app-menu__item" id="backup" href="<?= BASE_URL(); ?>backup"><i class="app-menu__icon fas fa-shield-alt"></i><span class="app-menu__label">Backup</span></a>
         </li>
         <?php } ?>
       </ul>
