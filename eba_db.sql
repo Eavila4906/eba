@@ -517,3 +517,36 @@ CREATE TABLE IF NOT EXISTS `detail_accounting` (
   FOREIGN KEY (`estudiante`) REFERENCES `student` (`estudiante`),
   FOREIGN KEY (`course`) REFERENCES `course` (`id_course`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `backup`
+--
+DROP TABLE IF EXISTS `backup`;
+CREATE TABLE IF NOT EXISTS `backup` (
+  `id_backup` int(11) NOT NULL AUTO_INCREMENT,
+  `nameFile` varchar(255) NOT NULL,
+  PRIMARY KEY (`id_backup`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `detail_backup`
+--
+DROP TABLE IF EXISTS `detail_backup`;
+CREATE TABLE IF NOT EXISTS `detail_backup` (
+  `id_detail_backup` int(11) NOT NULL AUTO_INCREMENT,
+  `backup` int(11) NOT NULL,
+  `create_by` varchar(10) NOT NULL,
+  `creation_date` timestamp default current_timestamp,
+  `eliminated_by` varchar(10) NOT NULL,
+  `removal_date` timestamp default '0000-00-00',
+  `status` int(1) NOT NULL,
+  PRIMARY KEY (`id_detail_backup`),
+  FOREIGN KEY (`backup`) REFERENCES `backup` (`id_backup`),
+  FOREIGN KEY (`create_by`) REFERENCES `usuario` (`DNI`),
+  FOREIGN KEY (`eliminated_by`) REFERENCES `usuario` (`DNI`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
