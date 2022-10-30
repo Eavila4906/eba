@@ -69,7 +69,7 @@ function FctBackup() {
 	});
 }
 
-function FctBtnInfoCourse(id_backup) {
+function FctBtnInfoBackup(id_backup) {
 	var id_backup = id_backup;
 	var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
 	var ajaxUrl = BASE_URL + 'backup/getBackup/' + id_backup;
