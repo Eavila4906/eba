@@ -1,3 +1,11 @@
+$(document).ready(function () {
+	if (document.querySelector('#module-personalArea')) {
+		document.querySelector('#module-personalArea').classList.add('is-expanded');
+		if (document.querySelector('#personalArea')) {
+			$("#personalArea").attr("data-toggle", "treeview");
+		}
+	}
+});
 const expresiones = {
 	nombre: /^[a-zA-ZÀ-ÿ0-9¿?¡!.,:;\s]{1,45}$/,
 	descripcionCorta: /^[a-zA-ZÀ-ÿ0-9¡!%""$#.,:;()\s]{1,100}$/,
