@@ -1,3 +1,12 @@
+$(document).ready(function () {
+	if (document.querySelector('#module-courses')) {
+		document.querySelector('#module-courses').classList.add('is-expanded');
+		if (document.querySelector('#icon-courses')) {
+            document.querySelector('#icon-courses').classList.replace('fa-circle-o', 'fa-circle');
+            document.querySelector('#icon-courses').classList.add('text-primary');
+        }
+	}
+});
 /* Starts validacion de formulario add roles */
 const inputs = document.querySelectorAll('#formCourse input');
 const textarea = document.querySelectorAll('#formCourse textarea');
