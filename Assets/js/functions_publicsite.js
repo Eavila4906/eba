@@ -1,3 +1,11 @@
+$(document).ready(function () {
+	if (document.querySelector('#module-publicSite')) {
+		document.querySelector('#module-publicSite').classList.add('is-expanded');
+		if (document.querySelector('#publicSite')) {
+			$("#publicSite").attr("data-toggle", "treeview");
+		}
+	}
+});
 //Expreciones para validar formularios
 const expresiones = {
 	titulo: /^[a-zA-ZÀ-ÿ¿?¡!.,:;\s]{1,60}$/,
