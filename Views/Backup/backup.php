@@ -1,5 +1,6 @@
 <?php
   header_view($data);
+  getModal('info_backup_modal', $data);
 ?>
 
 <div id="ContentAjax"></div>
