@@ -1,3 +1,11 @@
+$(document).ready(function () {
+	if (document.querySelector('#module-dashboard')) {
+		document.querySelector('#module-dashboard').classList.add('is-expanded');
+		if (document.querySelector('#dashboard')) {
+			$("#dashboard").attr("data-toggle", "treeview");
+		}
+	}
+});
 function loadCoutUsers() {
     var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
     var ajaxUrl = BASE_URL+'dashboard/getCountUsers';
