@@ -29,6 +29,7 @@
     const DB_PASSWORD = "";
     const DB_NAME = "eba_db_p";
     const DB_CHARSET = "utf8";
+    const DIRECTORY_DBMS = '/opt/lampp/bin/';
 
     //Datos envio de correo
 	const SENDER_NAME = "English Bootcamp Academy";
