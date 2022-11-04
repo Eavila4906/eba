@@ -28,15 +28,15 @@
               <td style="width: 200px"><b>Fecha de creacion</b></td>
               <td id="getCreationDate"></td>
             </tr>
-            <tr>
+            <tr id="tr-file">
               <td style="width: 200px"><b>Archivo</b></td>
-              <td id="archivo"></td>
+              <td id="file"></td>
             </tr>
-            <tr>
+            <tr id="tr-getEliminatedBy">
               <td style="width: 150px"><b>Eliminado por</b></td>
               <td id="getEliminatedBy"></td>
             </tr>
-            <tr>
+            <tr id="tr-getRemovalDate">
               <td style="width: 150px"><b>Fecha de eliminacion</b></td>
               <td id="getRemovalDate"></td>
             </tr>

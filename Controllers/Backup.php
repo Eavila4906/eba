@@ -42,8 +42,9 @@
                             $btnRemoveBackup = "";
                         } else {
                             if ($_SESSION['permisosModulo']['d']){
+                                $file = "'".$arrayData[$i]['nameFile']."'";
                                 $btnRemoveBackup = '<button class="btn btn-danger btn-sm" 
-                                                        onclick="FctBtnDeleteBackup('.$arrayData[$i]['id_backup'].')" 
+                                                        onclick="FctBtnDeleteBackup('.$arrayData[$i]['id_backup'].','.$file.')" 
                                                         title="Eliminar">
                                                         <i class="fas fa-trash"></i>
                                                 </button>';
@@ -75,6 +76,16 @@
                     $this->id_backup = intval($id_backup);
                     if ($this->id_backup > 0) {
                         $arrayData = $this->model->SelectBackup($this->id_backup);
+
+                        //fotrmat name file view
+                        $name = explode(':', $arrayData['nameFile']);
+                        $arrayData['nameFile_format'] = $name[0].'-'.$arrayData['id_backup'];
+                        
+                        //Download file backup
+                        $file = "'".$arrayData['nameFile']."'";
+                        //$arrayData['file'] = '<a target="_black" onclick="downloadBackup('.$file.')"><i class="fas fa-download"></i> Download backup</a>';
+                        $arrayData['file'] = '<a target="_black" href="./Backup/'.$arrayData['nameFile'].'" download><i class="fas fa-download"></i> Download backup</a>';
+                        
                         if (!empty($arrayData)) {
                             $arrayData = array('status' => true, 'data' => $arrayData);
                         } else {
@@ -99,18 +110,23 @@
                 if ($_POST['backup'] != "backup") {
                     $arrayData = array('status' => false, 'msg' => 'No se pudo ejecutar este proceso.');
                 } else {
+                    $current_date = date('d-m-Y H:m:s');
+                    $file_sql = 'Backup_'.DB_NAME.':'.md5($current_date).'.sql';
+
                     $this->create_by = $_SESSION['dataUser']['DNI'];
-                    $this->nameFile = "Respaldo prueba";
+                    $this->nameFile = $file_sql;
 
                     if ($_SESSION['permisosModulo']['w']) {
                         $arrayData = $this->model->InsertBackup($this->nameFile, $this->create_by);
+                        $dataBackup = backup($file_sql);
                     }
 
-                    if ($arrayData > 0) {
+                    if ($arrayData > 0 && $dataBackup == true) {
                         $arrayData = array('status' => true, 'msg' => 'Hecho exitosamente.');
                     } else {
                         $arrayData = array('status' => false, 'msg' => 'No se pudo ejecutar este proceso.');
                     }
+                    
                     echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
                 }
             }
@@ -121,11 +137,12 @@
             if ($_POST) {
                 $this->id_backup = intval($_POST['id_backup']);
                 $this->eliminated_by = $_SESSION['dataUser']['DNI'];
-
+                $this->file = $_POST['file'];
                 if ($this->id_backup > 0) {
                     $arrayData = "";
                     if ($_SESSION['permisosModulo']['d']) {
                         $arrayData = $this->model->DeleteBackup($this->id_backup, $this->eliminated_by);
+                        unlink('./Backup/'.$this->file);
                     }
                     if ($arrayData == "ok") {
                         $arrayData = array('status' => true, 'msg' => 'Eliminado con exito.');
@@ -134,6 +151,28 @@
                     }
                     echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
                 }
+            }
+            die();
+        }
+
+        public function downloadBackup() {
+            if ($_POST) {
+
+                $this->filePath = './Backup/'.$_POST['file'];
+                $this->file = $_POST['file'];
+                $arrayData = "";
+
+                $arrayData = downloadBackup($this->filePath, $this->file);
+
+                if ($arrayData == "ok") {
+                    $arrayData = array('status' => true, 'msg' => 'Exitosa.');
+                } else if ($arrayData == "no existe") {
+                    $arrayData = array('status' => false, 'msg' => 'No existe el archivo.');
+                } else {
+                    $arrayData = array('status' => false, 'msg' => 'No se pudo ejecutar este proceso.');
+                } 
+                
+                echo json_encode($arrayData, JSON_UNESCAPED_UNICODE);
             }
             die();
         }

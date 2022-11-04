@@ -5,7 +5,7 @@
         }
 
         public function SelectAllBackup() {
-            $Query_Select_All = "SELECT bc.id_backup, us.username AS create_by, rl.nombreRol, db.creation_date, db.status  
+            $Query_Select_All = "SELECT bc.id_backup, bc.nameFile, us.username AS create_by, rl.nombreRol, db.creation_date, db.status  
                                  FROM detail_backup db INNER JOIN backup bc ON (bc.id_backup=db.backup)
                                  INNER JOIN usuario us ON (us.DNI=db.create_by)
                                  INNER JOIN roles rl ON (rl.id_rol=us.rol)";
