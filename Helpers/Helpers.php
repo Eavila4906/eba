@@ -239,4 +239,43 @@
         $string = str_ireplace("==","",$string);
         return $string;
     }
+
+    //Backup function
+    function backup($file_sql) {
+        $db_host = DB_HOST; 
+        $db_name = DB_NAME; 
+        $db_user = DB_USER; 
+        $db_pass = DB_PASSWORD; 
+        $directory_DBMS = DIRECTORY_DBMS; 
+        
+        $file_sql = $file_sql; 
+        $rute_directory = './Backup/';
+
+        $dump = $directory_DBMS."mysqldump -u$db_user -p$db_pass $db_name > $rute_directory$file_sql";
+        system($dump, $output);
+
+        if ($file_sql) {
+            $return = true;
+        } else {
+            $return = false;
+        }
+        return $return;
+    }
+
+    //Download backup
+    function downloadBackup($filePath, $file) {
+        if (file_exists($filePath)) {
+            $return = "ok";
+            header('Content-disposition: attachment; filename='.$filePath);
+            header('Content-type: application/sql');
+
+            readfile($filePath);
+
+            
+        } else {
+            $return = "no existe";
+        }
+        return $return;
+    }
+    
 ?>
