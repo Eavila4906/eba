@@ -158,9 +158,9 @@
 
         public function paymentReminder() {
             $this->current_date = date("Y-m-d");
-            //$this->current_date = date("2022-01-05");
+            //$this->current_date = date("2022-12-03");
             $arrayData = $this->SelectAllAccountingUsers($this->current_date);
-            //echo json_encode($arrayData, JSON_UNESCAPED_UNICODE)."<br>";
+            echo json_encode($arrayData, JSON_UNESCAPED_UNICODE)."<br>";
             for ($i=0; $i < count($arrayData); $i++) { 
                 if ($arrayData[$i]['plazo'] < 4 && $arrayData[$i]['plazo'] > 0) {
                     #Insert Notifications payment reminder

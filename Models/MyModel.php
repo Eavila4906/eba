@@ -178,9 +178,9 @@
         public function SelectAllAccounting(String $dni, String $current_date) {
             $this->dni = $dni;
             $this->current_date = $current_date;
-            $Query_Select = "SELECT * FROM accounting 
-                             WHERE estudiante = '$this->dni' AND cuota = 'Compra Total' 
-                                AND (fecha_IC <= '$this->current_date' AND fecha_FC >= '$this->current_date')";
+            $Query_Select = "SELECT * FROM accounting ac INNER JOIN detail_accounting da ON (da.accounting=ac.id_accounting) 
+                             WHERE da.estudiante = '$this->dni' AND da.share = 'Compra Total' 
+                                AND (ac.date_SA <= '$this->current_date' AND ac.date_FA >= '$this->current_date')";
             $result = $this->SelectMySQL($Query_Select);
             
             if (!empty($result)) {

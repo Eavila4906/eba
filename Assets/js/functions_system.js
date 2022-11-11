@@ -159,11 +159,11 @@ function ftnSeeNotifications(id_notification, tipo, fecha, leida, mes, descripci
                     if (tipo == "Pago Final" || tipo == "Pago Final (No contable)") {
                         document.querySelector('#periodo-pp').innerHTML = "--------------------------------------";
                         document.querySelector('#fecha-pp').innerHTML = "--------------------------------------";
-                        document.querySelector('#cantidad-pp').innerHTML = "--------------------------------------";
+                        //document.querySelector('#cantidad-pp').innerHTML = "--------------------------------------";
                     } else {
                         document.querySelector('#periodo-pp').innerHTML = objData.data.periodo;
                         document.querySelector('#fecha-pp').innerHTML = objData.data.fecha_pp;
-                        document.querySelector('#cantidad-pp').innerHTML = "$"+objData.data.valor;
+                        //document.querySelector('#cantidad-pp').innerHTML = "$"+objData.data.valor;
                     }
                     if (tipo == "Pago Total") {
                         document.querySelector('#nt-info-pp1').classList.replace("font-weight-bold", "notBlock");
@@ -204,7 +204,7 @@ function ftnSeeNotifications(id_notification, tipo, fecha, leida, mes, descripci
                 if (objData.status) {
                     document.querySelector('#periodo-pp-rp').innerHTML = objData.data.periodo;
                     document.querySelector('#fecha-pp-rp').innerHTML = objData.data.fecha_pp;
-                    document.querySelector('#cantidad-pp-rp').innerHTML = "$"+objData.data.valor;
+                    //document.querySelector('#cantidad-pp-rp').innerHTML = "$"+objData.data.valor;
                 } else {
                     swal("ERROR!", objData.msg, "error");
                 }
@@ -235,7 +235,7 @@ function ftnSeeNotifications(id_notification, tipo, fecha, leida, mes, descripci
                 if (objData.status) {
                     document.querySelector('#periodo-pp-pa').innerHTML = objData.data.periodo;
                     document.querySelector('#fecha-pp-pa').innerHTML = objData.data.fecha_pp;
-                    document.querySelector('#cantidad-pp-pa').innerHTML = "$"+objData.data.valor;
+                    //document.querySelector('#cantidad-pp-pa').innerHTML = "$"+objData.data.valor;
                 } else {
                     swal("ERROR!", objData.msg, "error");
                 }

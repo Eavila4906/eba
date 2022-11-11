@@ -27,12 +27,12 @@
                   <td style="width: 100px" class="font-weight-bold">Fecha:</td>
                   <td id="fechapago"></td>
                 </tr>
-
+                <!--
                 <tr>
                   <td style="width: 100px" class="font-weight-bold">Cantidad:</td>
                   <td id="cantidad"></td>
                 </tr>
-
+                -->
                 <tr>
                   <td style="width: 100px" class="font-weight-bold">Tipo de pago:</td>
                   <td id="tipo-pago"></td>
@@ -51,10 +51,12 @@
                   <td style="width: 100px" class="font-weight-bold">Fecha:</td>
                   <td id="fecha-pp"></td>
                 </tr>
+                <!--
                 <tr>
                   <td style="width: 100px" class="font-weight-bold">Cantidad:</td>
                   <td id="cantidad-pp"></td>
                 </tr>
+                -->
               </tbody>
             </table>
             <br><br>
@@ -95,10 +97,12 @@
                   <td style="width: 100px" class="font-weight-bold">Fecha:</td>
                   <td id="fecha-pp-rp"></td>
                 </tr>
+                <!--
                 <tr>
                   <td style="width: 100px" class="font-weight-bold">Cantidad:</td>
                   <td id="cantidad-pp-rp"></td>
                 </tr>
+                -->
               </tbody>
             </table><br>
             <h4 class="font-weight-bold">Opciones de pago</h4><br>
@@ -147,10 +151,12 @@
                   <td style="width: 100px" class="font-weight-bold">Fecha:</td>
                   <td id="fecha-pp-pa"></td>
                 </tr>
+                <!-- 
                 <tr>
                   <td style="width: 100px" class="font-weight-bold">Cantidad:</td>
                   <td id="cantidad-pp-pa"></td>
                 </tr>
+                -->
               </tbody>
             </table><br>
             <h4 class="font-weight-bold">Opciones de pago</h4><br>
