@@ -191,6 +191,7 @@ CREATE TABLE IF NOT EXISTS `student` (
   `id_student` int(11) NOT NULL AUTO_INCREMENT,
   `estudiante` varchar(10) NOT NULL,
   `proceso_contable` int(11) DEFAULT 0,
+  `payment_control` int(11) DEFAULT 0,
   PRIMARY KEY (`id_student`),
   FOREIGN KEY (`estudiante`) REFERENCES `usuario` (`DNI`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -550,3 +551,18 @@ CREATE TABLE IF NOT EXISTS `detail_backup` (
   FOREIGN KEY (`eliminated_by`) REFERENCES `usuario` (`DNI`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `detail_backup`
+--
+DROP TABLE IF EXISTS `payment_control`;
+CREATE TABLE IF NOT EXISTS `payment_control` (
+  `id_payment_control` int(11) NOT NULL AUTO_INCREMENT,
+  `student` int(11) NOT NULL,
+  `date_control_LP` timestamp NOT NULL,
+  `description` varchar(80) DEFAULT NULL,
+  `status` int(1) NOT NULL,
+  PRIMARY KEY (`id_payment_control`),
+  FOREIGN KEY (`student`) REFERENCES `student` (`id_student`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

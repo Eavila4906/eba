@@ -202,8 +202,8 @@ function ftnSeeNotifications(id_notification, tipo, fecha, leida, mes, descripci
             if (request.readyState == 4 && request.status == 200) {
                 var objData = JSON.parse(request.responseText);
                 if (objData.status) {
-                    document.querySelector('#periodo-pp-rp').innerHTML = objData.data.periodo;
-                    document.querySelector('#fecha-pp-rp').innerHTML = objData.data.fecha_pp;
+                    //document.querySelector('#periodo-pp-rp').innerHTML = objData.data.periodo;
+                    //document.querySelector('#fecha-pp-rp').innerHTML = objData.data.fecha_pp;
                     //document.querySelector('#cantidad-pp-rp').innerHTML = "$"+objData.data.valor;
                 } else {
                     swal("ERROR!", objData.msg, "error");
@@ -233,8 +233,8 @@ function ftnSeeNotifications(id_notification, tipo, fecha, leida, mes, descripci
             if (request.readyState == 4 && request.status == 200) {
                 var objData = JSON.parse(request.responseText);
                 if (objData.status) {
-                    document.querySelector('#periodo-pp-pa').innerHTML = objData.data.periodo;
-                    document.querySelector('#fecha-pp-pa').innerHTML = objData.data.fecha_pp;
+                    //document.querySelector('#periodo-pp-pa').innerHTML = objData.data.periodo;
+                    //document.querySelector('#fecha-pp-pa').innerHTML = objData.data.fecha_pp;
                     //document.querySelector('#cantidad-pp-pa').innerHTML = "$"+objData.data.valor;
                 } else {
                     swal("ERROR!", objData.msg, "error");

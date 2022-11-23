@@ -87,6 +87,13 @@
         </li>
         <?php } ?>
 
+        <!-- PAYMENT CONTROL MODULE -->
+        <?php if (!empty($_SESSION['permisos'][11]['r'])) { ?>
+        <li class="treeview" id="module-payment-control">
+          <a class="app-menu__item" id="payment-control" href="<?= BASE_URL(); ?>payment_control"><i class="app-menu__icon fas fa-paste"></i><span class="app-menu__label">Control de pagos</span></a>
+        </li>
+        <?php } ?>
+
         <!-- BACKUP MODULE -->
         <?php if (!empty($_SESSION['permisos'][11]['r'])) { ?>
         <li class="treeview" id="module-backup">
