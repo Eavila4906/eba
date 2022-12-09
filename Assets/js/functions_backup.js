@@ -132,6 +132,7 @@ function FctBtnDeleteBackup(id_backup, file) {
 		closeOnCancel: true,
 	}, function (isConfirm) {
 		if (isConfirm) {
+			divLoading.style.display = "flex";
 			var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
 			var ajaxUrl = BASE_URL + 'backup/backupDelete/';
 			var data = 'id_backup=' + id_backup + '&file=' + file;
@@ -149,6 +150,8 @@ function FctBtnDeleteBackup(id_backup, file) {
 						swal("ERROR!", objData.msg, "error");
 					}
 				}
+				divLoading.style.display = "none";
+            	return false;
 			}
 		}
 	});
@@ -162,12 +165,13 @@ function downloadBackup(file) {
 		text: "¿Estas seguro que deceas descargar este archivo?",
 		type: "warning",
 		showCancelButton: true,
-		confirmButtonText: "Si, Descargar",
+		confirmButtonText: "Si, confirmar",
 		cancelButtonText: "No, cancelar",
 		closeOnConfirm: false,
 		closeOnCancel: true,
 	}, function (isConfirm) {
 		if (isConfirm) {
+			divLoading.style.display = "flex";
 			var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
 			var ajaxUrl = BASE_URL + 'backup/downloadBackup/';
 			var data = 'file=' + file;
@@ -185,6 +189,8 @@ function downloadBackup(file) {
 						swal("ERROR!", objData.msg, "error");
 					}
 				}
+				divLoading.style.display = "none";
+            	return false;
 			}
 		}
 	});
