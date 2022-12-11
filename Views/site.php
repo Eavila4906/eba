@@ -125,70 +125,64 @@
           </div>
      </section> 
 
+     <div class="container">
+    <!-- Example row of columns -->
+    <div class="row">
+      
+    </div>
+
+    <hr>
+
+  </div>
+
      <!-- ABOUT -->
      <section id="about">
           <div class="container">
                <div class="row">
                     <div class="col-md-12 col-sm-12">
-
-                              <div class="about-info">
-                                   <h2>About <small><?= NAME_PROJECT; ?></small></h2>
-                              </div>
-                         <div class="owl-carousel owl-theme owl-courses">
-                                        <div class="courses-detail">
-                                             <h3><a href="#">Quienes Somos</a></h3>
-                                             <p>!Somos una empresa que se dedica a tal cosa por tal motivo!</p>
-                                             <p>Al finalizar este curso serás capaz de sostener conversaciones sencillas de manera independiente.!Incluso al viajar al extranjero!</p>
-                                        </div>
-
-
-                              <?php
-                              if (!empty($ContentsAbout)) {
-                                   for ($i=0; $i < count($ContentsAbout); $i++) {
-                                        if (strlen($ContentsAbout[$i]['descripcion']) > 100) {
-                                             $id = $ContentsAbout[$i]['id_cont'];
-                                             $descripcion = $ContentsAbout[$i]['descripcion'];
-                                             $idlmas = "leermas".$id;
-                                             $idlmenos = "leermenos".$id;
-                                             $t1 = "text1".$id;
-                                             $t2 = "text2".$id;
-                                             $text1 = substr($descripcion,0,100).'...<a id="leermas'.$id.'" onclick="leerMas('.$idlmas.','.$t1.','.$t2.');" href="javascript:;">Leer mas</a>';
-                                             $text2 = $descripcion.'...<a id="leermenos'.$id.'" onclick="leerMenos('.$idlmenos.','.$t1.','.$t2.');" href="javascript:;">Leer menos</a>';
-                                             $des = 1;
-                                        }else{
-                                             $descripcion = $ContentsAbout[$i]['descripcion'];
-                                             $des = 2;
-                                        }
+                         <div class="about-info">
+                              <h2>About <small><?= NAME_PROJECT; ?></small></h2>
+                         </div>
+                         <?php
+                         if (!empty($ContentsAbout)) {
+                              for ($i=0; $i < count($ContentsAbout); $i++) {
+                                   if (strlen($ContentsAbout[$i]['descripcion']) > 100) {
+                                        $id = $ContentsAbout[$i]['id_cont'];
+                                        $descripcion = $ContentsAbout[$i]['descripcion'];
+                                        $idlmas = "leermas".$id;
+                                        $idlmenos = "leermenos".$id;
+                                        $t1 = "text1".$id;
+                                        $t2 = "text2".$id;
+                                        $text1 = substr($descripcion,0,100).'<br><a id="leermas'.$id.'" onclick="leerMas('.$idlmas.','.$t1.','.$t2.');" href="javascript:;"><span class="btn btn-info">Leer mas</span></a>';
+                                        $text2 = $descripcion.'<br><a id="leermenos'.$id.'" onclick="leerMenos('.$idlmenos.','.$t1.','.$t2.');" href="javascript:;"><span class="btn btn-info">Leer menos</span></a>';
+                                        $des = 1;
+                                   }else{
+                                        $descripcion = $ContentsAbout[$i]['descripcion'];
+                                        $des = 2;
+                                   }
+                         ?>
+                         <div class="col-md-4" style="text-align: justify;">
+                              <h3><?= $ContentsAbout[$i]['titulo']?></h3>
+                              <?php 
+                                   if($des == 1){
                               ?>
-                              <figure>
-                                   <span><i class="fas fa-<?= $ContentsAbout[$i]['icono']?>"></i></span>
-                                   <figcaption>
-                                        <h3><?= $ContentsAbout[$i]['titulo']?></h3>
-                                        <?php 
-                                             if($des == 1){
-                                        ?>
-                                        <p id="text1<?=$id;?>"><?= $text1; ?></p><p id="text2<?=$id;?>" style="display: none;"><?= $text2; ?></p>
-                                   
-                                        <?php 
-                                             }else{
-                                        ?>
-                                        <p><?=$descripcion;?>></p>
-                                        <?php
-                                             }
-                                        ?>
-                                   </figcaption>
-                              </figure>
+                              <p id="text1<?=$id;?>"><?= $text1; ?></p><p id="text2<?=$id;?>" style="display: none;"><?= $text2; ?></p> 
+                              <?php 
+                                   }else{
+                              ?>
+                              <p><?=$descripcion;?>></p>
                               <?php
                                    }
-                              } else {
-                                   
                               ?>
-                                   <h3 class="col-md-6 col-sm-12 csms text-muted">¡No existen datos para mostrar!</h3>
-                              <?php
-                              }
-                              ?>  
-
                          </div>
+                         <?php
+                              }
+                         } else {
+                         ?>
+                              <h3 class="col-md-6 col-sm-12 csms text-muted">¡No existen datos para mostrar!</h3>
+                         <?php
+                         }
+                         ?>  
                     </div>
                </div>
           </div>
@@ -376,7 +370,7 @@
                                    </div>
                               </div>
                          </div>
-
+                         
                          <div class="col-md-4 col-sm-4">
                               <div class="item">
                                    <div class="courses-thumb">
@@ -476,7 +470,7 @@
                                    </div>
                               </div> 
                          </div>
-<!--
+                         <!--
                          <div class="col-md-4 col-sm-4">
                               <div class="item">
                                    <div class="courses-thumb">
@@ -494,7 +488,7 @@
                                    </div>
                               </div> 
                          </div>
-               -->
+                         -->
                     </div>
                </div>
           </div>
